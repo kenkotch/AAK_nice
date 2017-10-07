@@ -4,7 +4,7 @@ exports.up = (knex, Promise) => {
 
     table.varchar('template_name', 63)
       .notNullable()
-      .defaultTo('')
+      .defaultTo(1)
 
     table.timestamps(true, true)
   })
