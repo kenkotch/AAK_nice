@@ -12,6 +12,24 @@ exports.seed = (knex, Promise) => {
         first_name_2: 'Lisa',
         last_name_2: 'the Magnificent',
         template_id: 1
+      }, {
+        id: 2,
+        hashed_password: "bananaPassword",
+        email: 'hello@email.com',
+        first_name_1: 'Bob',
+        last_name_1: 'Dumbface',
+        first_name_2: 'Wanda',
+        last_name_2: 'the less than Magnificent',
+        template_id: 1
+      }, {
+        id: 3,
+        hashed_password: "applePassword",
+        email: 'adamJustYelled@email.com',
+        first_name_1: 'Balls',
+        last_name_1: 'McSwarmy',
+        first_name_2: 'Betty',
+        last_name_2: 'Clarkerton',
+        template_id: 1
       }
 
       ])
