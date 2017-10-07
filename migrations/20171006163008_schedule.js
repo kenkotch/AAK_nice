@@ -1,7 +1,7 @@
 exports.up = (knex, Promise) => {
   return knex.schema.createTable('schedule', (table) => {
     table.increments()
-    // should type be datetime? would be easier to convert from 12hr to 24hr and vice versa
+
     table.varchar('time', 63)
       .notNullable()
       .defaultTo('')
