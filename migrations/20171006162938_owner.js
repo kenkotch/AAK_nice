@@ -31,6 +31,7 @@ exports.up = (knex, Promise) => {
       .inTable('template')
       .onDelete('CASCADE')
       .notNullable()
+      .defaultTo(1)
 
     table.timestamps(true, true)
   })
