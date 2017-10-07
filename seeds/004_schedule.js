@@ -11,7 +11,7 @@ exports.seed = (knex, Promise) => {
         owner_id: 1
       }])
         .then(() => {
-          return knex.raw("SELECT setval('user_id_seq',(SELECT MAX(id) FROM user));")
+          return knex.raw("SELECT setval('schedule_id_seq',(SELECT MAX(id) FROM schedule));")
         })
     })
 }
