@@ -5,6 +5,7 @@ exports.up = (knex, Promise) => {
     table.varchar('username', 63)
       .notNullable()
       .defaultTo('')
+      .unique()
 
     table.specificType('hashed_password', 'CHAR(60)')
       .notNullable()
