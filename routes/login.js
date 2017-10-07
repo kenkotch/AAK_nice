@@ -14,3 +14,5 @@ router.post('/', function (req, res, next) {
 router.get('/', function (req, res, next) {
   // code goes here
 })
+
+module.exports = router
