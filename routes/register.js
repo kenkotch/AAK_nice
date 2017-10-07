@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt')
 router.post('/', (req, res, next) => {
   // now these must all be required fields in the request body/form input
   const {
-    username,
     email,
     password,
     first_name_1,
@@ -15,10 +14,10 @@ router.post('/', (req, res, next) => {
     last_name_2
   } = req.body
 
+  console.log(email)
   bcrypt.hash(password, 5, (err, hash) => {
     knex('owner')
       .insert({
-        username,
         email,
         hashed_password: hash,
         first_name_1,
