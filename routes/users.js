@@ -4,10 +4,10 @@ const knex = require('../knex')
 
 // READ for User
 router.get('/', (req, res) => {
-  // when authenticated, user can see owner, joined to schedule rendered on page
+  let id = 1 // id will eventually come from cookie
   knex('owner')
     .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-    // .where('schedule.owner_id', 'owner.id')
+    .where('owner.id', id)
     .innerJoin('schedule', 'owner_id', 'owner.id')
     .innerJoin('template', 'template.id', 'owner.template_id')
     .then((data) => {
