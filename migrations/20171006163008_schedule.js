@@ -6,7 +6,7 @@ exports.up = (knex, Promise) => {
       .notNullable()
       .defaultTo('')
 
-    table.text('event')
+    table.text('item')
       .notNullable()
       .defaultTo('')
 
