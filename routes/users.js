@@ -6,8 +6,8 @@ const knex = require('../knex')
 router.get('/', (req, res) => {
   // when authenticated, user can see owner, joined to schedule rendered on page
   knex('owner')
-    .select(names, template_id)
-    
+    .select('names', 'template_id')
+    .innerJoin('schedule', 'owner_id')
 })
 
 
