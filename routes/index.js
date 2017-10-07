@@ -2,20 +2,19 @@ const express = require('express')
 const router = express.Router()
 const knex = require('../knex')
 
-// C
-router.post('/', (req, res, next) => {
-  const { item } = req.body
-  // code goes here
-})
-
-// L
-router.get('/', (req, res, next) => {
-  // code goes here
-})
+//GET all
+// router.get('/', (req, res, next) => {
+//   // code goes here
+// })
 
 // R
 router.get('/:id', (req, res, next) => {
   const id = Number(req.params.id)
+  // code goes here
+})
+//CREATE a
+router.post('/', (req, res, next) => {
+  const { item } = req.body
   // code goes here
 })
 
