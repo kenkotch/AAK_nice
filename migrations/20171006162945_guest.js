@@ -1,5 +1,5 @@
 exports.up = (knex, Promise) => {
-  return knex.schema.createTable('user', (table) => {
+  return knex.schema.createTable('guest', (table) => {
     table.increments()
 
     table.varchar('username', 63)
@@ -20,5 +20,5 @@ exports.up = (knex, Promise) => {
 }
 
 exports.down = (knex, Promise) => {
-  return knex.schema.dropTableIfExists('user')
+  return knex.schema.dropTableIfExists('guest')
 }

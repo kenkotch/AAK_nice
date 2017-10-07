@@ -13,7 +13,19 @@ exports.up = (knex, Promise) => {
       .notNullable()
       .defaultTo('')
 
-    table.varchar('names')
+    table.varchar('first_name_1')
+      .notNullable()
+      .defaultTo('')
+
+    table.varchar('last_name_1')
+      .notNullable()
+      .defaultTo('')
+
+    table.varchar('first_name_2')
+      .notNullable()
+      .defaultTo('')
+
+    table.varchar('last_name_2')
       .notNullable()
       .defaultTo('')
 

@@ -8,7 +8,10 @@ exports.seed = (knex, Promise) => {
         username: 'testing',
         hashed_password: "hashed_pass",
         email: 'test@gmail.com',
-        names: 'Adam and Lisa',
+        first_name_1: 'Adam',
+        last_name_1: 'Neef',
+        first_name_2: 'Lisa',
+        last_name_2: 'the Magnificent',
         template_id: 1
       }
 
