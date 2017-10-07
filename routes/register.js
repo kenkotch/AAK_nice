@@ -10,7 +10,7 @@ router.post('/', function (req, res, next) {
   bcrypt.hash(password, 5, function(err, hash) {
 
     knex('owner')
-      .insert({username: username, email: email, password: hash, first_name_1: first_name_1, last_name_1: last_name_1, first_name_2: first_name_2, last_name_2: last_name_2})
+      .insert({username: username, email: email, hashed_password: hash, first_name_1: first_name_1, last_name_1: last_name_1, first_name_2: first_name_2, last_name_2: last_name_2})
       .then(() =>{
         res.send(200)
       })
