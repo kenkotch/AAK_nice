@@ -5,7 +5,6 @@ exports.seed = (knex, Promise) => {
       // Inserts seed entries
       return knex('owner').insert([{
         id: 1,
-        username: 'testing',
         hashed_password: "hashed_pass",
         email: 'test@gmail.com',
         first_name_1: 'Adam',
