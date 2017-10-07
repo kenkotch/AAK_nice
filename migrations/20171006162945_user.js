@@ -1,7 +1,7 @@
 exports.up = (knex, Promise) => {
   return knex.schema.createTable('user', (table) => {
     table.increments()
-
+    // if we have a defaultTo here, does that mean a username can be an empty string?
     table.varchar('username', 63)
       .notNullable()
       .defaultTo('')

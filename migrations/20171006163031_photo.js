@@ -7,7 +7,7 @@ exports.up = (knex, Promise) => {
       .inTable('owner')
       .onDelete('CASCADE')
       .notNullable()
-
+      // base64 would mean there is a photo- so should we remove .notNullable and default to?
     table.text('base64')
       .notNullable()
       .defaultTo('')
