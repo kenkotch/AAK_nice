@@ -1,10 +1,11 @@
 exports.up = (knex, Promise) => {
-  return knex.schema.createTable('user', (table) => {
+  return knex.schema.createTable('guest', (table) => {
     table.increments()
 
     table.varchar('username', 63)
       .notNullable()
       .defaultTo('')
+      .unique()
 
     table.specificType('hashed_password', 'CHAR(60)')
       .notNullable()
@@ -20,5 +21,5 @@ exports.up = (knex, Promise) => {
 }
 
 exports.down = (knex, Promise) => {
-  return knex.schema.dropTableIfExists('user')
+  return knex.schema.dropTableIfExists('guest')
 }
