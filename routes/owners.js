@@ -4,8 +4,9 @@ const knex = require('../knex')
 
 // GET all lines of schedule
 router.get('/', (req, res, next) => {
-
-  knex('')
+  
+  // knex('owner')
+  //   .where('')
 
 })
 // CREATE a new schedule
