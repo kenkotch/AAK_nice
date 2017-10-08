@@ -14,14 +14,24 @@ router.get('/', (req, res) => {
       for (let i = 0; i < data.length; i++) {
         delete data[i].created_at
         delete data[i].updated_at
-        var fName1 = data[i].first_name_1
-        var fName2 = data[i].first_name_2
-        var wedDate = data[i].wedding_date
-        var template_name = data[i].template_name
-        // slice is not working so its printing WAY too much .slice(0, 11)
+        var fName1 = data[0].first_name_1
+        var fName2 = data[0].first_name_2
+        var wedDate = data[i].wedding_date.toString().slice(0, 16)
+        var scheduleTime = data[i].time
+        var scheduleItem = data[i].item
+        var scheduleDescripton = data[i].description
+
+        // console.log(wedDate)
       }
-      console.log(wedDate)
-      res.render('./users', { fName1, fName2, wedDate, _layoutFile: 'layout.ejs' })
+      res.render('./users', {
+        fName1,
+        fName2,
+        wedDate,
+        scheduleTime,
+        scheduleItem,
+        scheduleDescripton,
+        _layoutFile: 'layout.ejs'
+      })
     })
 })
 
