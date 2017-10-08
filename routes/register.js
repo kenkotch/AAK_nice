@@ -14,7 +14,12 @@ router.post('/', (req, res, next) => {
     last_name_2
   } = req.body
 
-  console.log(email)
+  if(!email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
+    res.status(400)
+    res.send('Please complete all fields')
+    return
+  }
+
   bcrypt.hash(password, 5, (err, hash) => {
     knex('owner')
       .insert({
@@ -26,11 +31,9 @@ router.post('/', (req, res, next) => {
         last_name_2
       })
       .then(() => {
-        res.send(200)
+        return res.sendStatus(200)
       })
-  })
-    .catch((err) => {
-      next(err)
+    .catch((err) => next(err))
     })
 })
 

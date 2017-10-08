@@ -23,7 +23,6 @@ router.post('/', function (req, res, next) {
       {httpOnly: true})
       res.sendStatus(200)
     })
-    .catch((err) => next(err))
 })
 
 router.get('/', (req, res, next) => {
@@ -33,6 +32,7 @@ router.get('/', (req, res, next) => {
     }
     res.send(true)
   })
+  .catch((err) => next(err))
 })
 
 router.delete('/', (req, res, next) => {
