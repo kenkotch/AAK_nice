@@ -41,7 +41,6 @@ router.post('/', (req, res, next) => {
 })
 
 router.get('/', (req, res, next) => {
-  console.log('get?')
   res.render('register')
 })
 
