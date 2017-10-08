@@ -11,6 +11,7 @@ exports.seed = (knex, Promise) => {
         last_name_1: 'Neef',
         first_name_2: 'Lisa',
         last_name_2: 'the Magnificent',
+        wedding_date: '2018-07-24',
         template_id: 1
       }, {
         id: 2,
@@ -20,6 +21,7 @@ exports.seed = (knex, Promise) => {
         last_name_1: 'Dumbface',
         first_name_2: 'Wanda',
         last_name_2: 'the less than Magnificent',
+        wedding_date: '2079-11-12',
         template_id: 1
       }, {
         id: 3,
@@ -29,6 +31,7 @@ exports.seed = (knex, Promise) => {
         last_name_1: 'McSwarmy',
         first_name_2: 'Betty',
         last_name_2: 'Clarkerton',
+        wedding_date: '1980-01-20',
         template_id: 1
       }
 

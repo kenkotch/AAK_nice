@@ -28,5 +28,8 @@
 
     // callback return
     "callback-return": ["error", ["callback", "cb", "next"]],
+
+    // allow ++ instead of +=
+    "eslint no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
   }
 }
