@@ -8,19 +8,26 @@ const secret = process.env.JWT_KEY
 router.post('/', function (req, res, next) {
   const { email, password } = req.body
 
-  knex('owners')
+  if(!email || !password){
+    res.status(400)
+    res.send('Bad email or password')
+    return
+  }
+
+  knex('owner')
     .where('email', email)
     .first()
     .then((data) => {
-      let match = bcrypt.compare(password, data.hashed_password,(err, res) => {
+      let match = bcrypt.compare(password, data.hashed_password)
         if(!match) {
-          return res.sendStatus(404)
+          res.sendStatus(404)
+          return
         }
-      })
-        const token = jwt.sign({userId: data.id}, secret)
+        const token = jwt.sign({ownerId: data.id}, secret)
 
         res.cookie('token', token,
       {httpOnly: true})
+      console.log(res.cookie)
       res.sendStatus(200)
     })
 })
