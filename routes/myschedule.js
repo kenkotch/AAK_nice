@@ -1,0 +1,91 @@
+const express = require('express')
+const router = express.Router()
+const knex = require('../knex')
+
+// C
+router.post('/', (req, res, next) => {
+  // if (err) {
+  //   res.render('error', { message: 'There seems to be a problem. Please try again.' })
+  //   return
+  // }
+
+  // if (!req.body.time || !req.body.time.trim()) {
+  //   res.status(500)
+  //   res.render('error', { message: 'Time cannot be blank' })
+  // } else if (!req.body.item || !req.body.item.trim()) {
+  //   res.status(500)
+  //   res.render('error', { message: 'Item cannot be blank' })
+  // } else {
+  knex('schedule')
+    .insert({
+      time: req.body.time,
+      item: req.body.item,
+      description: req.body.description,
+      owner_id: 1
+    }, '*')
+    .then(() => {
+      res.redirect('/myschedule')
+    })
+})
+// })
+
+// L info from db
+router.get('/', (req, res, next) => {
+  let id = 1 // id will eventually come from cookie
+
+  let fName1
+  let fName2
+  let wedDate
+
+  knex('owner')
+    .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
+    .where('owner.id', id)
+    .innerJoin('schedule', 'owner_id', 'owner.id')
+    .innerJoin('template', 'template.id', 'owner.template_id')
+    .then((data) => {
+      fName1 = data[0].first_name_1
+      fName2 = data[0].first_name_2
+      wedDate = data[0].wedding_date.toString().slice(0, 15)
+
+      for (let i = 0; i < data.length; i++) {
+        delete data[i].created_at
+        delete data[i].updated_at
+      }
+
+      res.render(
+        'myschedule',
+        {
+          title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+          data,
+          wedDate,
+          _layoutFile: 'layout.ejs'
+        }
+      )
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
+
+// R
+router.get('/:id', (req, res, next) => {
+  const id = Number(req.params.id)
+  // code goes here
+})
+
+// U
+router.patch('/:id', (req, res, next) => {
+  const id = Number(req.params.id)
+  const { item } = req.body
+  // code goes here
+})
+
+// D
+router.delete('/:id', (req, res, next) => {
+  const id = Number(req.params.id)
+  // code goes here
+})
+
+
+
+module.exports = router

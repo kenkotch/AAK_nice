@@ -1,0 +1,37 @@
+<p>Welcome to <%= title %></p>
+
+<h2><%= wedDate %></h2>
+
+<table>
+  <tr>
+    <th>time</th>
+    <th>event</th>
+    <th>description</th>
+  </tr>
+
+  <% for (let i = 0; i < data.length; i++) { %>
+    <tr>
+      <td><%= data[i].time %></td>
+      <td><%= data[i].item %></td>
+      <td><%= data[i].description %></td>
+    </tr>
+  <% } %>
+</table>
+
+<br><br>
+
+<form action="/myschedule" method="post">
+  <div>
+    <label for="time">Time</label>
+    <input type="text" name="time" id="time" placeholder="new time" required>
+
+    <label for="item">Item</label>
+    <input type="text" name="item" id="item" placeholder="new item" required>
+
+    <label for="description">Description</label>
+    <input type="text" name="description" id="description" placeholder="new description">
+  </div>
+
+  <button type="submit">add row</button>
+
+</form>
