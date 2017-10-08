@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
         delete data[i].updated_at
       }
 
-      res.render('users', { title: 'Welcome', data, _layoutFile: 'layout.ejs' })
+      res.render('users', { title: `Welcome to ${fName1} and ${fName2}'s wedding!`, data, _layoutFile: 'layout.ejs' })
     })
     .catch((err) => next(err))
 })
