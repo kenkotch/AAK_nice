@@ -3,3 +3,12 @@
 <h1>Welcome to <%= fName1 %> and <%= fName2 %>'s wedding!</h1>
 
 <p><%= scheduleTime %> | <%= scheduleItem %> | <%= scheduleDescripton %></p>
+
+
+<ul>
+  <% for(var i=0; i < scheduleTime.length; i++) { %>
+    <li><h4>
+      <%= scheduleTime[i] %> | <%= scheduleItem[i] %> | <%= scheduleDescripton[i] %>
+    </h4></li>
+  <% } %>
+</ul>

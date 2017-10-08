@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
         var scheduleItem = data[i].item
         var scheduleDescripton = data[i].description
 
-        // console.log(wedDate)
+        console.log(scheduleItem)
       }
       res.render('./users', {
         fName1,
