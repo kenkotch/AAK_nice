@@ -30,6 +30,7 @@ router.get('/', (req, res, next) => {
         {
           title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
           data,
+          wedDate,
           _layoutFile: 'layout.ejs'
         }
       )
