@@ -4,7 +4,7 @@ const knex = require('../knex')
 const bcrypt = require('bcrypt')
 
 router.post('/', (req, res, next) => {
-  // now these must all be required fields in the request body/form input
+  // now these must all be required fields in the request body/form input except wedding_date
   const {
     email,
     password,
@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
     wedding_date
   } = req.body
 
-  if(!email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2 || !wedding_date) {
+  if(!email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
     res.status(400)
     res.send('Please complete all fields')
     return
@@ -33,10 +33,15 @@ router.post('/', (req, res, next) => {
         wedding_date
       })
       .then(() => {
-        return res.sendStatus(200)
+        res.status(200)
+        res.redirect('/register')
       })
     .catch((err) => next(err))
     })
+})
+
+router.get('/', (req, res, next) => {
+  res.render('register')
 })
 
 module.exports = router
