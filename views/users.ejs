@@ -1,17 +1,17 @@
 <h1><%= title %></h1>
 
+<table>
+  <tr>
+    <th>time</th>
+    <th>event</th>
+    <th>description</th>
+  </tr>
 
-<ul>
-  <% for (let i; i < data.length; i++) { %>
-<li>
-    <%= data[i].time %>
-  </li>
+  <% for (let i = 0; i < data.length; i++) { %>
+    <tr>
+      <td><%= data[i].time %></td>
+      <td><%= data[i].item %></td>
+      <td><%= data[i].description %></td>
+    </tr>
   <% } %>
-</ul>
-
-
-
-
-
-
-  <h1><%= data[0].id %></h1>
+</table>
