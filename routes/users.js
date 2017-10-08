@@ -16,7 +16,9 @@ router.get('/', (req, res) => {
         delete data[i].updated_at
         var fName1 = data[0].first_name_1
         var fName2 = data[0].first_name_2
-        var wedDate = data[i].wedding_date.toString().slice(0, 16)
+        var wedDate = data[0].wedding_date.toString().slice(0, 15)
+
+        // need to loop through these in ejs to show all of schedule
         var scheduleTime = data[i].time
         var scheduleItem = data[i].item
         var scheduleDescripton = data[i].description
