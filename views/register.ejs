@@ -1,9 +1,11 @@
-<form id="newOwner">
+<div id="errorMessage"></div>
+
+<form id="newOwner" action="" method="post">
   <label for="email">Email:</label>
   <input type="text" id="email" name="email" placeholder="Enter your email" required>
   <br>
   <label for="password">Password:</label>
-  <input type="text" id="hashed_password" name="hashed_password" placeholder="Create a password" required>
+  <input type="text" id="password" name="password" placeholder="Create a password" required>
   <br>
   <label for="first_name_1">First First Name:</label>
   <input type="text" id="first_name_1" name="first_name_1" placeholder="Please enter the first name of the first person" required>
@@ -17,8 +19,8 @@
   <label for="last_name_2">Second Last Name:</label>
   <input type="text" id="last_name_2" name="last_name_2" placeholder="Please enter the last name of the second person" required>
   <br>
-  <label for="wedding_date">Tentative Wedding Date:</label>
-  <input type="text" id="wedding_date" name="wedding_date" placeholder="Please enter your tentative wedding date (this field is optional)">
+  <!-- <label for="wedding_date">Tentative Wedding Date:</label>
+  <input type="text" id="wedding_date" name="wedding_date" placeholder="Please enter your tentative wedding date (this field is optional)"> -->
 
   <button type="submit" id="registerOwner">Submit</button>
 </form>
