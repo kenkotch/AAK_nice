@@ -26,6 +26,8 @@ exports.up = (knex, Promise) => {
       .notNullable()
       .defaultTo('')
 
+    table.date('wedding_date')
+
     table.integer('template_id')
       .references('id')
       .inTable('template')
