@@ -33,9 +33,10 @@ router.get('/', (req, res, next) => {
           _layoutFile: 'layout.ejs'
         }
       )
-      console.log(data.length)
     })
-    .catch((err) => next(err))
+    .catch((err) => {
+      next(err)
+    })
 })
 
 module.exports = router
