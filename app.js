@@ -14,6 +14,7 @@ const register = require('./routes/register')
 const login = require('./routes/login')
 const owners = require('./routes/owners')
 const users = require('./routes/users')
+const myschedule = require('./routes/myschedule')
 
 const app = express()
 
@@ -34,6 +35,7 @@ app.use('/register', register)
 app.use('/login', login)
 app.use('/owners', owners)
 app.use('/users', users)
+app.use('/myschedule', myschedule)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
