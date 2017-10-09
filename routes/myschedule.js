@@ -36,6 +36,7 @@ router.get('/', (req, res, next) => {
   knex('owner')
     .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
     .where('owner.id', id)
+    .orderBy('time')
     .innerJoin('schedule', 'owner_id', 'owner.id')
     .innerJoin('template', 'template.id', 'owner.template_id')
     .then((data) => {
