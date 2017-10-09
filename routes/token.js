@@ -24,7 +24,7 @@ router.post('/', function (req, res, next) {
           res.sendStatus(404)
           return
         }
-        const token = jwt.sign({ownerId: data.id}, secret)
+        const token = jwt.sign({ownerId: data.id, templateId: data.template_id}, secret)
 
         res.cookie('token', token,
       {httpOnly: true})
