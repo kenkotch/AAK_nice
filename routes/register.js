@@ -38,7 +38,6 @@ router.post('/', (req, res, next) => {
         wedding_date
       })
       .then((registered) => {
-        console.log(registered)
         res.status(200)
         res.render('register', { registered, _layoutFile: 'register.ejs' })
       })

@@ -43,7 +43,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.delete('/', (req, res, next) => {
-  res.clearCooke('token')
+  res.clearCookie('token')
   res.sendStatus(200)
 })
 
