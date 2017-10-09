@@ -2,11 +2,13 @@
 
 <h2><%= wedDate %></h2>
 
+<!-- schedule -->
 <table>
   <tr>
     <th>time</th>
     <th>event</th>
     <th>description</th>
+    <th>buttons</th>
   </tr>
 
   <% for (let i = 0; i < data.length; i++) { %>
@@ -14,24 +16,27 @@
       <td><%= data[i].time %></td>
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
+      <td><button type="button" name="button">edit</button>
+      <button type="button" name="button">delete</button></td>
     </tr>
   <% } %>
 </table>
 
 <br><br>
 
+<!-- insert/edit/delete -->
 <form action="/myschedule" method="post">
   <div>
     <label for="time">Time</label>
     <input type="time" name="time" id="time" placeholder="new time" required>
 
-    <label for="item">Item</label>
-    <input type="text" name="item" id="item" placeholder="new item" required>
+    <label for="item">Event</label>
+    <input type="text" name="item" id="item" placeholder="new event" required>
 
     <label for="description">Description</label>
     <input type="text" name="description" id="description" placeholder="new description">
-  </div>
 
-  <button type="submit">add row</button>
+  <button type="submit">add event</button>
+</div>
 
 </form>
