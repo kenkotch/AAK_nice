@@ -39,7 +39,6 @@ router.post('/', (req, res, next) => {
         registered = data
         res.status(200)
         res.send(registered[0])
-        // res.render('register', { registered, _layoutFile: 'layout.ejs' })
       })
     .catch((err) => next(err))
     })
