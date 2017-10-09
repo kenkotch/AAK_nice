@@ -3,6 +3,10 @@ const router = express.Router()
 const knex = require('../knex')
 const bcrypt = require('bcrypt')
 
+router.get('/', (req, res, next) => {
+  res.render('register')
+})
+
 router.post('/', (req, res, next) => {
   // now these must all be required fields in the request body/form input except wedding_date
   const {
@@ -23,6 +27,7 @@ router.post('/', (req, res, next) => {
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('owner')
+    .returning(['first_name_1', 'first_name_2'])
       .insert({
         email,
         hashed_password: hash,
@@ -32,16 +37,13 @@ router.post('/', (req, res, next) => {
         last_name_2,
         wedding_date
       })
-      .then(() => {
+      .then((registered) => {
+        console.log(registered)
         res.status(200)
-        res.redirect('/register')
+        res.render('register', { registered, _layoutFile: 'register.ejs' })
       })
     .catch((err) => next(err))
     })
-})
-
-router.get('/', (req, res, next) => {
-  res.render('register')
 })
 
 module.exports = router
