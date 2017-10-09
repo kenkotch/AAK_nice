@@ -33,6 +33,16 @@ exports.seed = (knex, Promise) => {
         last_name_2: 'Clarkerton',
         wedding_date: '1980-01-20',
         template_id: 1
+      }, {
+        id: 4,
+        hashed_password: "password",
+        email: "john",
+        first_name_1: "john",
+        last_name_1: "butt",
+        first_name_2: "carla",
+        last_name_2: "face",
+        wedding_date: "2040-01-01",
+        template_id: 2
       }
 
       ])
