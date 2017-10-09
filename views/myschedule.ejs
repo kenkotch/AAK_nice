@@ -3,7 +3,7 @@
 <h2><%= wedDate %></h2>
 
 <!-- schedule -->
-<table>
+<table id="schedule">
   <tr>
     <th>time</th>
     <th>event</th>
@@ -16,15 +16,15 @@
       <td><%= data[i].time %></td>
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
-      <td><button type="button" name="button">edit</button>
-      <button type="button" name="button">delete</button></td>
+      <td><button type="button" name="button" id=e<%= data[i].id %>>edit</button>
+      <button type="button" name="button" id=d<%= data[i].id %>>delete</button></td>
     </tr>
   <% } %>
 </table>
 
 <br><br>
 
-<!-- insert/edit/delete -->
+<!-- insert -->
 <form action="/myschedule" method="post">
   <div>
     <label for="time">Time</label>
