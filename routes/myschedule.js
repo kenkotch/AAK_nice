@@ -1,35 +1,31 @@
 const express = require('express')
+const boom = require('boom')
 const router = express.Router()
 const knex = require('../knex')
 
 // C
 router.post('/', (req, res, next) => {
-  // if (err) {
-  //   res.render('error', { message: 'There seems to be a problem. Please try again.' })
-  //   return
-  // }
-
-  // if (!req.body.time || !req.body.time.trim()) {
-  //   res.status(500)
-  //   res.render('error', { message: 'Time cannot be blank' })
-  // } else if (!req.body.item || !req.body.item.trim()) {
-  //   res.status(500)
-  //   res.render('error', { message: 'Item cannot be blank' })
-  // } else {
-  knex('schedule')
-    .insert({
-      time: req.body.time,
-      item: req.body.item,
-      description: req.body.description,
-      owner_id: 1
-    }, '*')
-    .then(() => {
-      res.redirect('/myschedule')
-    })
+  if (!req.body.time || !req.body.time.trim()) {
+    res.status(500)
+    res.render('error', { message: 'Time cannot be blank' })
+  } else if (!req.body.item || !req.body.item.trim()) {
+    res.status(500)
+    res.render('error', { message: 'Item cannot be blank' })
+  } else {
+    knex('schedule')
+      .insert({
+        time: req.body.time,
+        item: req.body.item,
+        description: req.body.description,
+        owner_id: 1
+      }, '*')
+      .then(() => {
+        res.redirect('/myschedule')
+      })
+  }
 })
-// })
 
-// L info from db
+// R info from db
 router.get('/', (req, res, next) => {
   let id = 1 // id will eventually come from cookie
 
@@ -67,12 +63,6 @@ router.get('/', (req, res, next) => {
     })
 })
 
-// R
-router.get('/:id', (req, res, next) => {
-  const id = Number(req.params.id)
-  // code goes here
-})
-
 // U
 router.patch('/:id', (req, res, next) => {
   const id = Number(req.params.id)
@@ -83,9 +73,30 @@ router.patch('/:id', (req, res, next) => {
 // D
 router.delete('/:id', (req, res, next) => {
   const id = Number(req.params.id)
-  // code goes here
+  console.log(id)
+
+  if (Number.isNaN(id)) {
+    return next()
+  }
+
+  let event
+
+  knex('schedule')
+    .where('id', id)
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found')
+      }
+      event = row
+
+      return knex('schedule')
+        .del()
+        .where('id', id)
+    })
+    .then(() => {
+      delete event.id
+      res.send(event)
+    })
 })
-
-
 
 module.exports = router
