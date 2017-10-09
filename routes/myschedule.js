@@ -66,14 +66,48 @@ router.get('/', (req, res, next) => {
 // U
 router.patch('/:id', (req, res, next) => {
   const id = Number(req.params.id)
-  const { item } = req.body
-  // code goes here
+
+  if (Number.isNaN(id)) {
+    return next()
+  }
+
+  knex('schedule')
+    .where('id', id)
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found')
+      }
+
+      const { time, item, description } = req.body
+      const updateRow = {}
+
+      if (time) {
+        updateRow.time = time
+      }
+
+      if (item) {
+        updateRow.item = item
+      }
+
+      if (description) {
+        updateRow.description = description
+      }
+
+      return knex('schedule')
+        .update(updateRow, '*')
+        .where('id', id)
+    })
+    .then((rows) => {
+      res.send(rows[0])
+    })
+    .catch((err) => {
+      next(err)
+    })
 })
 
 // D
 router.delete('/:id', (req, res, next) => {
   const id = Number(req.params.id)
-  console.log(id)
 
   if (Number.isNaN(id)) {
     return next()
@@ -95,7 +129,7 @@ router.delete('/:id', (req, res, next) => {
     })
     .then(() => {
       delete event.id
-      res.send(event)
+      res.end()
     })
 })
 
