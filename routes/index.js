@@ -4,7 +4,7 @@ const knex = require('../knex')
 
 // index
 router.get('/', (req, res) => {
-  res.render('/index', { title: 'Couple' })
+  res.render('index', { title: 'Couple', _layoutFile: 'layout.ejs' })
 })
 
 

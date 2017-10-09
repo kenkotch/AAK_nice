@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const engine = require('ejs-mate')
 
+//Adam N. add 10/9/17 - trying to get our app to route to a homepage, then we can navigate from there
+const index = require('./routes/index')
 const register = require('./routes/register')
 const login = require('./routes/login')
 const owners = require('./routes/owners')
@@ -19,7 +21,7 @@ const myschedule = require('./routes/myschedule')
 const app = express()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+// app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.engine('ejs', engine)
 
@@ -31,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use('/', index)
 app.use('/register', register)
 app.use('/login', login)
 app.use('/owners', owners)

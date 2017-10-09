@@ -4,7 +4,7 @@ const knex = require('../knex')
 const bcrypt = require('bcrypt')
 
 router.get('/', (req, res, next) => {
-  res.render('register')
+  res.render('register', {_layoutFile: 'layout.ejs'})
 })
 
 router.post('/', (req, res, next) => {
@@ -39,7 +39,7 @@ router.post('/', (req, res, next) => {
       })
       .then((registered) => {
         res.status(200)
-        res.render('register', { registered, _layoutFile: 'register.ejs' })
+        res.render('register', { registered, _layoutFile: 'layout.ejs' })
       })
     .catch((err) => next(err))
     })
