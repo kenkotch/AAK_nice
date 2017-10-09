@@ -7,7 +7,7 @@
     <th>time</th>
     <th>event</th>
     <th>description</th>
-    <th></th>
+    <th>buttons</th>
   </tr>
 
   <% for (let i = 0; i < data.length; i++) { %>
@@ -15,8 +15,8 @@
       <td><%= data[i].time %></td>
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
-      <td><button type="button" name="button">edit</button></td>
-      <td><button type="button" name="button">delete</button></td>
+      <td><button type="button" name="button">edit</button>
+      <button type="button" name="button">delete</button></td>
     </tr>
   <% } %>
 </table>
