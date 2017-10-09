@@ -6,7 +6,7 @@ exports.seed = (knex, Promise) => {
       return knex('guest').insert([{
         id: 1,
         username: 'test_user1',
-        hashed_password: 'test_user1',
+        password: 'test_user1',
         owner_id: 1
       }])
         .then(() => {
