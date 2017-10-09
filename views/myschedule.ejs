@@ -13,11 +13,11 @@
 
   <% for (let i = 0; i < data.length; i++) { %>
     <tr>
-      <td><%= data[i].time %></td>
+      <td data-id=""><%= data[i].time %></td>
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
-      <td><button type="button" name="button" id=e<%= data[i].id %>>edit</button>
-      <button type="button" name="button" id=d<%= data[i].id %>>delete</button></td>
+      <td><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button>
+      <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button></td>
     </tr>
   <% } %>
 </table>
