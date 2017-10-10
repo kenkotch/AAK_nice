@@ -14,10 +14,10 @@ router.post('/', (req, res, next) => {
     let id = payload.ownerId
     console.log(id)
 
-    if (!req.body.time || req.body.time.trim()) {
+    if (!req.body.time || !req.body.time.trim()) {
       res.status(500)
       res.render('error', { message: 'Time cannot be blank' })
-    } else if (!req.body.item || req.body.item.trim()) {
+    } else if (!req.body.item || !req.body.item.trim()) {
       res.status(500)
       res.render('error', { message: 'Item cannot be blank' })
     } else {
@@ -88,19 +88,19 @@ router.get('/:id/edit', (req, res) => {
 
   if (typeof id !== 'undefined') {
     knex('schedule')
-    .select()
-    .where('id', id)
-    .first()
-    .then((data) => {
-      res.render('edit', {
-        title: `something is working at id ${id}`,
-        id: id,
-        time: data.time,
-        item: data.item,
-        description: data.description,
-        _layoutFile: 'layout.ejs'
+      .select()
+      .where('id', id)
+      .first()
+      .then((data) => {
+        res.render('edit', {
+          title: `something is working at id ${id}`,
+          id,
+          time: data.time,
+          item: data.item,
+          description: data.description,
+          _layoutFile: 'layout.ejs'
+        })
       })
-    })
   } else {
     res.status(500)
     res.render('error', { message: 'something went wrong' })
