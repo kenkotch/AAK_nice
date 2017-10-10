@@ -28,6 +28,11 @@ exports.up = (knex, Promise) => {
 
     table.date('wedding_date')
 
+    table.varchar('owner_id')
+      .references('id')
+      .inTable('owner')
+      .unique()
+
     table.integer('template_id')
       .references('id')
       .inTable('template')

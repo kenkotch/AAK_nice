@@ -4,11 +4,10 @@ const knex = require('../knex')
 const jwt = require('jsonwebtoken')
 
 let guest_profile
-// GET a list of all TODOS
+// RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
 
-// SELECT id, item FROM owner ORDER BY id
 router.get('/', (req, res, next) => {
-  res.render('profile', { guest_profile, _layoutFile: 'layout.ejs'})
+  res.render('profile', { guest_profile, _layoutFile: 'layout.ejs' })
 })
 //
 // router.get('/:id', function (req, res, next) {
@@ -16,6 +15,8 @@ router.get('/', (req, res, next) => {
 //   // code goes here
 // })
 
+
+// HANDLES CREATION OF GUEST USERNAME AND PASSWORD - ADAM M.
 router.post('/', (req, res, next) => {
   // const { item } = req.body
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
