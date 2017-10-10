@@ -22,6 +22,9 @@ router.post('/', (req, res, next) => {
     res.send('Please complete all fields')
     return
   }
+  if(!wedding_date) {
+    
+  }
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('owner')
