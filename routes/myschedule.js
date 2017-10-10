@@ -34,7 +34,10 @@ router.get('/', (req, res, next) => {
   if(err){
     return res.send(false)
   }
-  let id = payload.templateId // id will eventually come from cookie
+  let id = payload.ownerId // id will eventually come from cookie
+  /*Adam N. - needs error handling in case ownerId has no templates.
+  Can't logic through tonite, too tired.
+  */
 
   let fName1
   let fName2

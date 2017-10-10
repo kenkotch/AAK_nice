@@ -7,7 +7,6 @@ const secret = process.env.JWT_KEY
 
 router.post('/', function (req, res, next) {
   const { email, password } = req.body
-  console.log(email)
 
   if(!email || !password){
     res.status(400)
@@ -24,11 +23,10 @@ router.post('/', function (req, res, next) {
           res.sendStatus(404)
           return
         }
-        const token = jwt.sign({ownerId: data.id, templateId: data.template_id}, secret)
+        const token = jwt.sign({ownerId: data.id}, secret)
 
         res.cookie('token', token,
       {httpOnly: true})
-      console.log(res.cookie.token)
       res.status(200)
       delete data.hashed_password
       res.send(data)
