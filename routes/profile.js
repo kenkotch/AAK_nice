@@ -21,8 +21,10 @@ router.post('/', (req, res, next) => {
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
       return res.send(false)
+      console.log(false)
     }
     let id = payload.ownerId
+    console.log(id)
 
     if (!req.body.username || req.body.username.trim() === '') {
       res.status(500)
@@ -44,7 +46,8 @@ router.post('/', (req, res, next) => {
         .then((data) => {
           guest_profile = data
           res.status(200)
-          res.send(guest_profile[0])
+          // res.send(guest_profile[0])
+          res.redirect('/profile')
         })
     }
   })

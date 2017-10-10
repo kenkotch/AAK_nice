@@ -7,7 +7,6 @@ exports.up = (knex, Promise) => {
       .defaultTo('')
       .unique()
 
-
     table.specificType('password', 'CHAR(60)')
       .notNullable()
 
