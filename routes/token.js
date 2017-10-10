@@ -8,7 +8,13 @@ const secret = process.env.JWT_KEY
 router.post('/', function (req, res, next) {
   const { email, password } = req.body
 
-  if(!email || !password){
+  if(!email || email.trim() === ('')){
+    res.status(400)
+    res.send('Bad email or password')
+    return
+  }
+
+  if(!password || password.trim() === ('')){
     res.status(400)
     res.send('Bad email or password')
     return
@@ -18,7 +24,7 @@ router.post('/', function (req, res, next) {
     .where('email', email)
     .first()
     .then((data) => {
-      let match = bcrypt.compare(password, data.hashed_password)
+      let match = bcrypt.compareSync(password, data.hashed_password)
         if(!match) {
           res.sendStatus(404)
           return
