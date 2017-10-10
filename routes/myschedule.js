@@ -66,9 +66,9 @@ router.get('/', (req, res, next) => {
 // R to go to edit page
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
-  
+
   if (typeof id !== 'undefined') {
-    knex('owner')
+    knex('schedule')
     .select()
     .where('id', id)
     .first()

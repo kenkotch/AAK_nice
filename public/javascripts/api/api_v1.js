@@ -24,14 +24,18 @@ $(document).ready(() => {
         })
     })
 
-    // if it's the update form populated the fields
-    $.getJSON(`/myschedule/${id}`).then((data) => {
-      console.log("fetched a student", id, data);
-      if (document.location.href.match(/students\/\d+$/)) {
-        updateShow(data)
-      } else if (document.location.href.match(/students\/\d+\/edit$/)) {
-        updateEditForm(data)
-      }
+    // UPDATE
+    $("#schedule .edit").click((e) => {
+      e.preventDefault()
+      console.log(`delete ${e.target.id}`)
+      $.ajax({
+        url: `/myschedule/${e.target.id}/edit`,
+        method: "PATCH",
+        success: getAndRenderSchedule()
+      })
+        // .then((data) => {
+        //   $(e.target).closest('tr').hide()
+        // })
     })
 
     function updateShow(data) {
@@ -45,28 +49,5 @@ $(document).ready(() => {
       $('#newStudent #mantra').attr("value", data.mantra)
     }
 
-
-
-
-    // EDIT
-    $('#schedule .edit').click((e) => {
-      e.preventDefault()
-      console.log((`edit ${e.target.id}`))
-
-      // $.ajax({
-      //   url: `/myschedule/${e.target.id}`,
-      //   method: 'PATCH',
-      //   // data: {
-      //   //   time: updatedTime,
-      //   //   item: updatedItem,
-      //   //   description: updatedDescription
-      //   // },
-      //   contentType: 'application/json',
-      //   success: getAndRenderSchedule
-      // })
-
-
-
-    })
-  }
+    }
 })
