@@ -75,9 +75,11 @@ router.get('/:id/edit', (req, res) => {
     .then((data) => {
       res.render('edit', {
         title: `something is working at id ${id}`,
+        id: id,
         time: data.time,
         item: data.item,
-        description: data.description
+        description: data.description,
+        _layoutFile: 'layout.ejs'
       })
     })
   } else {
@@ -89,6 +91,7 @@ router.get('/:id/edit', (req, res) => {
 // U
 router.patch('/:id', (req, res, next) => {
   const id = Number(req.params.id)
+  console.log(id)
 
   if (Number.isNaN(id)) {
     return next()
@@ -116,12 +119,12 @@ router.patch('/:id', (req, res, next) => {
         updateRow.description = description
       }
 
-      return knex('schedule')
+      knex('schedule')
         .update(updateRow, '*')
         .where('id', id)
-    })
-    .then((row) => {
-      res.send(row[0])
+        .then((row) => {
+          res.send(row[0])
+        })
     })
     .catch((err) => {
       next(err)
