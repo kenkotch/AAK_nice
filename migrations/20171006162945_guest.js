@@ -15,6 +15,7 @@ exports.up = (knex, Promise) => {
       .inTable('owner')
       .onDelete('CASCADE')
       .notNullable()
+      .unique()
 
     table.timestamps(true, true)
   })
