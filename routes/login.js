@@ -1,9 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const knex = require('../knex')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const secret = process.env.JWT_KEY
 
 router.get('/', (req, res, next) => {
   res.render('login', {
@@ -11,6 +7,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
+<<<<<<< HEAD
 router.post('/', function(req, res, next) {
   const {
     email,
@@ -64,4 +61,6 @@ router.delete('/', (req, res, next) => {
   res.sendStatus(200)
 })
 
+=======
+>>>>>>> 9c75b4248b564505bbeb2ab3f63227684e889a09
 module.exports = router

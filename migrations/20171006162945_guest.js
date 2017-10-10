@@ -7,7 +7,8 @@ exports.up = (knex, Promise) => {
       .defaultTo('')
       .unique()
 
-    table.varchar('password', 63)
+
+    table.specificType('password', 'CHAR(60)')
       .notNullable()
 
     table.integer('owner_id')
