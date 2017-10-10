@@ -7,7 +7,6 @@ router.get('/', (req, res, next) => {
   })
 })
 
-<<<<<<< HEAD
 router.post('/', function(req, res, next) {
   const {
     email,
@@ -61,6 +60,4 @@ router.delete('/', (req, res, next) => {
   res.sendStatus(200)
 })
 
-=======
->>>>>>> 9c75b4248b564505bbeb2ab3f63227684e889a09
 module.exports = router

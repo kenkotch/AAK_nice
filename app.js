@@ -17,6 +17,7 @@ const login = require('./routes/login')
 const token = require('./routes/token')
 const users = require('./routes/users')
 const myschedule = require('./routes/myschedule')
+const profile = require('./routes/profile')
 
 const app = express()
 
@@ -38,6 +39,7 @@ app.use('/login', login)
 app.use('/token', token)
 app.use('/users', users)
 app.use('/myschedule', myschedule)
+app.use('/profile', profile)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

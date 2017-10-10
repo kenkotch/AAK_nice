@@ -15,7 +15,7 @@ const jwt = require('jsonwebtoken')
 //   // code goes here
 // })
 
-router.post('/', (req, res, next) => {
+router.post('/profile', (req, res, next) => {
   // const { item } = req.body
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
@@ -57,3 +57,5 @@ router.post('/', (req, res, next) => {
 //   const id = Number(req.params.id)
 //   // code goes here
 // })
+
+module.exports = router
