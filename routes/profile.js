@@ -24,12 +24,12 @@ router.post('/', (req, res, next) => {
     }
     let id = payload.ownerId
 
-    if (!req.body.username || !req.body.username.trim()) {
+    if (!req.body.username || req.body.username.trim() === '') {
       res.status(500)
       res.render('error', {
         message: 'Username cannot be blank'
       })
-    } else if (!req.body.password || !req.body.password.trim()) {
+    } else if (!req.body.password || req.body.password.trim() === '') {
       res.status(500)
       res.render('error', {
         message: 'Password cannot be blank'

@@ -31,47 +31,71 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next) => {
 
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
-  if(err){
-    return res.send(false)
-  }
-  let id = payload.ownerId // id will eventually come from cookie
-  /*Adam N. - needs error handling in case ownerId has no templates.
-  Can't logic through tonite, too tired.
-  */
+    if (err) {
+      return res.send(false)
+    }
+    let id = payload.ownerId // id will eventually come from cookie
+    /*Adam N. - needs error handling in case ownerId has no templates.
+    Can't logic through tonite, too tired. */
 
-  let fName1
-  let fName2
-  let wedDate
-  knex('owner')
-    .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
-    .where('owner.id', id)
-    .orderBy('time')
-    .innerJoin('schedule', 'owner_id', 'owner.id')
-    .innerJoin('template', 'template.id', 'owner.template_id')
-    .then((data) => {
-      fName1 = data[0].first_name_1
-      fName2 = data[0].first_name_2
-      wedDate = data[0].wedding_date.toString().slice(0, 15)
+    let fName1
+    let fName2
+    let wedDate
+    knex('owner')
+      .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
+      .where('owner.id', id)
+      .orderBy('time')
+      .innerJoin('schedule', 'owner_id', 'owner.id')
+      .innerJoin('template', 'template.id', 'owner.template_id')
+      .then((data) => {
+        fName1 = data[0].first_name_1
+        fName2 = data[0].first_name_2
+        wedDate = data[0].wedding_date.toString().slice(0, 15)
 
-      for (let i = 0; i < data.length; i++) {
-        delete data[i].created_at
-        delete data[i].updated_at
-      }
-
-      res.render(
-        'myschedule',
-        {
-          title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-          data,
-          wedDate,
-          _layoutFile: 'layout.ejs'
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].created_at
+          delete data[i].updated_at
         }
-      )
-    })
-    .catch((err) => {
-      next(err)
-    })
+
+        res.render(
+          'myschedule',
+          {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            data,
+            wedDate,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+      })
+      .catch((err) => {
+        next(err)
+      })
   })
+})
+
+// R to go to edit page
+router.get('/:id/edit', (req, res) => {
+  const id = req.params.id
+
+  if (typeof id !== 'undefined') {
+    knex('schedule')
+    .select()
+    .where('id', id)
+    .first()
+    .then((data) => {
+      res.render('edit', {
+        title: `something is working at id ${id}`,
+        id: id,
+        time: data.time,
+        item: data.item,
+        description: data.description,
+        _layoutFile: 'layout.ejs'
+      })
+    })
+  } else {
+    res.status(500)
+    res.render('error', { message: 'something went wrong' })
+  }
 })
 
 // U
@@ -84,8 +108,8 @@ router.patch('/:id', (req, res, next) => {
 
   knex('schedule')
     .where('id', id)
-    .then((row) => {
-      if (!row) {
+    .then((rows) => {
+      if (!rows) {
         throw boom.create(404, 'Not Found')
       }
 
@@ -104,12 +128,12 @@ router.patch('/:id', (req, res, next) => {
         updateRow.description = description
       }
 
-      return knex('schedule')
+      knex('schedule')
         .update(updateRow, '*')
         .where('id', id)
-    })
-    .then((rows) => {
-      res.send(rows[0])
+        .then((row) => {
+          res.send(row[0])
+        })
     })
     .catch((err) => {
       next(err)

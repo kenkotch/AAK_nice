@@ -37,7 +37,7 @@ app.use('/', index)
 app.use('/register', register)
 app.use('/login', login)
 app.use('/token', token)
-app.use('/users', users)
+app.use('/schedule', users)
 app.use('/myschedule', myschedule)
 app.use('/profile', profile)
 

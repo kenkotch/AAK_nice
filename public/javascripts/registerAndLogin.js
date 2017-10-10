@@ -39,4 +39,15 @@ $(document).ready(() => {
     })
   }
 
+  $('#logout').click(() => {
+    console.log('clicked on logout')
+
+    $.ajax({
+      method: 'DELETE',
+      url: '/token',
+      success: 'success'
+    }).then(() =>{
+      document.location = '/'
+    })
+  })
 })

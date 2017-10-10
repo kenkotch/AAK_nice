@@ -5,7 +5,7 @@ exports.seed = (knex, Promise) => {
       // Inserts seed entries
       return knex('schedule').insert([{
         id: 1,
-        time: "9:30",
+        time: "09:30",
         item: "test_event",
         description: "this event is a test",
         owner_id: 1
@@ -23,7 +23,7 @@ exports.seed = (knex, Promise) => {
         owner_id: 1
       }, {
         id: 4,
-        time: "8:27",
+        time: "08:27",
         item: "breakfast event",
         description: "why are we awake?",
         owner_id: 2

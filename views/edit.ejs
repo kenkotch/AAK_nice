@@ -1,0 +1,19 @@
+<%= title %>
+<h3>edit.ejs file</h3>
+
+<!-- edit form -->
+<form id="editForm" action="/myschedule">
+
+  <input type="hidden" name="id" value="<%= id %>">
+
+  <label for="time">Time</label>
+  <input value="<%= time %>" type="time" name="time" id="time" placeholder="new time" required>
+
+  <label for="item">Event</label>
+  <input value="<%= item %>" type="text" name="item" id="item" placeholder="new event" required>
+
+  <label for="description">Description</label>
+  <input value="<%= description %>" type="text" name="description" id="description" placeholder="new description">
+
+  <button id="editBtn" type="submit">edit event</button>
+</form>
