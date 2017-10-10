@@ -14,7 +14,10 @@ const engine = require('ejs-mate')
 const index = require('./routes/index')
 const register = require('./routes/register')
 const login = require('./routes/login')
+<<<<<<< HEAD
 // const owners = require('./routes/owners')
+=======
+>>>>>>> 4df3babc99fe304038937a5d8b5ee3110fde02c6
 const users = require('./routes/users')
 const myschedule = require('./routes/myschedule')
 
@@ -35,7 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', index)
 app.use('/register', register)
 app.use('/login', login)
+<<<<<<< HEAD
 // app.use('/owners', owners)
+=======
+>>>>>>> 4df3babc99fe304038937a5d8b5ee3110fde02c6
 app.use('/users', users)
 app.use('/myschedule', myschedule)
 

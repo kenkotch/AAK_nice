@@ -2,35 +2,88 @@ const express = require('express')
 const router = express.Router()
 const knex = require('../knex')
 
-// GET all lines of schedule
+// GET a list of all TODOS
+
+// SELECT id, item FROM owner ORDER BY id
 router.get('/', (req, res, next) => {
-
-  // knex('owner')
-  //   .where('')
-
+  knex('owner')
+    .select('id', 'item')
+    .orderBy('id')
+    .then((items) => {
+      res.setHeader('Content-Type', 'application/json')
+      res.send(JSON.stringify(items))
+    })
+    .catch((err) => next(err))
 })
-// CREATE a new schedule
+
+// GET a single to do
+// SELECT id, item FROM owner WHERE id = ? ORDER BY id
+router.get('/:id', (req, res, next) => {
+  const id = req.params.id
+
+  knex('owner')
+    .select('id', 'item')
+    .orderBy('id')
+    .where('id', id)
+    .then((items) => {
+      if (items.length < 1) {
+        return res.sendStatus(404)
+      }
+
+      res.setHeader('Content-Type', 'application/json')
+      res.send(JSON.stringify(items[0]))
+    })
+    .catch((err) => next(err))
+})
+
+// POST a new item to do
+// INSERT INTO owner(item) VALUES(?)
 router.post('/', (req, res, next) => {
   const { item } = req.body
-  // code goes here
+
+  knex('owner')
+    .insert({item: item}, 'id')
+    .then((id) => {
+      res.sendStatus(200)
+    })
+    .catch((err) => next(err))
 })
 
-// UPDATE an existing schedule, line by line
+// PATCH and existing to do
+// UPDATE owner SET item = ? WHERE id = ?
 router.patch('/:id', (req, res, next) => {
-  const id = Number(req.params.id)
   const { item } = req.body
-  // code goes here
+  const id = req.params.id
+
+  knex('owner')
+    .update({item: item})
+    .where('id', id)
+    .then((rowsAffected) => {
+      if (rowsAffected !== 1) {
+        return res.sendStatus(404)
+      }
+
+      res.sendStatus(200)
+    })
+    .catch((err) => next(err))
 })
 
-// Future Expansion: UPDATE an existing schedule, all of it
-
-// DELETE an existing schedule, line by line
+// DELETE something that you have done with satisfaction
+// DELETE FROM owner WHERE id = ?
 router.delete('/:id', (req, res, next) => {
-  const id = Number(req.params.id)
-  // code goes here
+  const id = req.params.id
+
+  knex('owner')
+    .del()
+    .where('id', id)
+    .then((rowsAffected) => {
+      if (rowsAffected !== 1) {
+        return res.sendStatus(404)
+      }
+
+      res.sendStatus(200)
+    })
+    .catch((err) => next(err))
 })
-
-// Future Expansion: DELETE an entire schedule
-
 
 module.exports = router
