@@ -49,6 +49,7 @@ router.post('/', (req, res, next) => {
           // res.send(guest_profile[0])
           res.redirect('/profile')
         })
+        .catch((err) => next(err))
     }
   })
 })
