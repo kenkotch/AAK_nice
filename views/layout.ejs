@@ -8,9 +8,16 @@
     <title>nicePaper!</title>
 
     <link href="/stylesheets/style.css" rel="stylesheet">
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+      <script src="/javascripts/registerAndLogin.js"></script>
+      <script src="/javascripts/api/api_v1.js" charset="utf-8"></script>
   </head>
 
   <body>
+    <div id="errorMessage"></div>
 <!-- add nav here -->
 <!-- Adam N, 10/9/17, 08:04 - adding very basic nav -->
 <div>
@@ -20,6 +27,7 @@
     <li><a href="/login">Login</a></li>
     <li><a href="/myschedule">My Schedule</a></li>
     <li><a href="/users">Users</a></li>
+    <li><a id="logout" href="">Logout</a></li>
   </ul>
 </div>
 
@@ -32,10 +40,5 @@
 
     </div><!-- /.container -->
 
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous"></script>
-      <script src="/javascripts/api/api_v1.js" charset="utf-8"></script>
   </body>
 </html>

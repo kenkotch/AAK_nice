@@ -1,7 +1,5 @@
 <h1>Register with Nice Paper</h1>
 
-<div id="errorMessage"></div>
-
 <% if(typeof registered == 'object' && registered) { %>
 <div id="renderOwner">Congratulations, <%= registered[0].first_name_1 %> and <%= registered[0].first_name_2 %>, you're registered!</div>
 <% } %>
@@ -25,8 +23,8 @@
   <label for="last_name_2">Second Last Name:</label>
   <input type="text" id="last_name_2" name="last_name_2" placeholder="Please enter the last name of the second person" required>
   <br>
-  <!-- <label for="wedding_date">Tentative Wedding Date:</label>
-  <input type="text" id="wedding_date" name="wedding_date" placeholder="Please enter your tentative wedding date (this field is optional)"> -->
+  <label for="wedding_date">Tentative Wedding Date:</label>
+  <input type="text" id="wedding_date" name="wedding_date" placeholder="Please enter your tentative wedding date (this field is optional)">
 
   <button type="submit" id="registerOwner">Submit</button>
 </form>

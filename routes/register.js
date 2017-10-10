@@ -3,9 +3,7 @@ const router = express.Router()
 const knex = require('../knex')
 const bcrypt = require('bcrypt')
 
-router.get('/', (req, res, next) => {
-  res.render('register', {_layoutFile: 'layout.ejs'})
-})
+let registered
 
 router.post('/', (req, res, next) => {
   // now these must all be required fields in the request body/form input except wedding_date
@@ -37,12 +35,17 @@ router.post('/', (req, res, next) => {
         last_name_2,
         wedding_date
       })
-      .then((registered) => {
+      .then((data) => {
+        registered = data
         res.status(200)
-        res.render('register', { registered, _layoutFile: 'layout.ejs' })
+        res.send(registered[0])
       })
     .catch((err) => next(err))
     })
+})
+
+router.get('/', (req, res, next) => {
+  res.render('register', { registered, _layoutFile: 'layout.ejs'})
 })
 
 module.exports = router

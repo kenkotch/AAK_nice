@@ -2,6 +2,8 @@ const express = require('express')
 const boom = require('boom')
 const router = express.Router()
 const knex = require('../knex')
+const jwt = require('jsonwebtoken')
+const secret = process.env.JWT_KEY
 
 // C
 router.post('/', (req, res, next) => {
@@ -27,7 +29,15 @@ router.post('/', (req, res, next) => {
 
 // R info from db
 router.get('/', (req, res, next) => {
-  let id = 1 // id will eventually come from cookie
+
+  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
+  if(err){
+    return res.send(false)
+  }
+  let id = payload.ownerId // id will eventually come from cookie
+  /*Adam N. - needs error handling in case ownerId has no templates.
+  Can't logic through tonite, too tired.
+  */
 
   let fName1
   let fName2
@@ -61,6 +71,7 @@ router.get('/', (req, res, next) => {
     .catch((err) => {
       next(err)
     })
+  })
 })
 
 // R to go to edit page
