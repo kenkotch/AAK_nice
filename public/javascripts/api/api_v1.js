@@ -2,7 +2,7 @@ $(document).ready(() => {
   if (document.location.href.match(/myschedule$/)) {
 
     // called on DELETE/EDIT success- reloads only table
-    function fetchAndRenderSchedule() {
+    function getAndRenderSchedule() {
       $.ajax({
         method: 'GET',
         url: '/myschedule',
@@ -17,19 +17,12 @@ $(document).ready(() => {
       $.ajax({
         url: `/myschedule/${e.target.id}`,
         method: "DELETE",
-        success: fetchAndRenderSchedule()
+        success: getAndRenderSchedule()
       })
         .then((data) => {
           $(e.target).closest('tr').hide()
         })
     })
-
-    let checkId = document.location.href.match(/(\d+)$/)
-    // .match(/(\d+)$/) || document.location.href.match(/(\d+)\/edit$/)
-
-    // if (checkId) {
-      let id = checkId[0]
-    console.log("found id", checkId)
 
     // if it's the update form populated the fields
     $.getJSON(`/myschedule/${id}`).then((data) => {
@@ -69,7 +62,7 @@ $(document).ready(() => {
       //   //   description: updatedDescription
       //   // },
       //   contentType: 'application/json',
-      //   success: fetchAndRenderSchedule
+      //   success: getAndRenderSchedule
       // })
 
 

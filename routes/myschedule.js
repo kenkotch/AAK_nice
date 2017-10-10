@@ -64,30 +64,27 @@ router.get('/', (req, res, next) => {
 })
 
 // R to go to edit page
-router.get('/:id', (req, res) => {
+router.get('/:id/edit', (req, res) => {
   const id = req.params.id
+  
   if (typeof id !== 'undefined') {
     knex('owner')
     .select()
     .where('id', id)
+    .first()
     .then((data) => {
-      res.render('edit', { title: 'something is working' })
+      res.render('edit', {
+        title: `something is working at id ${id}`,
+        time: data.time,
+        item: data.item,
+        description: data.description
+      })
     })
   } else {
     res.status(500)
     res.render('error', { message: 'something went wrong' })
   }
 })
-
-
-
-
-
-
-
-
-  // res.render('edit') // , { title: 'Edit Event', _layoutFile: 'layout.ejs' })
-// })
 
 // U
 router.patch('/:id', (req, res, next) => {
@@ -99,8 +96,8 @@ router.patch('/:id', (req, res, next) => {
 
   knex('schedule')
     .where('id', id)
-    .then((row) => {
-      if (!row) {
+    .then((rows) => {
+      if (!rows) {
         throw boom.create(404, 'Not Found')
       }
 
@@ -123,8 +120,8 @@ router.patch('/:id', (req, res, next) => {
         .update(updateRow, '*')
         .where('id', id)
     })
-    .then((rows) => {
-      res.send(rows[0])
+    .then((row) => {
+      res.send(row[0])
     })
     .catch((err) => {
       next(err)
