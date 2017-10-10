@@ -69,6 +69,7 @@ router.get('/:id', (req, res) => {
   if (typeof id !== 'undefined') {
     knex('owner')
     .select()
+    .where('id', id)
     .then((data) => {
       res.render('edit', { title: 'something is working' })
     })

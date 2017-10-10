@@ -16,7 +16,7 @@
       <td data-id=""><%= data[i].time %></td>
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
-      <td><a href="/myschedule/<%= data[i].id %>" class="edit" type="button" name="button" id="<%= data[i].id %>">edit</a>
+      <td><a href="/myschedule/<%= data[i].id %>"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
       <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button></td>
     </tr>
   <% } %>
