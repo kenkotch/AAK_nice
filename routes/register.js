@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
     wedding_date
   } = req.body
 
-  if(!email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
+  if (!email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
     res.status(400)
     res.send('Please complete all fields')
     return
