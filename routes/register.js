@@ -23,28 +23,45 @@ router.post('/', (req, res, next) => {
     return
   }
   if(!wedding_date) {
-    
+    bcrypt.hash(password, 5, (err, hash) => {
+      knex('owner')
+        .returning(['first_name_1', 'first_name_2'])
+        .insert({
+          email,
+          hashed_password: hash,
+          first_name_1,
+          last_name_1,
+          first_name_2,
+          last_name_2
+        })
+        .then((data) => {
+          registered = data
+          res.status(200)
+          res.send(registered[0])
+        })
+        .catch((err) => next(err))
+    })
+  } else {
+    bcrypt.hash(password, 5, (err, hash) => {
+      knex('owner')
+        .returning(['first_name_1', 'first_name_2'])
+        .insert({
+          email,
+          hashed_password: hash,
+          first_name_1,
+          last_name_1,
+          first_name_2,
+          last_name_2,
+          wedding_date
+        })
+        .then((data) => {
+          registered = data
+          res.status(200)
+          res.send(registered[0])
+        })
+        .catch((err) => next(err))
+    })
   }
-
-  bcrypt.hash(password, 5, (err, hash) => {
-    knex('owner')
-      .returning(['first_name_1', 'first_name_2'])
-      .insert({
-        email,
-        hashed_password: hash,
-        first_name_1,
-        last_name_1,
-        first_name_2,
-        last_name_2,
-        wedding_date
-      })
-      .then((data) => {
-        registered = data
-        res.status(200)
-        res.send(registered[0])
-      })
-  .catch((err) => next(err))
-  })
 })
 
 router.get('/', (req, res, next) => {
