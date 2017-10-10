@@ -7,40 +7,49 @@ const secret = process.env.JWT_KEY
 
 // C
 router.post('/', (req, res, next) => {
-  if (!req.body.time || !req.body.time.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Time cannot be blank' })
-  } else if (!req.body.item || !req.body.item.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Item cannot be blank' })
-  } else {
-    knex('schedule')
-      .insert({
-        time: req.body.time,
-        item: req.body.item,
-        description: req.body.description,
-        owner_id: 1
-      }, '*')
-      .then(() => {
-        res.redirect('/myschedule')
-      })
-  }
-})
-
-// R info from db
-router.get('/', (req, res, next) => {
-
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
       return res.send(false)
     }
-    let id = payload.ownerId // id will eventually come from cookie
-    /*Adam N. - needs error handling in case ownerId has no templates.
-    Can't logic through tonite, too tired. */
+    let id = payload.ownerId
+    console.log(id)
 
+    if (!req.body.time || !req.body.time.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Time cannot be blank' })
+    } else if (!req.body.item || !req.body.item.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Item cannot be blank' })
+    } else {
+      knex('schedule')
+        .insert({
+          time: req.body.time,
+          item: req.body.item,
+          description: req.body.description,
+          owner_id: id
+        }, '*')
+        .then(() => {
+          console.log('should render')
+          res.redirect('/myschedule')
+        })
+    }
+  })
+})
+
+// R info from db
+router.get('/', (req, res, next) => {
+  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
+    if (err) {
+      return res.send(false)
+    }
+    let id = payload.ownerId
+
+    console.log('id', id)
+    console.log('payload', payload)
     let fName1
     let fName2
     let wedDate
+
     knex('owner')
       .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
       .where('owner.id', id)
@@ -79,19 +88,19 @@ router.get('/:id/edit', (req, res) => {
 
   if (typeof id !== 'undefined') {
     knex('schedule')
-    .select()
-    .where('id', id)
-    .first()
-    .then((data) => {
-      res.render('edit', {
-        title: `something is working at id ${id}`,
-        id: id,
-        time: data.time,
-        item: data.item,
-        description: data.description,
-        _layoutFile: 'layout.ejs'
+      .select()
+      .where('id', id)
+      .first()
+      .then((data) => {
+        res.render('edit', {
+          title: `something is working at id ${id}`,
+          id,
+          time: data.time,
+          item: data.item,
+          description: data.description,
+          _layoutFile: 'layout.ejs'
+        })
       })
-    })
   } else {
     res.status(500)
     res.render('error', { message: 'something went wrong' })
