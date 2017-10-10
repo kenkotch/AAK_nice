@@ -39,7 +39,6 @@ router.get('/', (req, res, next) => {
   let fName1
   let fName2
   let wedDate
-
   knex('owner')
     .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
     .where('owner.id', id)
@@ -138,7 +137,10 @@ router.delete('/:id', (req, res, next) => {
     })
     .then(() => {
       delete event.id
-      res.end()
+      res.send(event)
+    })
+    .catch((err) => {
+      next(err)
     })
 })
 
