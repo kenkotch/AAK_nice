@@ -45,6 +45,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.delete('/', (req, res, next) => {
+  console.log('cookie-cleared. logged out')
   res.clearCookie('token')
   res.sendStatus(200)
 })
