@@ -1,5 +1,4 @@
 $(document).ready(() => {
-  // if (document.location.href.match(/myschedule$/) ) {
 
     // called on DELETE/EDIT success- reloads only table
     function getAndRenderSchedule() {
@@ -36,9 +35,8 @@ $(document).ready(() => {
         data: $('#editForm').serialize(),
         success: (res) => {
           console.log(res)
-          window.location = "/myschedule"
+          window.location = '/myschedule'
         }
       })
     })
-    // }
 })
