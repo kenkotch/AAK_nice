@@ -4,7 +4,12 @@ const knex = require('../knex')
 
 // READ for User
 router.get('/', (req, res, next) => {
-  let id = 1 // id will eventually come from cookie
+  router.get('/', (req, res, next) => {
+    jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
+      if (err) {
+        return res.send(false)
+      }
+      let id = payload.ownerId
 
   let fName1
   let fName2
