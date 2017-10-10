@@ -63,6 +63,31 @@ router.get('/', (req, res, next) => {
     })
 })
 
+// R to go to edit page
+router.get('/:id', (req, res) => {
+  const id = req.params.id
+  if (typeof id !== 'undefined') {
+    knex('owner')
+    .select()
+    .then((data) => {
+      res.render('edit', { title: 'something is working' })
+    })
+  } else {
+    res.status(500)
+    res.render('error', { message: 'something went wrong' })
+  }
+})
+
+
+
+
+
+
+
+
+  // res.render('edit') // , { title: 'Edit Event', _layoutFile: 'layout.ejs' })
+// })
+
 // U
 router.patch('/:id', (req, res, next) => {
   const id = Number(req.params.id)
