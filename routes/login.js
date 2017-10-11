@@ -2,6 +2,7 @@ const express = require('express')
 const knex = require('../knex')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const secret = process.env.JWT_KEY
 const router = express.Router()
 
 // added consts above
