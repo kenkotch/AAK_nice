@@ -14,6 +14,7 @@
   </tr>
 
   <% for (let i = 0; i < data.length; i++) { %>
+      <% if(data[i].time !== 'hide') { %>
     <tr>
       <td><%= data[i].time %></td>
       <td><%= data[i].item %></td>
@@ -23,6 +24,7 @@
         <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button>
       </td>
     </tr>
+    <% } %>
   <% } %>
 </table>
 

@@ -42,29 +42,30 @@ router.post('/', (req, res, next) => {
         delete data.created_at
         delete data.updated_at
         delete data.hashed_password
+        console.log('data.id:', data[0].id)
 
         knex('schedule')
-        .returning('id')
-        .first()
-        .insert({
-          time:'',
-          item:'',
-          description:'',
-          account_id: data.id
-        })
-        .then((rowId) => {
+          .returning('id')
+          .first()
+          .insert({
+            time: 'hide',
+            item: '',
+            description: '',
+            account_id: data[0].id
+          })
+          .then(() => {
+            registered = data
+            res.status(200)
 
-          registered = data
-          res.status(200)
-          res.send(registered[0])
-        })
+            res.send(registered[0])
+          })
       })
   .catch((err) => next(err))
   })
 })
 
 router.get('/', (req, res, next) => {
-  res.render('register', { registered, _layoutFile: 'layout.ejs'})
+  res.render('register', { registered, _layoutFile: 'layout.ejs', role: ''})
 })
 
 module.exports = router
