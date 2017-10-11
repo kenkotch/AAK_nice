@@ -7,79 +7,77 @@ const secret = process.env.JWT_KEY
 
 const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
-    if(err) {
+    if (err) {
       res.status(401)
       return res.send('Not Authorized')
     }
-    req.claim = payload.ownerId
+    req.claim = payload.accountId
     next()
   })
 }
 
 // C
 router.post('/', auth, (req, res, next) => {
+  let id = req.claim
 
-    let id = req.claim
-
-    if (!req.body.time || !req.body.time.trim()) {
-      res.status(500)
-      res.render('error', { message: 'Time cannot be blank' })
-    } else if (!req.body.item || !req.body.item.trim()) {
-      res.status(500)
-      res.render('error', { message: 'Item cannot be blank' })
-    } else {
-      knex('schedule')
-        .insert({
-          time: req.body.time,
-          item: req.body.item,
-          description: req.body.description,
-          owner_id: id
-        }, '*')
-        .then(() => {
-          console.log('should render')
-          res.redirect('/myschedule')
-        })
-    }
+  if (!req.body.time || !req.body.time.trim()) {
+    res.status(500)
+    res.render('error', { message: 'Time cannot be blank' })
+  } else if (!req.body.item || !req.body.item.trim()) {
+    res.status(500)
+    res.render('error', { message: 'Item cannot be blank' })
+  } else {
+    knex('schedule')
+      .insert({
+        time: req.body.time,
+        item: req.body.item,
+        description: req.body.description,
+        account_id: id
+      }, '*')
+      .then(() => {
+        console.log('should render')
+        res.redirect('/myschedule')
+      })
+  }
 })
 
 // R info from db
 router.get('/', auth, (req, res, next) => {
+  let id = req.claim
 
-    let id = req.claim
+  console.log('id', id)
+  let fName1
+  let fName2
+  let wedDate
 
-    console.log('id', id)
-    let fName1
-    let fName2
-    let wedDate
+  knex('account')
+    .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
+    .where('account.id', id)
+    .orderBy('time')
+    .innerJoin('schedule', 'account_id', 'account.id')
+    .innerJoin('template', 'template.id', 'account.template_id')
+    .then((data) => {
+      fName1 = data[0].first_name_1
+      fName2 = data[0].first_name_2
+      wedDate = data[0].wedding_date.toString().slice(0, 15)
 
-    knex('owner')
-      .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
-      .where('owner.id', id)
-      .orderBy('time')
-      .innerJoin('schedule', 'owner_id', 'owner.id')
-      .innerJoin('template', 'template.id', 'owner.template_id')
-      .then((data) => {
-        fName1 = data[0].first_name_1
-        fName2 = data[0].first_name_2
-        wedDate = data[0].wedding_date.toString().slice(0, 15)
+      for (let i = 0; i < data.length; i++) {
+        delete data[i].created_at
+        delete data[i].updated_at
+      }
 
-        for (let i = 0; i < data.length; i++) {
-          delete data[i].created_at
-          delete data[i].updated_at
+      res.render(
+        'myschedule',
+        {
+          title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+          data,
+          wedDate,
+          _layoutFile: 'layout.ejs'
         }
-
-        res.render(
-          'myschedule',
-          {
-            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-            data,
-            wedDate,
-            _layoutFile: 'layout.ejs'
-          }
-        )
-      })
-      .catch((err) => {
-        next(err)
+      )
+    })
+    .catch((err) => {
+      next(err)
     })
 })
 

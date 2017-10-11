@@ -1,4 +1,4 @@
-const express = require('express')
+ownerconst express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
         return
       }
       const token = jwt.sign({
-        ownerId: data.id
+        accountId: data.id
       }, secret)
 
       res.cookie('token', token, {
