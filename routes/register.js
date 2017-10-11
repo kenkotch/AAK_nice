@@ -26,7 +26,6 @@ router.post('/', (req, res, next) => {
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('account')
-      .returning(['first_name_1', 'first_name_2'])
       .insert({
         username,
         email,
@@ -37,11 +36,25 @@ router.post('/', (req, res, next) => {
         last_name_2,
         wedding_date,
         role: 2
-      })
+      }, '*')
       .then((data) => {
+        delete data.created_at
+        delete data.updated_at
+        delete data.hashed_password
+
+        knex('schedule')
+        .insert({
+          time:'',
+          item:'',
+          description:'',
+          account_id: data.id
+        }).
+        then(() => {
+
         registered = data
         res.status(200)
         res.send(registered[0])
+        })
       })
   .catch((err) => next(err))
   })

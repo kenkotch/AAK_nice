@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
+let role
+
 const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
     if (err) {
@@ -13,6 +15,17 @@ const auth = (req, res, next) => {
     }
     req.claim = payload.accountId
     next()
+  })
+}
+
+const checkRole = (req) => {
+  knex('account')
+    .select('role')
+    .first()
+    .where('id', req.claim)
+    .then((data) => {
+      return
+      role = data.role
   })
 }
 
@@ -53,18 +66,14 @@ router.post('/', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-// // test get route with auth - works
-// router.get('/', auth, (req, res, next) => {
-//
-//   console.log('passed variable:', butt)
-//
-// })
-// const checkRole = (req, res, next) {
-//   knex('account')
-//     .select(role)
-//     .where('id', req.claim )
-//
-// }
+// test get route with auth - works
+router.get('/', auth, checkRole, (req, res, next) => {
+
+  console.log(role)
+
+  res.redirect('/')
+
+})
 
 
 router.delete('/', (req, res, next) => {
