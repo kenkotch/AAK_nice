@@ -59,8 +59,13 @@ router.post('/', (req, res, next) => {
 //   console.log('passed variable:', butt)
 //
 // })
+// const checkRole = (req, res, next) {
+//   knex('account')
+//     .select(role)
+//     .where('id', req.claim )
+//
+// }
 
-// knex('account')
 
 router.delete('/', (req, res, next) => {
   console.log('cookie-cleared. logged out')
