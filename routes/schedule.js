@@ -45,14 +45,13 @@ router.post('/', auth, (req, res, next) => {
 router.get('/', auth, (req, res, next) => {
   let id = req.claim
 
-  console.log('req.body.wedding_date', req.body.wedding_date)
   let fName1
   let fName2
-  let wedDate
+  // let wedDate
 
-  if (req.body.wedding_date) {
+  if (!req.body.wedding_date) {
     knex('account')
-      .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
+      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
       .where('account.id', id)
       .orderBy('time')
       .innerJoin('schedule', 'schedule.account_id', 'account.id')
@@ -61,7 +60,6 @@ router.get('/', auth, (req, res, next) => {
         console.log(data)
         fName1 = data[0].first_name_1
         fName2 = data[0].first_name_2
-        wedDate = data[0].wedding_date.toString().slice(0, 15)
 
         for (let i = 0; i < data.length; i++) {
           delete data[i].created_at
@@ -73,7 +71,6 @@ router.get('/', auth, (req, res, next) => {
           {
             title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
             data,
-            wedDate,
             _layoutFile: 'layout.ejs'
           }
         )
@@ -82,6 +79,8 @@ router.get('/', auth, (req, res, next) => {
         next(err)
       })
   } else {
+    let wedDate
+
     knex('account')
       .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
       .where('account.id', id)
@@ -92,6 +91,7 @@ router.get('/', auth, (req, res, next) => {
         console.log(data)
         fName1 = data[0].first_name_1
         fName2 = data[0].first_name_2
+        wedDate = data[0].wedding_date.toString().slice(0, 15)
 
         for (let i = 0; i < data.length; i++) {
           delete data[i].created_at
