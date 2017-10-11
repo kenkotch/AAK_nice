@@ -4,6 +4,8 @@ const knex = require('../knex')
 const jwt = require('jsonwebtoken')
 const boom = require('boom')
 const secret = process.env.JWT_KEY
+const bcrypt = require('bcrypt')
+
 let role
 // let guest_profile
 // RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
@@ -45,7 +47,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
       .first()
       .then((data) => {
         res.render('profile', {
-          title: `something is working at id ${id}`,
+          title: `${data.first_name_1} and ${data.first_name_2}'s profile page`,
           id,
           first_name_1: data.first_name_1,
           first_name_2: data.first_name_2,
@@ -83,21 +85,24 @@ router.post('/', auth, checkRole, (req, res, next) => {
       message: 'Password cannot be blank'
     })
   } else {
-    knex('account')
-      .insert({
-        username: req.body.username,
-        hashed_password: req.body.password,
-        account_id: id,
-        role: 3
-      }, '*')
-      .then((data) => {
-        guest_profile = data
-        res.status(200)
-        // res.send(guest_profile[0])
-        res.redirect('/profile')
-      })
-      .catch((err) => next(err))
+    bcrypt.hash(req.body.password, 5, (err, hash) => {
+      knex('account')
+        .insert({
+          email: req.body.username,
+          hashed_password: hash,
+          account_id: id,
+          role: 3
+        }, '*')
+        .then((data) => {
+          guest_profile = data
+          res.status(200)
+          // res.send(guest_profile[0])
+          res.redirect('/profile')
+        })
+        .catch((err) => next(err))
+    })
   }
+
 })
 
 
