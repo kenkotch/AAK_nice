@@ -5,7 +5,7 @@ exports.seed = (knex, Promise) => {
       // Inserts seed entries
       return knex('account').insert([{
         id: 1,
-        username: 'adamN'
+        username: 'adamN',
         hashed_password: "hashed_pass",
         email: 'test@gmail.com',
         first_name_1: 'Adam',
@@ -13,11 +13,12 @@ exports.seed = (knex, Promise) => {
         first_name_2: 'Lisa',
         last_name_2: 'the Magnificent',
         wedding_date: '2018-07-24',
-        account_id:
+        account_id: null,
+        role: 2,
         template_id: 1
       }, {
         id: 2,
-        username: 'Bananas'
+        username: 'Bananas',
         hashed_password: "hashed_pass",
         email: 'test2@gmail.com',
         first_name_1: 'Adam',
@@ -25,7 +26,8 @@ exports.seed = (knex, Promise) => {
         first_name_2: 'Lisa',
         last_name_2: 'the Magnificent',
         wedding_date: '2018-07-24',
-        account_id:1
+        account_id: 1,
+        role: 3,
         template_id: 1
       }])
         .then(() => {
