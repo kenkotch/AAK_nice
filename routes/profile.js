@@ -6,13 +6,13 @@ const jwt = require('jsonwebtoken')
 let guest_profile
 // RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
 
-router.get('/', (req, res, next) => {
+// router.get('/', (req, res, next) => {
+//   res.render('profile', { guest_profile, _layoutFile: 'layout.ejs' })
+// })
+// //
+router.get('/:id', function (req, res, next) {
+  const id = Number(req.params.id)
   res.render('profile', { guest_profile, _layoutFile: 'layout.ejs' })
-})
-//
-// router.get('/:id', function (req, res, next) {
-//   const id = Number(req.params.id)
-//   // code goes here
 // })
 
 
