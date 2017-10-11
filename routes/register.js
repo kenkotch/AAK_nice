@@ -45,22 +45,19 @@ router.post('/', (req, res, next) => {
         console.log('data.id:', data[0].id)
 
         knex('schedule')
-        .returning('id')
-        .first()
-        .insert({
-          time:'',
-          item:'',
-          description:'',
-          account_id: data[0].id
-        })
-        .then((rowId) => {
-
-          registered = data
-          res.status(200)
-          // res.write(registered[0])
-          // res.write(rowId)
-          res.send(registered[0])
-        })
+          .returning('id')
+          .first()
+          .insert({
+            time: '',
+            item: '',
+            description: '',
+            account_id: data[0].id
+          })
+          .then((rowId) => {
+            registered = data
+            res.status(200)
+            res.send(registered[0])
+          })
       })
   .catch((err) => next(err))
   })

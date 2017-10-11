@@ -13,7 +13,7 @@ $(document).ready(() => {
 
       $.post("/register", data, null, 'json').then((data) => {
         console.log('Input data', data)
-        document.location = '/register'
+        document.location = '/'
       })
         .fail((err) => {
           $('#errorMessage').html(`<div>${err.responseText}</div>`)
