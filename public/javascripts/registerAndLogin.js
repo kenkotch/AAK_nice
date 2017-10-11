@@ -8,6 +8,7 @@ $(document).ready(() => {
       event.preventDefault()
 
       let data = $('#newOwner').serialize()
+      delete data.hashed_password
       console.log(data)
 
       $.post("/register", data, null, 'json').then((data) => {

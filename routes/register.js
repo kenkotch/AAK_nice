@@ -42,6 +42,7 @@ router.post('/', (req, res, next) => {
         delete data.created_at
         delete data.updated_at
         delete data.hashed_password
+        console.log('data.id:', data[0].id)
 
         knex('schedule')
         .returning('id')
@@ -50,15 +51,15 @@ router.post('/', (req, res, next) => {
           time:'',
           item:'',
           description:'',
-          account_id: data.id
+          account_id: data[0].id
         })
         .then((rowId) => {
 
           registered = data
           res.status(200)
-          res.write(rowId)
-          res.write(registerd[0])
-          res.send()
+          // res.write(registered[0])
+          // res.write(rowId)
+          res.send(registered[0])
         })
       })
   .catch((err) => next(err))
