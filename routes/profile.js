@@ -49,6 +49,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
         res.render('profile', {
           title: `${data.first_name_1} and ${data.first_name_2}'s profile page`,
           id,
+          role,
           first_name_1: data.first_name_1,
           first_name_2: data.first_name_2,
           last_name_1: data.last_name_1,
@@ -88,7 +89,8 @@ router.post('/', auth, checkRole, (req, res, next) => {
     bcrypt.hash(req.body.password, 5, (err, hash) => {
       knex('account')
         .insert({
-          email: req.body.username,
+          email: id,
+          username: req.body.username,
           hashed_password: hash,
           account_id: id,
           role: 3
