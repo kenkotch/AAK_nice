@@ -7,16 +7,52 @@ const boom = require('boom')
 let guest_profile
 // RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
 
+const auth = (req, res, next) => {
+  jwt.verify(req.cookies.token, secret, (err, payload) => {
+    if (err) {
+      res.status(401)
+      return res.send('Not Authorized')
+    }
+    req.claim = payload.accountId
+    next()
+  })
+}
+
+const checkRole = (req, res, next) => {
+  knex('account')
+    .select('role')
+    .first()
+    .where('id', req.claim)
+    .then((data) => {
+      role = data.role
+      next()
+    })
+}
+
 // router.get('/', (req, res, next) => {
 //   res.render('profile', { guest_profile, _layoutFile: 'layout.ejs' })
 // })
 //
-router.get('/:id', (req, res, next) => {
-  // const id = Number(req.params.id)
-  res.render('profile', {
-    guest_profile,
-    _layoutFile: 'layout.ejs'
-  })
+router.get('/:id', auth, checkRole, (req, res, next) => {
+  const id = Number(req.params.id)
+  knex('account')
+    .select('id', 'email', 'first_name_1', 'last_name_1', 'first_name_2', 'last_name_2', 'cover_url', 'created_at', 'updated_at')
+    .orderBy('id')
+    .where('id', id)
+    .then((profile) => {
+      if (profile.length < 1) {
+        return res.sendStatus(404)
+      }
+
+      res.setHeader('Content-Type', 'application/json')
+      res.send(JSON.stringify(profile[0]))
+    })
+    .catch((err) => next(err))
+
+  // res.render('profile', {
+  //   guest_profile,
+  //   _layoutFile: 'layout.ejs'
+  // })
 })
 
 

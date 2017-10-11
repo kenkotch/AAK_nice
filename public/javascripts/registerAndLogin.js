@@ -31,7 +31,7 @@ $(document).ready(() => {
 
       $.post('/token', data, null, 'json').then((data) => {
         console.log('data being posted to /token', data)
-        document.location = '/token'
+        (document.location) = '/token'
       })
         .fail((err) => {
           $('#errorMessage').html(`<div>${err.responseText}</div>`)
