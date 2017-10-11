@@ -4,7 +4,7 @@ $(document).ready(() => {
   function getAndRenderSchedule() {
     $.ajax({
       method: 'GET',
-      url: '/myschedule',
+      url: '/schedule',
       success: 'success'
     })
   }
@@ -14,7 +14,7 @@ $(document).ready(() => {
     e.preventDefault()
     console.log(`delete ${e.target.id}`)
     $.ajax({
-      url: `/myschedule/${e.target.id}`,
+      url: `/schedule/${e.target.id}`,
       method: "DELETE",
       success: getAndRenderSchedule()
     })
@@ -30,7 +30,7 @@ $(document).ready(() => {
     let id = $('input[name="id"]').val()
 
     $.ajax({
-      url: `/myschedule/${id}`,
+      url: `/schedule/${id}`,
       method: "PATCH",
       data: $('#editForm').serialize(),
       success: (res) => {
