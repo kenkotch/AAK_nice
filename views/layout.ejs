@@ -8,12 +8,6 @@
     <title>nicePaper!</title>
 
     <link href="/stylesheets/style.css" rel="stylesheet">
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous"></script>
-      <script src="/javascripts/registerAndLogin.js"></script>
-      <script src="/javascripts/api/api_v1.js" charset="utf-8"></script>
   </head>
 
   <body>
@@ -21,22 +15,24 @@
 <!-- nav -->
 <div>
   <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/register">Register</a></li>
-    <li><a href="/schedule">Schedule</a></li>
-    <li><a href="/profile">My Profile</a></li>
-    <li><a id="logout" href="">Logout</a></li>
+    <li id="home"><a href="/">Home</a></li>
+    <li id="register"><a href="/register">Register</a></li>
+    <li id="schedule"><a href="/schedule">Schedule</a></li>
+    <li id="profile"><a href="/profile">My Profile</a></li>
+    <li id="log_out"><a id="logout" href="">Logout</a></li>
   </ul>
 </div>
 
-    <div class="container">
-
-      <h1>Welcome to Nice Paper</h1>
-      <h2>This is from our layout file</h2>
-
+    <div>
       <%- body -%>
-
     </div><!-- /.container -->
 
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="/javascripts/registerAndLogin.js"></script>
+    <script src="/javascripts/api/api_v1.js" charset="utf-8"></script>
+    <script src="/javascripts/navBarView.js" charset="utf-8"></script>
   </body>
 </html>
