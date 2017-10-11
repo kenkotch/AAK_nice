@@ -47,7 +47,7 @@ router.get('/', auth, (req, res, next) => {
 
   let fName1
   let fName2
-  // let wedDate
+  let wedDate
 
   if (!req.body.wedding_date) {
     knex('account')
@@ -79,7 +79,7 @@ router.get('/', auth, (req, res, next) => {
         next(err)
       })
   } else {
-    let wedDate
+    // let wedDate
 
     knex('account')
       .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')

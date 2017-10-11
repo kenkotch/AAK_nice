@@ -1,6 +1,8 @@
 <p><%= title %></p>
 
-<h2><%= wedDate %></h2>
+<% if (typeof wedDate == 'object' && wedDate) { %>
+  <h2><%= wedDate %></h2>
+<% } %>
 
 <!-- schedule -->
 <table id="schedule">
