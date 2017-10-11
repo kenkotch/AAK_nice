@@ -61,8 +61,6 @@ router.post('/', auth, checkRole, (req, res, next) => {
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.claim
-  console.log('id', id)
-  console.log('role', role)
 
   let fName1
   let fName2
@@ -101,8 +99,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
           next(err)
         })
     } else {
-      // let wedDate
-
       knex('account')
         .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
         .where('account.id', id)
@@ -221,6 +217,7 @@ router.get('/:id/edit', (req, res) => {
           time: data.time,
           item: data.item,
           description: data.description,
+          role,
           _layoutFile: 'layout.ejs'
         })
       })
