@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 let registered
 
 router.post('/', (req, res, next) => {
+  console.log(req.body)
   // now these must all be required fields in the request body/form input except wedding_date
   const {
     username,
@@ -15,8 +16,9 @@ router.post('/', (req, res, next) => {
     last_name_1,
     first_name_2,
     last_name_2,
+    wedding_date
   } = req.body
-  console.log('req.body.wedding_date', typeof (req.body.wedding_date))
+  console.log('req.body.wedding_date', req.body.wedding_date)
 
   if (!username || !email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
     res.status(400)
@@ -24,7 +26,7 @@ router.post('/', (req, res, next) => {
     return
   }
 
-  let wedding_date = req.body.wedding_date || "1000 - 01 - 01"
+  // let wedding_date = req.body.wedding_date || "1000 - 01 - 01"
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('account')
@@ -37,18 +39,20 @@ router.post('/', (req, res, next) => {
         first_name_2,
         last_name_2,
         wedding_date,
-        role: 2,
+        role: 2
       }, '*')
       .then((data) => {
         delete data.created_at
         delete data.updated_at
         delete data.hashed_password
+        console.log(data[0])
 
-        knex('account')
-          .insert({
-            account_id: data[0].id
-          })
-          .then(() => {
+        // knex('account')
+        //   .update({
+        //     account_id: data[0].id
+        //   })
+        //   .where('id', id)
+        //   .then(() => {
 
             knex('schedule')
               .insert({
@@ -63,16 +67,17 @@ router.post('/', (req, res, next) => {
                 res.send(registered[0])
                 return
               })
-          })
+          // })
       })
-      .catch((err) => next(err))
+    .catch((err) => next(err))
   })
 })
 
 router.get('/', (req, res, next) => {
   res.render('register', {
     registered,
-    _layoutFile: 'layout.ejs'
+    _layoutFile: 'layout.ejs',
+    role: ''
   })
 })
 
