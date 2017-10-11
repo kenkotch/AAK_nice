@@ -33,6 +33,7 @@ const checkRole = (req, res, next) => {
 router.post('/', auth, checkRole, (req, res, next) => {
   if (role === 2) {
     let id = req.claim
+    console.log('this is id for role 2', id)
 
     if (!req.body.time || !req.body.time.trim()) {
       res.status(500)
