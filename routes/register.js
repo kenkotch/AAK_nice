@@ -48,17 +48,15 @@ router.post('/', (req, res, next) => {
         .returning('id')
         .first()
         .insert({
-          time:'',
-          item:'',
-          description:'',
+          time: 'hide',
+          item: '',
+          description: '',
           account_id: data[0].id
         })
-        .then((rowId) => {
-
+        .then(() => {
           registered = data
           res.status(200)
-          // res.write(registered[0])
-          // res.write(rowId)
+
           res.send(registered[0])
         })
       })
