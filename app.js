@@ -11,12 +11,12 @@ const bodyParser = require('body-parser')
 const engine = require('ejs-mate')
 
 // Adam N. add 10/9/17 - trying to get our app to route to a homepage, then we can navigate from there
-const index = require('./routes/index')
+// const index = require('./routes/index')
 const register = require('./routes/register')
 const login = require('./routes/login')
 const token = require('./routes/token')
-const users = require('./routes/users')
-const myschedule = require('./routes/myschedule')
+// const users = require('./routes/users')
+const schedule = require('./routes/schedule')
 const profile = require('./routes/profile')
 
 const app = express()
@@ -33,12 +33,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', index)
+app.use('/', login)
 app.use('/register', register)
 app.use('/login', login)
 app.use('/token', token)
-app.use('/schedule', users)
-app.use('/myschedule', myschedule)
+app.use('/schedule', schedule)
 app.use('/profile', profile)
 
 // catch 404 and forward to error handler
