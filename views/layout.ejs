@@ -13,13 +13,22 @@
   <body>
     <div id="errorMessage"></div>
 <!-- nav -->
+
 <div>
   <ul>
     <li id="home"><a href="/">Home</a></li>
-    <li id="register"><a href="/register">Register</a></li>
+    <% if (role === '') { %>
+      <li id="register"><a href="/register">Register</a></li>
+    <% } %>
+
+    <% if (role === 1 || role === 2) { %>
     <li id="schedule"><a href="/schedule">Schedule</a></li>
     <li id="profile"><a href="/profile">My Profile</a></li>
+
+    <% if (role === 1 || role === 2 || role === 3) { %>
     <li id="log_out"><a id="logout" href="">Logout</a></li>
+<% } %>
+    <% } %>
   </ul>
 </div>
 
@@ -33,6 +42,5 @@
     crossorigin="anonymous"></script>
     <script src="/javascripts/registerAndLogin.js"></script>
     <script src="/javascripts/api/api_v1.js" charset="utf-8"></script>
-    <script src="/javascripts/navBarView.js" charset="utf-8"></script>
   </body>
 </html>

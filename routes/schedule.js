@@ -91,6 +91,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
             'schedule',
             {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+              role,
               data,
               _layoutFile: 'layout.ejs'
             }
@@ -124,6 +125,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
             {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               data,
+              role,
               wedDate,
               _layoutFile: 'layout.ejs'
             }
@@ -156,6 +158,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
             'scheduleGuest',
             {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+              role,
               data,
               _layoutFile: 'layout.ejs'
             }
@@ -188,6 +191,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
             'scheduleGuest',
             {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+              role,
               data,
               wedDate,
               _layoutFile: 'layout.ejs'

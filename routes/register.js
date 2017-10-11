@@ -64,7 +64,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.get('/', (req, res, next) => {
-  res.render('register', { registered, _layoutFile: 'layout.ejs'})
+  res.render('register', { registered, _layoutFile: 'layout.ejs', role: ''})
 })
 
 module.exports = router
