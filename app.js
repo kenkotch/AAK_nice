@@ -15,7 +15,7 @@ const index = require('./routes/index')
 const register = require('./routes/register')
 const login = require('./routes/login')
 const token = require('./routes/token')
-const users = require('./routes/users')
+// const users = require('./routes/users')
 const schedule = require('./routes/schedule')
 const profile = require('./routes/profile')
 
