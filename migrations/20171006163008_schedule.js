@@ -3,7 +3,7 @@ exports.up = (knex, Promise) => {
     table.increments()
 
     table.varchar('time', 5)
-      .defaultTo(' ')
+      .defaultTo('')
 
     table.text('item')
       .notNullable()
