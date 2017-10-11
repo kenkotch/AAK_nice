@@ -22,7 +22,6 @@ router.post('/', (req, res, next) => {
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
       return res.send(false)
-      console.log(false)
     }
     let id = payload.ownerId
     console.log(id)
@@ -55,11 +54,11 @@ router.post('/', (req, res, next) => {
   })
 })
 
-// router.patch('/:id', function (req, res, next) {
-//   const id = Number(req.params.id)
-//   const { item } = req.body
-//   // code goes here
-// })
+router.patch('/:id', function (req, res, next) {
+  const id = Number(req.params.id)
+  const { item } = req.body
+  // code goes here
+})
 //
 // router.delete('/:id', function (req, res, next) {
 //   const id = Number(req.params.id)
