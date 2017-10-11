@@ -45,7 +45,6 @@ router.post('/', (req, res, next) => {
         delete data.created_at
         delete data.updated_at
         delete data.hashed_password
-        console.log(data[0])
 
         // knex('account')
         //   .update({

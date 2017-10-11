@@ -22,16 +22,13 @@ $(document).ready(() => {
   }
 
   if (document.location.href.match(/\/$/)) {
-    console.log('on page: login')
 
     $('#loginForm').submit((event) => {
       event.preventDefault()
 
       let data = $('#loginForm').serialize()
-      console.log('data from form:', data)
 
       $.post('/token', data, null, 'json').then((data) => {
-        console.log('data being posted to /token', data)
         document.location = '/schedule'
       })
         .fail((err) => {

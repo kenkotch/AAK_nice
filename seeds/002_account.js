@@ -6,7 +6,7 @@ exports.seed = (knex, Promise) => {
       return knex('account').insert([{
         id: 1,
         username: 'adamN',
-        hashed_password: "hashed_pass",
+        hashed_password: "$2a$05$q/QusSnYKdQqu/hzrO7uE.ILNFmfc.rOdljX9uqEkO6QkgQagQRP.",
         email: 'test@gmail.com',
         first_name_1: 'Adam',
         last_name_1: 'Neef',
@@ -19,7 +19,7 @@ exports.seed = (knex, Promise) => {
       }, {
         id: 2,
         username: 'Bananas',
-        hashed_password: "hashed_pass",
+        hashed_password: "$2a$05$q/QusSnYKdQqu/hzrO7uE.ILNFmfc.rOdljX9uqEkO6QkgQagQRP.",
         email: 'test2@gmail.com',
         first_name_1: 'Adam',
         last_name_1: 'Neef',
