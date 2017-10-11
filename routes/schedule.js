@@ -54,7 +54,7 @@ router.get('/', auth, (req, res, next) => {
     .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
     .where('account.id', id)
     .orderBy('time')
-    .innerJoin('schedule', 'account_id', 'account.id')
+    .innerJoin('schedule', 'account.account_id', 'account.id')
     .innerJoin('template', 'template.id', 'account.template_id')
     .then((data) => {
       fName1 = data[0].first_name_1
