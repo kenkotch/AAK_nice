@@ -7,44 +7,45 @@ const secret = process.env.JWT_KEY
 
 const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
-    if(err) {
+    if (err) {
       res.status(401)
       return res.send('Not Authorized')
     }
-    let butt = 'butt'
-    req.claim = payload.ownerId
-    next(butt)
+    req.claim = payload.accountId
+    next()
   })
 }
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res, next) => {
   const { email, password } = req.body
 
-  if(!email || email.trim() === ('')){
+  if (!email || email.trim() === ('')) {
     res.status(400)
     res.send('Bad email or password')
     return
   }
 
-  if(!password || password.trim() === ('')){
+  if (!password || password.trim() === ('')) {
     res.status(400)
     res.send('Bad email or password')
     return
   }
 
-  knex('owner')
+  knex('account')
     .where('email', email)
     .first()
     .then((data) => {
       let match = bcrypt.compareSync(password, data.hashed_password)
-        if(!match) {
-          res.sendStatus(404)
-          return
-        }
-        const token = jwt.sign({ownerId: data.id}, secret)
+      if (!match) {
+        res.sendStatus(404)
+        return
+      }
+      const token = jwt.sign({ accountId: data.id }, secret)
 
-        res.cookie('token', token,
-      {httpOnly: true})
+      res.cookie(
+        'token', token,
+        { httpOnly: true }
+      )
       res.status(200)
       delete data.hashed_password
       res.send(data)
