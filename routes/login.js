@@ -1,5 +1,11 @@
 const express = require('express')
+const knex = require('../knex')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
+
+// added consts above
+// where is SECRET defined on line 39
 
 router.get('/', (req, res, next) => {
   res.render('login', {
@@ -7,7 +13,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
-router.post('/', function(req, res, next) {
+router.post('/', (req, res, next) => {
   const {
     email,
     password
@@ -46,13 +52,13 @@ router.post('/', function(req, res, next) {
 
 router.get('/', (req, res, next) => {
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
-      if (err) {
-        return res.send(false)
-      }
-      res.render('login')
-      res.send(true)
-    })
-    .catch((err) => next(err))
+    if (err) {
+      return res.send(false)
+    }
+    res.render('login')
+    return res.send(true)
+  })
+  .catch((err) => next(err))
 })
 
 router.delete('/', (req, res, next) => {
