@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('owner')
-    .returning(['first_name_1', 'first_name_2'])
+      .returning(['first_name_1', 'first_name_2'])
       .insert({
         email,
         hashed_password: hash,
@@ -40,8 +40,8 @@ router.post('/', (req, res, next) => {
         res.status(200)
         res.send(registered[0])
       })
-    .catch((err) => next(err))
-    })
+  .catch((err) => next(err))
+  })
 })
 
 router.get('/', (req, res, next) => {
