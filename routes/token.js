@@ -60,6 +60,8 @@ router.post('/', (req, res, next) => {
 //
 // })
 
+// knex('account')
+
 router.delete('/', (req, res, next) => {
   console.log('cookie-cleared. logged out')
   res.clearCookie('token')
