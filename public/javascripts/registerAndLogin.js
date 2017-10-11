@@ -20,7 +20,7 @@ $(document).ready(() => {
     })
   }
 
-  if (document.location.href.match(/login$/)) {
+  if (document.location.href.match(/\/$/)) {
     console.log('on page: login')
 
     $('#loginForm').submit((event) => {
