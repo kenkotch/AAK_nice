@@ -56,7 +56,9 @@ router.post('/', (req, res, next) => {
 
           registered = data
           res.status(200)
-          res.send(registered[0])
+          res.write(rowId)
+          res.write(registerd[0])
+          res.send()
         })
       })
   .catch((err) => next(err))

@@ -5,6 +5,8 @@ const knex = require('../knex')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
+let role
+
 const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
     if (err) {
@@ -14,6 +16,17 @@ const auth = (req, res, next) => {
     req.claim = payload.accountId
     next()
   })
+}
+
+const checkRole = (req, res, next) => {
+  knex('account')
+    .select('role')
+    .first()
+    .where('id', req.claim)
+    .then((data) => {
+      role = data.role
+      next()
+    })
 }
 
 // C
@@ -42,7 +55,7 @@ router.post('/', auth, (req, res, next) => {
 })
 
 // R info from db
-router.get('/', auth, (req, res, next) => {
+router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.claim
 
   let fName1
