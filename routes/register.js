@@ -42,7 +42,6 @@ router.post('/', (req, res, next) => {
         delete data.created_at
         delete data.updated_at
         delete data.hashed_password
-        console.log('data.id:', data[0].id)
 
         knex('schedule')
           .returning('id')
@@ -65,7 +64,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.get('/', (req, res, next) => {
-  res.render('register', { registered, _layoutFile: 'layout.ejs', role: ''})
+  res.render('register', { registered, _layoutFile: 'layout.ejs', role: '' })
 })
 
 module.exports = router

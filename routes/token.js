@@ -7,7 +7,6 @@ const secret = process.env.JWT_KEY
 
 router.post('/', (req, res, next) => {
   const { email, password } = req.body
-  console.log('this is the error ken')
 
   if (!email || email.trim() === ('')) {
     res.status(400)
