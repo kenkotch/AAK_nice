@@ -5,32 +5,33 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
-let role
+// let role
 
-const auth = (req, res, next) => {
-  jwt.verify(req.cookies.token, secret, (err, payload) => {
-    if (err) {
-      res.status(401)
-      return res.send('Not Authorized')
-    }
-    req.claim = payload.accountId
-    next()
-  })
-}
+// const auth = (req, res, next) => {
+//   jwt.verify(req.cookies.token, secret, (err, payload) => {
+//     if (err) {
+//       res.status(401)
+//       return res.send('Not Authorized')
+//     }
+//     req.claim = payload.accountId
+//     next()
+//   })
+// }
 
-const checkRole = (req, res, next) => {
-  knex('account')
-    .select('role')
-    .first()
-    .where('id', req.claim)
-    .then((data) => {
-      role = data.role
-      next()
-    })
-}
+// const checkRole = (req, res, next) => {
+//   knex('account')
+//     .select('role')
+//     .first()
+//     .where('id', req.claim)
+//     .then((data) => {
+//       role = data.role
+//       next()
+//     })
+// }
 
 router.post('/', (req, res, next) => {
   const { email, password } = req.body
+  console.log('this is the error ken')
 
   if (!email || email.trim() === ('')) {
     res.status(400)
