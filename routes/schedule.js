@@ -36,7 +36,7 @@ router.post('/', auth, (req, res, next) => {
       }, '*')
       .then(() => {
         console.log('should render')
-        res.redirect('/myschedule')
+        res.redirect('/schedule')
       })
   }
 })
@@ -69,7 +69,7 @@ router.get('/', auth, (req, res, next) => {
         }
 
         res.render(
-          'myschedule',
+          'schedule',
           {
             title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
             data,
@@ -99,7 +99,7 @@ router.get('/', auth, (req, res, next) => {
         }
 
         res.render(
-          'myschedule',
+          'schedule',
           {
             title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
             data,
