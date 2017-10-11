@@ -53,10 +53,10 @@ router.post('/', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-// test get route with auth - works
+// // test get route with auth - works
 // router.get('/', auth, (req, res, next) => {
 //
-//   console.log('req.claim:', req.claim)
+//   console.log('passed variable:', butt)
 //
 // })
 
