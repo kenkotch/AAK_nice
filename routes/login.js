@@ -32,7 +32,8 @@ router.post('/', (req, res, next) => {
     .then((data) => {
       let match = bcrypt.compare(password, data.hashed_password)
       if (!match) {
-        res.sendStatus(404)
+        res.status(400)
+        res.send('Bad email or password')
         return
       }
       const token = jwt.sign({
