@@ -19,7 +19,7 @@ router.post('/', function(req, res, next) {
     return
   }
 
-  knex('owner')
+  knex('account')
     .where('email', email)
     .first()
     .then((data) => {
