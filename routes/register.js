@@ -15,15 +15,16 @@ router.post('/', (req, res, next) => {
     last_name_1,
     first_name_2,
     last_name_2,
-    wedding_date
   } = req.body
-  console.log('req.body.wedding_date', req.body.wedding_date)
+  console.log('req.body.wedding_date', typeof (req.body.wedding_date))
 
   if (!username || !email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
     res.status(400)
     res.send('Please complete all fields')
     return
   }
+
+  let wedding_date = req.body.wedding_date || "1000 - 01 - 01"
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('account')
@@ -36,36 +37,43 @@ router.post('/', (req, res, next) => {
         first_name_2,
         last_name_2,
         wedding_date,
-        role: 2
+        role: 2,
       }, '*')
       .then((data) => {
         delete data.created_at
         delete data.updated_at
         delete data.hashed_password
-        console.log('data.id:', data[0].id)
 
-        knex('schedule')
-        .returning('id')
-        .first()
-        .insert({
-          time: 'hide',
-          item: '',
-          description: '',
-          account_id: data[0].id
-        })
-        .then(() => {
-          registered = data
-          res.status(200)
+        knex('account')
+          .insert({
+            account_id: data[0].id
+          })
+          .then(() => {
 
-          res.send(registered[0])
-        })
+            knex('schedule')
+              .insert({
+                time: 'hide',
+                item: '',
+                description: '',
+                account_id: data[0].id
+              })
+              .then(() => {
+                registered = data
+                res.status(200)
+                res.send(registered[0])
+                return
+              })
+          })
       })
-  .catch((err) => next(err))
+      .catch((err) => next(err))
   })
 })
 
 router.get('/', (req, res, next) => {
-  res.render('register', { registered, _layoutFile: 'layout.ejs'})
+  res.render('register', {
+    registered,
+    _layoutFile: 'layout.ejs'
+  })
 })
 
 module.exports = router
