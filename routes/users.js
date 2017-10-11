@@ -10,12 +10,12 @@ router.get('/', (req, res, next) => {
   let fName2
   let wedDate
 
-  knex('owner')
+  knex('account')
     .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
-    .where('owner.id', id)
+    .where('account.id', id)
     .orderBy('time')
-    .innerJoin('schedule', 'owner_id', 'owner.id')
-    .innerJoin('template', 'template.id', 'owner.template_id')
+    .innerJoin('schedule', 'account.account_id', 'account.id')
+    .innerJoin('template', 'template.id', 'account.template_id')
     .then((data) => {
       fName1 = data[0].first_name_1
       fName2 = data[0].first_name_2

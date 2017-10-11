@@ -4,7 +4,7 @@ const knex = require('../knex')
 const jwt = require('jsonwebtoken')
 
 let guest_profile
-// RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
+// RENDERS EVERYTHING FROM THIS account'S SPECIFIC PROFILE
 
 router.get('/', (req, res, next) => {
   res.render('profile', { guest_profile, _layoutFile: 'layout.ejs' })
@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
       return res.send(false)
       console.log(false)
     }
-    let id = payload.ownerId
+    let id = payload.accountId
     console.log(id)
 
     if (!req.body.username || req.body.username.trim() === '') {
@@ -42,7 +42,7 @@ router.post('/', (req, res, next) => {
         .insert({
           username: req.body.username,
           password: req.body.password,
-          owner_id: id
+          account_id: id
         }, '*')
         .then((data) => {
           guest_profile = data
