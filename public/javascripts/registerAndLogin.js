@@ -11,16 +11,16 @@ $(document).ready(() => {
       console.log(data)
 
       $.post("/register", data, null, 'json').then((data) => {
-          console.log('Input data', data)
-          document.location = '/register'
-        })
+        console.log('Input data', data)
+        document.location = '/register'
+      })
         .fail((err) => {
           $('#errorMessage').html(`<div>${err.responseText}</div>`)
         })
     })
   }
 
-  if (document.location.href.match(/login$/)) {
+  if (document.location.href.match(/\/$/)) {
     console.log('on page: login')
 
     $('#loginForm').submit((event) => {
@@ -33,9 +33,9 @@ $(document).ready(() => {
         console.log('data being posted to /token', data)
         document.location = '/token'
       })
-      .fail((err) => {
-        $('#errorMessage').html(`<div>${err.responseText}</div>`)
-      })
+        .fail((err) => {
+          $('#errorMessage').html(`<div>${err.responseText}</div>`)
+        })
     })
   }
 
@@ -46,7 +46,7 @@ $(document).ready(() => {
       method: 'DELETE',
       url: '/token',
       success: 'success'
-    }).then(() =>{
+    }).then(() => {
       document.location = '/'
     })
   })

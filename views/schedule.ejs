@@ -1,6 +1,8 @@
 <p><%= title %></p>
 
-<h2><%= wedDate %></h2>
+<% if (typeof wedDate == 'object' && wedDate) { %>
+  <h2><%= wedDate %></h2>
+<% } %>
 
 <!-- schedule -->
 <table id="schedule">
@@ -17,7 +19,7 @@
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
       <td>
-        <a href="/myschedule/<%= data[i].id %>/edit"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
+        <a href="/schedule/<%= data[i].id %>/edit"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
         <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button>
       </td>
     </tr>
@@ -27,7 +29,7 @@
 <br><br>
 
 <!-- insert form-->
-<form action="/myschedule" method="post">
+<form action="/schedule" method="post">
   <div>
     <label for="time">Time</label>
     <input type="time" name="time" id="time" placeholder="new time" required>

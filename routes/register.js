@@ -17,6 +17,7 @@ router.post('/', (req, res, next) => {
     last_name_2,
     wedding_date
   } = req.body
+  console.log('req.body.wedding_date', req.body.wedding_date)
 
   if (!username || !email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
     res.status(400)

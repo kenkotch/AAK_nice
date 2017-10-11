@@ -35,7 +35,7 @@ $(document).ready(() => {
       data: $('#editForm').serialize(),
       success: (res) => {
         console.log(res)
-        window.location = '/myschedule'
+        window.location = '/schedule'
       }
     })
   })
