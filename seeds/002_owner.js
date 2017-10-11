@@ -1,10 +1,11 @@
 exports.seed = (knex, Promise) => {
   // Deletes ALL existing entries
-  return knex('owner').del()
+  return knex('account').del()
     .then(() => {
       // Inserts seed entries
-      return knex('owner').insert([{
+      return knex('account').insert([{
         id: 1,
+        username: 'adamN'
         hashed_password: "hashed_pass",
         email: 'test@gmail.com',
         first_name_1: 'Adam',
@@ -12,42 +13,23 @@ exports.seed = (knex, Promise) => {
         first_name_2: 'Lisa',
         last_name_2: 'the Magnificent',
         wedding_date: '2018-07-24',
+        account_id:
         template_id: 1
       }, {
         id: 2,
-        hashed_password: "bananaPassword",
-        email: 'hello@email.com',
-        first_name_1: 'Bob',
-        last_name_1: 'Dumbface',
-        first_name_2: 'Wanda',
-        last_name_2: 'the less than Magnificent',
-        wedding_date: '2079-11-12',
+        username: 'Bananas'
+        hashed_password: "hashed_pass",
+        email: 'test2@gmail.com',
+        first_name_1: 'Adam',
+        last_name_1: 'Neef',
+        first_name_2: 'Lisa',
+        last_name_2: 'the Magnificent',
+        wedding_date: '2018-07-24',
+        account_id:1
         template_id: 1
-      }, {
-        id: 3,
-        hashed_password: "applePassword",
-        email: 'adamJustYelled@email.com',
-        first_name_1: 'Balls',
-        last_name_1: 'McSwarmy',
-        first_name_2: 'Betty',
-        last_name_2: 'Clarkerton',
-        wedding_date: '1980-01-20',
-        template_id: 1
-      }, {
-        id: 4,
-        hashed_password: "password",
-        email: "john",
-        first_name_1: "john",
-        last_name_1: "butt",
-        first_name_2: "carla",
-        last_name_2: "face",
-        wedding_date: "2040-01-01",
-        template_id: 2
-      }
-
-      ])
+      }])
         .then(() => {
-          return knex.raw("SELECT setval('owner_id_seq',(SELECT MAX(id) FROM owner));")
+          return knex.raw("SELECT setval('account_id_seq',(SELECT MAX(id) FROM account));")
         })
     })
 }

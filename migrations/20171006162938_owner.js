@@ -1,6 +1,11 @@
 exports.up = (knex, Promise) => {
-  return knex.schema.createTable('owner', (table) => {
+  return knex.schema.createTable('account', (table) => {
     table.increments()
+
+    table.varchar('username', 63)
+      .notNullable()
+      .defaultTo('')
+      .unique()
 
     table.specificType('hashed_password', 'CHAR(60)')
       .notNullable()
@@ -11,11 +16,9 @@ exports.up = (knex, Promise) => {
       .unique()
 
     table.varchar('first_name_1', 63)
-      .notNullable()
       .defaultTo('')
 
     table.varchar('last_name_1', 63)
-      .notNullable()
       .defaultTo('')
 
     table.varchar('first_name_2', 63)
@@ -28,10 +31,13 @@ exports.up = (knex, Promise) => {
 
     table.date('wedding_date')
 
-    table.varchar('owner_id')
+    table.integer('account_id')
       .references('id')
-      .inTable('owner')
+      .inTable('account')
       .unique()
+
+    table.integer('role')
+      .notNullable()
 
     table.integer('template_id')
       .references('id')
@@ -45,5 +51,5 @@ exports.up = (knex, Promise) => {
 }
 
 exports.down = (knex, Promise) => {
-  return knex.schema.dropTableIfExists('owner')
+  return knex.schema.dropTableIfExists('account')
 }

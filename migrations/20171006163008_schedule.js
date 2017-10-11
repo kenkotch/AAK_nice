@@ -2,7 +2,7 @@ exports.up = (knex, Promise) => {
   return knex.schema.createTable('schedule', (table) => {
     table.increments()
 
-    table.varchar('time', 63)
+    table.varchar('time', 5)
       .notNullable()
       .defaultTo('')
 
@@ -14,9 +14,9 @@ exports.up = (knex, Promise) => {
       .notNullable()
       .defaultTo('')
 
-    table.integer('owner_id')
+    table.integer('account_id')
       .references('id')
-      .inTable('owner')
+      .inTable('account')
       .onDelete('CASCADE')
       .notNullable()
 
