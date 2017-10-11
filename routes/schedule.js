@@ -45,40 +45,73 @@ router.post('/', auth, (req, res, next) => {
 router.get('/', auth, (req, res, next) => {
   let id = req.claim
 
-  console.log('id', id)
+  console.log('req.body.wedding_date', req.body.wedding_date)
   let fName1
   let fName2
   let wedDate
 
-  knex('account')
-    .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
-    .where('account.id', id)
-    .orderBy('time')
-    .innerJoin('schedule', 'account.account_id', 'account.id')
-    .innerJoin('template', 'template.id', 'account.template_id')
-    .then((data) => {
-      fName1 = data[0].first_name_1
-      fName2 = data[0].first_name_2
-      wedDate = data[0].wedding_date.toString().slice(0, 15)
+  if (req.body.wedding_date) {
+    knex('account')
+      .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
+      .where('account.id', id)
+      .orderBy('time')
+      .innerJoin('schedule', 'schedule.account_id', 'account.id')
+      .innerJoin('template', 'template.id', 'account.template_id')
+      .then((data) => {
+        console.log(data)
+        fName1 = data[0].first_name_1
+        fName2 = data[0].first_name_2
+        wedDate = data[0].wedding_date.toString().slice(0, 15)
 
-      for (let i = 0; i < data.length; i++) {
-        delete data[i].created_at
-        delete data[i].updated_at
-      }
-
-      res.render(
-        'myschedule',
-        {
-          title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-          data,
-          wedDate,
-          _layoutFile: 'layout.ejs'
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].created_at
+          delete data[i].updated_at
         }
-      )
-    })
-    .catch((err) => {
-      next(err)
-    })
+
+        res.render(
+          'myschedule',
+          {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            data,
+            wedDate,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+      })
+      .catch((err) => {
+        next(err)
+      })
+  } else {
+    knex('account')
+      .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
+      .where('account.id', id)
+      .orderBy('time')
+      .innerJoin('schedule', 'schedule.account_id', 'account.id')
+      .innerJoin('template', 'template.id', 'account.template_id')
+      .then((data) => {
+        console.log(data)
+        fName1 = data[0].first_name_1
+        fName2 = data[0].first_name_2
+
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].created_at
+          delete data[i].updated_at
+        }
+
+        res.render(
+          'myschedule',
+          {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            data,
+            wedDate,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+      })
+      .catch((err) => {
+        next(err)
+      })
+  }
 })
 
 // R to go to edit page
