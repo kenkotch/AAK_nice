@@ -52,16 +52,16 @@ router.post('/', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-router.get('/', (req, res, next) => {
-  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
-    if (err) {
-      return res.send(false)
-    }
-    res.render('login')
-    return res.send(true)
-  })
-  .catch((err) => next(err))
-})
+// router.get('/', (req, res, next) => {
+//   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
+//     if (err) {
+//       return res.send(false)
+//     }
+//     res.render('login')
+//     return res.send(true)
+//   })
+//   .catch((err) => next(err))
+// })
 
 router.delete('/', (req, res, next) => {
   res.clearCookie('token')

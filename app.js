@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', login)
 app.use('/register', register)
 app.use('/login', login)
-// app.use('/token', token)
+app.use('/token', token)
 app.use('/schedule', schedule)
 app.use('/profile', profile)
 
