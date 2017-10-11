@@ -4,30 +4,32 @@ const knex = require('../knex')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
+const auth = require('../modules/auth')
+const checkRole = require('../modules/checkRole')
 
-let role
+// let role
 
-const auth = (req, res, next) => {
-  jwt.verify(req.cookies.token, secret, (err, payload) => {
-    if (err) {
-      res.status(401)
-      return res.send('Not Authorized')
-    }
-    req.claim = payload.accountId
-    next()
-  })
-}
-
-const checkRole = (req) => {
-  knex('account')
-    .select('role')
-    .first()
-    .where('id', req.claim)
-    .then((data) => {
-      return
-      role = data.role
-  })
-}
+// const auth = (req, res, next) => {
+//   jwt.verify(req.cookies.token, secret, (err, payload) => {
+//     if (err) {
+//       res.status(401)
+//       return res.send('Not Authorized')
+//     }
+//     req.claim = payload.accountId
+//     next()
+//   })
+// }
+//
+// const checkRole = (req, res, next) => {
+//   knex('account')
+//     .select('role')
+//     .first()
+//     .where('id', req.claim)
+//     .then((data) => {
+//       role = data.role
+//       next()
+//     })
+// }
 
 router.post('/', (req, res, next) => {
   const { email, password } = req.body
@@ -69,7 +71,7 @@ router.post('/', (req, res, next) => {
 // test get route with auth - works
 router.get('/', auth, checkRole, (req, res, next) => {
 
-  console.log(role)
+  console.log('role:', role)
 
   res.redirect('/')
 

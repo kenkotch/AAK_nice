@@ -43,17 +43,19 @@ router.post('/', (req, res, next) => {
         delete data.hashed_password
 
         knex('schedule')
+        .returning('id')
+        .first()
         .insert({
           time:'',
           item:'',
           description:'',
           account_id: data.id
-        }).
-        then(() => {
+        })
+        .then((rowId) => {
 
-        registered = data
-        res.status(200)
-        res.send(registered[0])
+          registered = data
+          res.status(200)
+          res.send(registered[0])
         })
       })
   .catch((err) => next(err))
