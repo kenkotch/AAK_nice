@@ -5,14 +5,21 @@ const knex = require('../knex')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
-// C
-router.post('/', (req, res, next) => {
-  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
-    if (err) {
-      return res.send(false)
+const auth = (req, res, next) => {
+  jwt.verify(req.cookies.token, secret, (err, payload) => {
+    if(err) {
+      res.status(401)
+      return res.send('Not Authorized')
     }
-    let id = payload.ownerId
-    console.log(id)
+    req.claim = payload.ownerId
+    next()
+  })
+}
+
+// C
+router.post('/', auth, (req, res, next) => {
+
+    let id = req.claim
 
     if (!req.body.time || !req.body.time.trim()) {
       res.status(500)
@@ -33,19 +40,14 @@ router.post('/', (req, res, next) => {
           res.redirect('/myschedule')
         })
     }
-  })
 })
 
 // R info from db
-router.get('/', (req, res, next) => {
-  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
-    if (err) {
-      return res.send(false)
-    }
-    let id = payload.ownerId
+router.get('/', auth, (req, res, next) => {
+
+    let id = req.claim
 
     console.log('id', id)
-    console.log('payload', payload)
     let fName1
     let fName2
     let wedDate
@@ -78,8 +80,7 @@ router.get('/', (req, res, next) => {
       })
       .catch((err) => {
         next(err)
-      })
-  })
+    })
 })
 
 // R to go to edit page

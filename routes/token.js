@@ -5,6 +5,17 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
+const auth = (req, res, next) => {
+  jwt.verify(req.cookies.token, secret, (err, payload) => {
+    if(err) {
+      res.status(401)
+      return res.send('Not Authorized')
+    }
+    req.claim = payload.ownerId
+    next()
+  })
+}
+
 router.post('/', function (req, res, next) {
   const { email, password } = req.body
 
@@ -40,15 +51,12 @@ router.post('/', function (req, res, next) {
     .catch((err) => next(err))
 })
 
-router.get('/', (req, res, next) => {
-  jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
-    if(err){
-      return res.send(false)
-    }
-    res.send(true)
-  })
-  .catch((err) => next(err))
-})
+// test get route with auth - works
+// router.get('/', auth, (req, res, next) => {
+//
+//   console.log('req.claim:', req.claim)
+//
+// })
 
 router.delete('/', (req, res, next) => {
   console.log('cookie-cleared. logged out')
