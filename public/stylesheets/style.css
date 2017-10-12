@@ -13,7 +13,6 @@ a {
 
 body {
   font-family: 'Gill Sans';
-  padding: 50px;
 }
 
 .desert {
@@ -38,4 +37,12 @@ body {
 
 .active{
   background-color: #cae6f9;
+}
+
+tr {
+  padding:15px;
+}
+
+td {
+  padding: 5px;
 }
