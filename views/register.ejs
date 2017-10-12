@@ -3,10 +3,6 @@
 
 <h1>Register with Nice Paper</h1>
 
-<% if(typeof registered == 'object' && registered) { %>
-<div id="renderOwner">Congratulations, <%= registered[0].first_name_1 %> and <%= registered[0].first_name_2 %>, you're registered!</div>
-<% } %>
-
 <form id="newOwner" action="" method="post">
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" placeholder="Enter your email" required>
