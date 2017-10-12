@@ -33,7 +33,7 @@ exports.seed = (knex, Promise) => {
           id: 3,
           username: 'survivor',
           hashed_password: "$2a$05$q/QusSnYKdQqu/hzrO7uE.ILNFmfc.rOdljX9uqEkO6QkgQagQRP.",
-          email: 'test3@gmail.com',
+          email: 'super@gmail.com',
           first_name_1: 'Kelsier',
           last_name_1: 'Survivor',
           first_name_2: 'Mare',

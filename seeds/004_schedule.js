@@ -33,6 +33,12 @@ exports.seed = (knex, Promise) => {
         item: "brunch event",
         description: "No. Really. Why are we awake?",
         account_id: 2
+      }, {
+        id: 6,
+        time: "12:00",
+        item: "Escape",
+        description: "Run into the nite",
+        account_id: 3
       }])
         .then(() => {
           return knex.raw("SELECT setval('schedule_id_seq',(SELECT MAX(id) FROM schedule));")

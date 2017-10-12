@@ -11,7 +11,10 @@ const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
     if (err) {
       res.status(401)
-      return res.render('login', { msg: "We couldn't find what you're looking for, so we've taken you to our homepage.", _layoutFile: 'layout.ejs' })
+      return res.render('login', {
+        msg: "We couldn't find what you're looking for, so we've taken you to our homepage.",
+        _layoutFile: 'layout.ejs'
+      })
     }
     console.log("payload", payload)
     req.payload = payload
@@ -40,10 +43,14 @@ router.post('/', auth, checkRole, (req, res, next) => {
 
     if (!req.body.time || !req.body.time.trim()) {
       res.status(500)
-      res.render('error', { message: 'Time cannot be blank' })
+      res.render('error', {
+        message: 'Time cannot be blank'
+      })
     } else if (!req.body.item || !req.body.item.trim()) {
       res.status(500)
-      res.render('error', { message: 'Item cannot be blank' })
+      res.render('error', {
+        message: 'Item cannot be blank'
+      })
     } else {
       knex('schedule')
         .insert({
@@ -68,6 +75,37 @@ router.get('/', auth, checkRole, (req, res, next) => {
   let fName2
   let wedDate
 
+  if (role === 1) {
+    knex('account')
+      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+      .where('account.id', id)
+      .orderBy('time')
+      .innerJoin('schedule', 'schedule.account_id', 'account.id')
+      .innerJoin('template', 'template.id', 'account.template_id')
+      .then((data) => {
+        console.log(data)
+        fName1 = data[0].first_name_1
+        fName2 = data[0].first_name_2
+
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].created_at
+          delete data[i].updated_at
+        }
+
+        res.render(
+          'schedule', {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            role,
+            data,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+      })
+      .catch((err) => {
+        next(err)
+      })
+  }
+
   if (role === 2) {
     // checks for wedding_date
     if (req.body.wedding_date === '9999-09-09') {
@@ -88,8 +126,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'schedule',
-            {
+            'schedule', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               role,
               data,
@@ -119,8 +156,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'schedule',
-            {
+            'schedule', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               data,
               role,
@@ -153,8 +189,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'scheduleGuest',
-            {
+            'scheduleGuest', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               role,
               data,
@@ -186,8 +221,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'scheduleGuest',
-            {
+            'scheduleGuest', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               role,
               data,
@@ -225,7 +259,9 @@ router.get('/:id/edit', (req, res) => {
       })
   } else {
     res.status(500)
-    res.render('error', { message: 'something went wrong' })
+    res.render('error', {
+      message: 'something went wrong'
+    })
   }
 })
 
@@ -244,7 +280,11 @@ router.patch('/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found')
       }
 
-      const { time, item, description } = req.body
+      const {
+        time,
+        item,
+        description
+      } = req.body
       const updateRow = {}
 
       if (time) {
