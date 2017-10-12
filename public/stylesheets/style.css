@@ -3,6 +3,10 @@
   src: url('gill-sans-light.ttf') format('truetype');
 }
 
+@component-active-bg:{
+  background-color: #cae6f9
+}
+
 a {
   color: #00B7FF;
 }
@@ -25,9 +29,13 @@ body {
 }
 
 .mocha{
-  background-color:  #493d37
+  background-color:  #493d37;
 }
 
 .mud{
-  background-color: #8e8477
+  background-color: #8e8477;
+}
+
+.active{
+  background-color: #cae6f9;
 }
