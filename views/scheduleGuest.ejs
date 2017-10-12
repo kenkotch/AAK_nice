@@ -13,10 +13,12 @@
   </tr>
 
   <% for (let i = 0; i < data.length; i++) { %>
+    <% if(data[i].time !== 'hide') { %>
     <tr>
       <td><%= data[i].time %></td>
       <td><%= data[i].item %></td>
       <td><%= data[i].description %></td>
     </tr>
+    <% } %>
   <% } %>
 </table>

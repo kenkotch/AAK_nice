@@ -35,7 +35,8 @@ router.post('/', (req, res, next) => {
           return
         }
         const token = jwt.sign({
-          accountId: data.id
+          accountId: data.account_id || data.id,
+          id: data.id
         }, secret)
 
         res.cookie(
@@ -60,7 +61,8 @@ router.post('/', (req, res, next) => {
         return
       }
       const token = jwt.sign({
-        accountId: data.id
+        accountId: data.account_id || data.id,
+        id: data.id
       }, secret)
 
       res.cookie(
