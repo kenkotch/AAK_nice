@@ -32,7 +32,9 @@
         <td><%= data[i].created_at %></td>
         <td><%= data[i].updated_at %></td>
 
-        <td><a href="/superSchedule/<%= data[i].id %>/edit"><button type="button" name="button" id="<%= data[i].id %>">edit</button></a>
+        <td><a href="/schedule/<%= data[i].id %>/edit"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
+        <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button>
+        <a href=""><button class="userSched" type="button" name="button" id="<%= data[i].id %> ">Get this user's schedule</button></a>
       </td>
     </tr>
   <% } %>

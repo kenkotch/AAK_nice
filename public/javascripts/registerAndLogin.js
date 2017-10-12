@@ -48,4 +48,13 @@ $(document).ready(() => {
       document.location = '/'
     })
   })
+
+  $('.userSched').click((e) => {
+    console.log('clicked on', e.target.id)
+    let id = e.target.id
+
+    $.ajax({
+
+    })
+  })
 })
