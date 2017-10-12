@@ -2,7 +2,7 @@
 <!-- <p><%= title %></p> -->
 <!-- <%= (data.email)%> -->
 <% if(typeof guest_profile == 'object' && guest_profile) { %>
-<div id="renderNewGuest">Congratulations, your guest username is : <%= guest_profile[0].username %> and your guest password is:  <%= guest_profile[0].password %>, now just share this with your guests so they can see your schedule!</div>
+<div id="renderNewGuest">Congratulations, your guest username is : <%= guest_profile[0].username %> and your guest password is:  <%= guest_profile[0].hashed_password %>, now just share this with your guests so they can see your schedule!</div>
 <% } %>
 
 <!-- profile -->
