@@ -14,8 +14,7 @@ router.post('/', (req, res, next) => {
     first_name_1,
     last_name_1,
     first_name_2,
-    last_name_2,
-    wedding_date
+    last_name_2
   } = req.body
   console.log('req.body.wedding_date', req.body.wedding_date)
 
@@ -25,7 +24,7 @@ router.post('/', (req, res, next) => {
     return
   }
 
-  // let wedding_date = req.body.wedding_date || "1000 - 01 - 01"
+  let wedding_date = req.body.wedding_date || "2018-01-01"
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('account')
