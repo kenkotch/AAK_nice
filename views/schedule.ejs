@@ -15,15 +15,25 @@
 
   <% for (let i = 0; i < data.length; i++) { %>
       <% if(data[i].time !== 'hide') { %>
+  <div class ="row">
     <tr>
+    <div class="col">
       <td><%= data[i].time %></td>
+    </div>
+    <div class="col">
       <td><%= data[i].item %></td>
+    </div>
+    <div class="col">
       <td><%= data[i].description %></td>
+    </div>
+    <div class="col">
       <td>
         <a href="/schedule/<%= data[i].id %>/edit"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
         <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button>
       </td>
+    </div>
     </tr>
+  </div>
     <% } %>
   <% } %>
 </table>
