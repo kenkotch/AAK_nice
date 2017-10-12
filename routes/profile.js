@@ -166,6 +166,10 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
 
       let updateRow = {}
 
+      if (username) {
+        updateRow.username = username
+      }
+
       if (email) {
         updateRow.email = email
       }
