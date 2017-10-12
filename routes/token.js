@@ -45,8 +45,10 @@ router.post('/', (req, res, next) => {
           }
         )
         res.status(200)
+        console.log('\n\n\nemail account\n\n\n')
         delete data.hashed_password
         res.send(data)
+        return
       })
       .catch((err) => next(err))
   }
@@ -71,8 +73,10 @@ router.post('/', (req, res, next) => {
         }
       )
       res.status(200)
+      console.log(data)
       delete data.hashed_password
       res.send(data)
+      return
     })
     .catch((err) => next(err))
 

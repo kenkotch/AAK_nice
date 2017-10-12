@@ -155,6 +155,10 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
 
       const updateRow = {}
 
+      if (username) {
+        updateRow.username = username
+      }
+
       if (email) {
         updateRow.email = email
       }
