@@ -81,31 +81,17 @@ router.get('/', auth, checkRole, (req, res, next) => {
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           delete data[i].hashed_password
+          data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
         }
         console.log('data pull from super:', data)
-
-        // res.render(
-        //   'schedule', {
-        //     title: `Welcome home, Survivor`,
-        //     role,
-        //     data
-        //     _layoutFile: 'layout.ejs'
-        //   }
-        // )
-
-          console.log('BEG RENDERING')
           res.render(
             'superSchedule', {
-              title: 'Welcome home, Survivor',
+              title: 'All registered accounts',
               role,
               data,
               _layoutFile: 'layout.ejs'
             }
           )
-          console.log('THE GODS ARE ANGRY')
-        // catch (e) {
-        //   console.log(e)
-        // }
       })
       .catch((err) => {
         next(err)
