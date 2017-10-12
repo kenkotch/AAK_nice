@@ -35,24 +35,24 @@ router.post('/', auth, checkRole, (req, res, next) => {
     let id = req.claim
     console.log('this is id for role 2', id)
 
-  if (!req.body.time || !req.body.time.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Time cannot be blank' })
-  } else if (!req.body.item || !req.body.item.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Item cannot be blank' })
-  } else {
-    knex('schedule')
-      .insert({
-        time: req.body.time,
-        item: req.body.item,
-        description: req.body.description,
-        account_id: id
-      }, '*')
-      .then(() => {
-        console.log('should render')
-        res.redirect('/schedule')
-      })
+    if (!req.body.time || !req.body.time.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Time cannot be blank' })
+    } else if (!req.body.item || !req.body.item.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Item cannot be blank' })
+    } else {
+      knex('schedule')
+        .insert({
+          time: req.body.time,
+          item: req.body.item,
+          description: req.body.description,
+          account_id: id
+        }, '*')
+        .then(() => {
+          // console.log('should render')
+          res.redirect('/schedule')
+        })
     }
   }
 })
@@ -67,7 +67,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
 
   if (role === 2) {
     // checks for wedding_date
-    if (!req.body.wedding_date) {
+    if (req.body.wedding_date === '9999-09-09') {
       knex('account')
         .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
 // this is data
