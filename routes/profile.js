@@ -180,8 +180,8 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
         updateRow.first_name_2 = first_name_2
       }
 
-      if (first_name_2) {
-        updateRow.first_name_2 = first_name_2
+      if (last_name_2) {
+        updateRow.last_name_2 = last_name_2
       }
 
       if (wedding_date) {
