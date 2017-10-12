@@ -1,4 +1,6 @@
 $(document).ready(() => {
+
+  // sets active class depending on current page
   $(".active").each(() => {
     $(this).removeClass("active")
   })
