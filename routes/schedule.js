@@ -27,7 +27,7 @@ const checkRole = (req, res, next) => {
     .where('id', req.payload.id)
     .then((data) => {
       role = data.role
-      console.log("role in checkRole", role)
+      // console.log("role in checkRole", role)
       next()
     })
 }
@@ -36,7 +36,7 @@ const checkRole = (req, res, next) => {
 router.post('/', auth, checkRole, (req, res, next) => {
   if (role === 2) {
     let id = req.payload.accountId
-    console.log('this is id for role 2', id)
+    // console.log('this is id for role 2', id)
 
     if (!req.body.time || !req.body.time.trim()) {
       res.status(500)

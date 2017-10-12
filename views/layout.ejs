@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nice Paper</title>
-
     <!-- bootstrap stylesheet -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- font awesome -->
@@ -34,7 +33,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active" id="home"><a href="/">Home</a><span class="sr-only">(current)</span></a></li>
+        <li id="home"><a href="/">Home</a></li>
 
         <% if (role === '') { %>
           <li id="register"><a href="/register">Register</a></li>
@@ -69,5 +68,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/javascripts/registerAndLogin.js"></script>
     <script src="/javascripts/api/api_v1.js" charset="utf-8"></script>
+    <script src="/javascripts/functions.js" charset="utf-8"></script>
   </body>
 </html>
