@@ -1,18 +1,15 @@
 $(document).ready(() => {
-  console.log('ready!')
 
   if (document.location.href.match(/register$/)) {
-    console.log('on page: register')
 
     $('#newOwner').submit((event) => {
       event.preventDefault()
 
       let data = $('#newOwner').serialize()
-      delete data.hashed_password
-      console.log(data)
+      // delete data.password
+      // console.log('type of data?', typeof(data))
 
       $.post("/register", data, null, 'json').then((data) => {
-        console.log('Input data', data)
         document.location = '/'
       })
         .fail((err) => {

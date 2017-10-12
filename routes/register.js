@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt')
 let registered
 
 router.post('/', (req, res, next) => {
-  console.log(req.body)
   // now these must all be required fields in the request body/form input except wedding_date
   const {
     username,
@@ -46,12 +45,12 @@ router.post('/', (req, res, next) => {
         delete data.updated_at
         delete data.hashed_password
 
-        // knex('account')
-        //   .update({
-        //     account_id: data[0].id
-        //   })
-        //   .where('id', id)
-        //   .then(() => {
+        knex('account')
+          .update({
+            account_id: data[0].id
+          })
+          .where('id', data[0].id)
+          .then(() => {
 
             knex('schedule')
               .insert({
@@ -66,7 +65,7 @@ router.post('/', (req, res, next) => {
                 res.send(registered[0])
                 return
               })
-          // })
+          })
       })
     .catch((err) => next(err))
   })
