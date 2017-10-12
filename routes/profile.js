@@ -150,7 +150,8 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
     last_name_2,
     wedding_date
   } = req.body
-
+  console.log('email', email);
+  console.log('req.body', req.body);
   if (Number.isNaN(id)) {
     return next()
   }
@@ -158,11 +159,12 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
   knex('account')
     .where('id', id)
     .then((rows) => {
+      console.log("rows: ", rows)
       if (!rows) {
         throw boom.create(404, 'Not Found')
       }
 
-      const updateRow = {}
+      let updateRow = {}
 
       if (email) {
         updateRow.email = email
@@ -187,11 +189,13 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
       if (wedding_date) {
         updateRow.wedding_date = wedding_date
       }
-
+      console.log('id is:', id);
+      console.log('updateRow:',updateRow);
       knex('account')
         .update(updateRow, '*')
         .where('id', id)
         .then((row) => {
+          console.log("row set 2: ", row)
           res.send(row[0])
         })
     })

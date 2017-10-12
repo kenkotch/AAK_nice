@@ -23,7 +23,7 @@ $(document).ready(() => {
       })
   })
 
-  // UPDATE
+  // UPDATE SCHEDULE
   $("#editForm").submit((e) => {
     e.preventDefault()
     console.log('form submit')
@@ -40,6 +40,7 @@ $(document).ready(() => {
     })
   })
 
+  // UPDATE PROFILE
   $("#editProfileForm").submit((e) => {
     e.preventDefault()
     console.log('form submit')
@@ -48,7 +49,7 @@ $(document).ready(() => {
     $.ajax({
       url: `/profile/${id}/editprofile`,
       method: "PATCH",
-      data: $('#editprofileForm').serialize(),
+      data: $('#editProfileForm').serialize(),
       success: (res) => {
         console.log(res)
         window.location = '/profile'
