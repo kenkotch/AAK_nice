@@ -22,10 +22,13 @@ $(document).ready(() => {
 
     $('#loginForm').submit((event) => {
       event.preventDefault()
+      console.log('clicked on login')
 
       let data = $('#loginForm').serialize()
+      console.log('data from form')
 
       $.post('/token', data, null, 'json').then((data) => {
+        console.log('from token to schedule')
         document.location = '/schedule'
       })
         .fail((err) => {

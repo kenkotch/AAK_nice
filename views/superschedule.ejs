@@ -1,0 +1,41 @@
+<p><%= title %></p>
+
+<table id="superSchedule">
+  <tr>
+    <th>account.id</th>
+    <th>email</th>
+    <th>firstName1</th>
+    <th>lastName1</th>
+    <th>firstName2</th>
+    <th>lastName2</th>
+    <th>weddingDate</th>
+    <th>account_id</th>
+    <th>role</th>
+    <th>template_id</th>
+  </tr>
+
+  <% for (let i = 0; i < data.length; i++) { %>
+      <% if(data[i].time !== 'hide') { %>
+    <tr>
+      <td><%= data[i].time %></td>
+      <td><%= data[i].item %></td>
+      <td><%= data[i].description %></td>
+
+        <td><%= account.id %></td>
+        <td><%= email %></td>
+        <td><%= firstName1 %></td>
+        <td><%= lastName1 %></td>
+        <td><%= firstName2 %></td>
+        <td><%= lastName2 %></td>
+        <td><%= weddingDate %></td>
+        <td><%= account_id %></td>
+        <td><%= role %></td>
+        <td><%= template_id %></td>
+
+        <td><a href="/schedule/<%= data[i].id %>/edit"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
+        <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button>
+      </td>
+    </tr>
+    <% } %>
+  <% } %>
+</table>

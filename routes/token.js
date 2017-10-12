@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
 router.post('/', (req, res, next) => {
-  console.log('in token')
   const {
     email,
     password

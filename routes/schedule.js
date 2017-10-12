@@ -70,31 +70,21 @@ router.post('/', auth, checkRole, (req, res, next) => {
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
-  console.log("id", id)
+  console.log("id in get", id)
   let fName1
   let fName2
   let wedDate
 
-  if (role === 1) {
+  if (role === Number(1)) {
     knex('account')
-      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-      .where('account.id', id)
-      .orderBy('time')
-      .innerJoin('schedule', 'schedule.account_id', 'account.id')
-      .innerJoin('template', 'template.id', 'account.template_id')
+      .select('*')
       .then((data) => {
-        console.log(data)
-        fName1 = data[0].first_name_1
-        fName2 = data[0].first_name_2
-
-        for (let i = 0; i < data.length; i++) {
-          delete data[i].created_at
-          delete data[i].updated_at
-        }
+        delete data.hashed_password
+        console.log('data pull from super:', data)
 
         res.render(
-          'schedule', {
-            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+          'superschedule', {
+            title: `Welcome home, Survivor`,
             role,
             data,
             _layoutFile: 'layout.ejs'
