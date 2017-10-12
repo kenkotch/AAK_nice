@@ -109,8 +109,37 @@ router.post('/', auth, checkRole, (req, res, next) => {
 
 })
 
+router.get('/:id/editprofile', (req, res) => {
+  const id = req.params.id
+
+  if (typeof id !== 'undefined') {
+    knex('account')
+      .select()
+      .where('id', id)
+      .first()
+      .then((data) => {
+        res.render('editprofile', {
+          title: `something is working at id ${id}`,
+          id,
+          data,
+          role,
+          username: data.username,
+          email: data.email,
+          first_name_1: data.first_name_1,
+          first_name_2: data.first_name_2,
+          last_name_1: data.last_name_1,
+          last_name_2: data.last_name_2,
+          wedding_date: data.wedding_date,
+          _layoutFile: 'layout.ejs'
+        })
+      })
+  } else {
+    res.status(500)
+    res.render('error', { message: 'something went wrong' })
+  }
+})
 // update the first and last names of the couple, update the wedding_date, update email,
-router.patch('/:id', auth, checkRole, (req, res, next) => {
+router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
   const id = Number(req.params.id)
   const {
     username,
