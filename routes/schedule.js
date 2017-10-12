@@ -13,7 +13,8 @@ const auth = (req, res, next) => {
       res.status(401)
       return res.render('login', { msg: "We couldn't find what you're looking for, so we've taken you to our homepage.", _layoutFile: 'layout.ejs' })
     }
-    req.claim = payload.accountId
+    console.log("payload", payload)
+    req.payload = payload
     next()
   })
 }
@@ -22,9 +23,11 @@ const checkRole = (req, res, next) => {
   knex('account')
     .select('role')
     .first()
-    .where('id', req.claim)
+    // .innerJoin('schedule', 'schedule.account_id', 'account.account_id')
+    .where('id', req.payload.id)
     .then((data) => {
       role = data.role
+      console.log("role in checkRole", role)
       next()
     })
 }
@@ -32,50 +35,48 @@ const checkRole = (req, res, next) => {
 // C
 router.post('/', auth, checkRole, (req, res, next) => {
   if (role === 2) {
-    let id = req.claim
+    let id = req.payload.accountId
     console.log('this is id for role 2', id)
 
-  if (!req.body.time || !req.body.time.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Time cannot be blank' })
-  } else if (!req.body.item || !req.body.item.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Item cannot be blank' })
-  } else {
-    knex('schedule')
-      .insert({
-        time: req.body.time,
-        item: req.body.item,
-        description: req.body.description,
-        account_id: id
-      }, '*')
-      .then(() => {
-        console.log('should render')
-        res.redirect('/schedule')
-      })
+    if (!req.body.time || !req.body.time.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Time cannot be blank' })
+    } else if (!req.body.item || !req.body.item.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Item cannot be blank' })
+    } else {
+      knex('schedule')
+        .insert({
+          time: req.body.time,
+          item: req.body.item,
+          description: req.body.description,
+          account_id: id
+        }, '*')
+        .then(() => {
+          // console.log('should render')
+          res.redirect('/schedule')
+        })
     }
   }
 })
 
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
-  let id = req.claim
-
+  let id = req.payload.accountId
+  console.log("id", id)
   let fName1
   let fName2
   let wedDate
 
   if (role === 2) {
     // checks for wedding_date
-    if (!req.body.wedding_date) {
+    if (req.body.wedding_date === '9999-09-09') {
       knex('account')
         .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-// this is data
         .where('account.id', id)
         .orderBy('time')
         .innerJoin('schedule', 'schedule.account_id', 'account.id')
         .innerJoin('template', 'template.id', 'account.template_id')
-// data ends here
         .then((data) => {
           console.log(data)
           fName1 = data[0].first_name_1
