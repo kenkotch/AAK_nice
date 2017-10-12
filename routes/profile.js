@@ -7,9 +7,8 @@ const secret = process.env.JWT_KEY
 const bcrypt = require('bcrypt')
 
 let role
-// let guest_profile
-// RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
 
+// RENDERS EVERYTHING FROM THIS OWNER'S SPECIFIC PROFILE
 const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
     if (err) {
