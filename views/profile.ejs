@@ -1,6 +1,33 @@
+
+<!-- <p><%= title %></p> -->
+<!-- <%= (data.email)%> -->
 <% if(typeof guest_profile == 'object' && guest_profile) { %>
 <div id="renderNewGuest">Congratulations, your guest username is : <%= guest_profile[0].username %> and your guest password is:  <%= guest_profile[0].password %>, now just share this with your guests so they can see your schedule!</div>
 <% } %>
+
+<!-- profile -->
+<!-- <table id="profile"> -->
+    <br>
+    <p>Username:</p> <%= data.username %>
+    <br>
+    <p>email:</p> <%= data.email %>
+    <br>
+    <p>First Name 1:</p> <%= data.first_name_1 %>
+    <br>
+    <p>Last Name 1:</p> <%= data.last_name_1 %>
+    <br>
+    <p>First Name 2:</p> <%= data.first_name_2 %>
+    <br>
+    <p>Last Name 2:</p> <%= data.last_name_2 %>
+    <br>
+    <br>
+    <a href="/profile/<%= data.id %>/profileedit"><button class="edit" type="button" name="button" id="<%= data.id %>">edit</button></a>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
 
 
 <form id="newGuest" action="/profile" method="post">

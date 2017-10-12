@@ -1,0 +1,11 @@
+<h3>Edit profile</h3>
+
+<form id="editForm" action="/profile">
+
+  <input type="hidden" name="id" value="<%= id %>">
+
+  <label for="email">email</label>
+  <input value="<%= data.email %>" type="text" name="email" id="email" placeholder="new email" required>
+
+  <button id="editBtn" type="submit">edit event</button>
+</form>

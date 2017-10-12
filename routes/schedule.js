@@ -72,10 +72,12 @@ router.get('/', auth, checkRole, (req, res, next) => {
     if (!req.body.wedding_date) {
       knex('account')
         .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+// this is data
         .where('account.id', id)
         .orderBy('time')
         .innerJoin('schedule', 'schedule.account_id', 'account.id')
         .innerJoin('template', 'template.id', 'account.template_id')
+// data ends here
         .then((data) => {
           console.log(data)
           fName1 = data[0].first_name_1
