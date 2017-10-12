@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
     return
   }
 
-  let wedding_date = req.body.wedding_date || "2018-01-01"
+  let wedding_date = req.body.wedding_date || "9999-09-09"
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('account')
