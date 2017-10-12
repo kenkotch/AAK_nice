@@ -6,7 +6,10 @@ const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
 router.post('/', (req, res, next) => {
-  const { email, password } = req.body
+  const {
+    email,
+    password
+  } = req.body
 
   if (!email || email.trim() === ('')) {
     res.status(400)
@@ -20,8 +23,35 @@ router.post('/', (req, res, next) => {
     return
   }
 
+  if (email.includes('@')) {
+
+    knex('account')
+      .where('email', email)
+      .first()
+      .then((data) => {
+        let match = bcrypt.compareSync(password, data.hashed_password)
+        if (!match) {
+          res.sendStatus(404)
+          return
+        }
+        const token = jwt.sign({
+          accountId: data.id
+        }, secret)
+
+        res.cookie(
+          'token', token, {
+            httpOnly: true
+          }
+        )
+        res.status(200)
+        delete data.hashed_password
+        res.send(data)
+      })
+      .catch((err) => next(err))
+  }
+
   knex('account')
-    .where('email', email)
+    .where('username', email)
     .first()
     .then((data) => {
       let match = bcrypt.compareSync(password, data.hashed_password)
@@ -29,17 +59,21 @@ router.post('/', (req, res, next) => {
         res.sendStatus(404)
         return
       }
-      const token = jwt.sign({ accountId: data.id }, secret)
+      const token = jwt.sign({
+        accountId: data.id
+      }, secret)
 
       res.cookie(
-        'token', token,
-        { httpOnly: true }
+        'token', token, {
+          httpOnly: true
+        }
       )
       res.status(200)
       delete data.hashed_password
       res.send(data)
     })
     .catch((err) => next(err))
+
 })
 
 router.delete('/', (req, res, next) => {

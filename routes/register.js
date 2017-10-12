@@ -14,8 +14,7 @@ router.post('/', (req, res, next) => {
     first_name_1,
     last_name_1,
     first_name_2,
-    last_name_2,
-    wedding_date
+    last_name_2
   } = req.body
   console.log('req.body.wedding_date', req.body.wedding_date)
 
@@ -24,6 +23,8 @@ router.post('/', (req, res, next) => {
     res.send('Please complete all fields')
     return
   }
+
+  let wedding_date = req.body.wedding_date || "9999-09-09"
 
   bcrypt.hash(password, 5, (err, hash) => {
     knex('account')
@@ -43,28 +44,38 @@ router.post('/', (req, res, next) => {
         delete data.updated_at
         delete data.hashed_password
 
-        knex('schedule')
-          .returning('id')
-          .first()
-          .insert({
-            time: 'hide',
-            item: '',
-            description: '',
+        knex('account')
+          .update({
             account_id: data[0].id
           })
+          .where('id', data[0].id)
           .then(() => {
-            registered = data
-            res.status(200)
 
-            res.send(registered[0])
+            knex('schedule')
+              .insert({
+                time: 'hide',
+                item: '',
+                description: '',
+                account_id: data[0].id
+              })
+              .then(() => {
+                registered = data
+                res.status(200)
+                res.send(registered[0])
+                return
+              })
           })
       })
-  .catch((err) => next(err))
+    .catch((err) => next(err))
   })
 })
 
 router.get('/', (req, res, next) => {
-  res.render('register', { registered, _layoutFile: 'layout.ejs', role: '' })
+  res.render('register', {
+    registered,
+    _layoutFile: 'layout.ejs',
+    role: ''
+  })
 })
 
 module.exports = router
