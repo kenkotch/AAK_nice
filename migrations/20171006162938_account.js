@@ -35,7 +35,7 @@ exports.up = (knex, Promise) => {
     table.integer('account_id')
       .references('id')
       .inTable('account')
-      .unique()
+      // .unique()
 
     table.integer('role')
       .notNullable()
