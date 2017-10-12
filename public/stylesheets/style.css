@@ -11,3 +11,23 @@ body {
   font-family: 'Gill Sans';
   padding: 50px;
 }
+
+.desert {
+  background-color: #ffefd5;
+}
+
+.warm {
+  background-color: #ebebeb;
+}
+
+.rain{
+  background-color: #b9d5e8;
+}
+
+.mocha{
+  background-color:  #493d37
+}
+
+.mud{
+  background-color: #8e8477
+}
