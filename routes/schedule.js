@@ -166,7 +166,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
           next(err)
         })
     } else {
-      // let wedDate
 
       knex('account')
         .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
