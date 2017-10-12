@@ -39,4 +39,20 @@ $(document).ready(() => {
       }
     })
   })
+
+  $("#editProfileForm").submit((e) => {
+    e.preventDefault()
+    console.log('form submit')
+    let id = $('input[name="id"]').val()
+
+    $.ajax({
+      url: `/profile/${id}/editprofile`,
+      method: "PATCH",
+      data: $('#editprofileForm').serialize(),
+      success: (res) => {
+        console.log(res)
+        window.location = '/profile'
+      }
+    })
+  })
 })

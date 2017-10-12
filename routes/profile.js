@@ -39,17 +39,19 @@ const checkRole = (req, res, next) => {
 router.get('/', auth, checkRole, (req, res, next) => {
   // const id = req.params.id
   let id = req.claim
-  console.log("id is:", id)
   if (typeof id !== 'undefined') {
     knex('account')
-      .select()
+      .select('id', 'username', 'email', 'first_name_1', 'last_name_1', 'first_name_2', 'last_name_2', 'wedding_date')
       .where('id', id)
       .first()
       .then((data) => {
         res.render('profile', {
           title: `${data.first_name_1} and ${data.first_name_2}'s profile page`,
           id,
+          data,
           role,
+          username: data.username,
+          email: data.email,
           first_name_1: data.first_name_1,
           first_name_2: data.first_name_2,
           last_name_1: data.last_name_1,
@@ -107,37 +109,63 @@ router.post('/', auth, checkRole, (req, res, next) => {
 
 })
 
+router.get('/:id/editprofile', (req, res) => {
+  const id = req.params.id
 
-router.patch('/:id', (req, res, next) => {
+  if (typeof id !== 'undefined') {
+    knex('account')
+      .select()
+      .where('id', id)
+      .first()
+      .then((data) => {
+        res.render('editprofile', {
+          title: `something is working at id ${id}`,
+          id,
+          data,
+          role,
+          username: data.username,
+          email: data.email,
+          first_name_1: data.first_name_1,
+          first_name_2: data.first_name_2,
+          last_name_1: data.last_name_1,
+          last_name_2: data.last_name_2,
+          wedding_date: data.wedding_date,
+          _layoutFile: 'layout.ejs'
+        })
+      })
+  } else {
+    res.status(500)
+    res.render('error', { message: 'something went wrong' })
+  }
+})
+// update the first and last names of the couple, update the wedding_date, update email,
+router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
   const id = Number(req.params.id)
+  const {
+    username,
+    email,
+    first_name_1,
+    last_name_1,
+    first_name_2,
+    last_name_2,
+    wedding_date
+  } = req.body
 
   if (Number.isNaN(id)) {
     return next()
   }
 
-  knex('acount')
+  knex('account')
     .where('id', id)
     .then((rows) => {
       if (!rows) {
         throw boom.create(404, 'Not Found')
       }
 
-      const {
-        email,
-        password,
-        first_name_1,
-        last_name_1,
-        first_name_2,
-        last_name_2,
-        wedding_date
-      } = req.body
       const updateRow = {}
+
       if (email) {
         updateRow.email = email
-      }
-
-      if (password) {
-        updateRow.password = password
       }
 
       if (first_name_1) {
@@ -170,29 +198,6 @@ router.patch('/:id', (req, res, next) => {
     .catch((err) => next(err))
 })
 //
-router.delete('/:id', (req, res, next) => {
-  const id = Number(req.params.id)
-  if (Number.isNaN(id)) {
-    return next()
-  }
-  let event
-  knex('account')
-    .where('id', id)
-    .then((row) => {
-      if (!row) {
-        throw boom.create(404, 'Not Found')
-      }
-      event = row
 
-      return knex('account')
-        .del()
-        .where('id', id)
-    })
-    .then(() => {
-      delete event.id
-      res.send(event)
-    })
-    .catch((err) => next(err))
-})
 
 module.exports = router
