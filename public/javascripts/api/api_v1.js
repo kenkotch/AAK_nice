@@ -48,7 +48,7 @@ $(document).ready(() => {
     $.ajax({
       url: `/profile/${id}/editprofile`,
       method: "PATCH",
-      data: $('#editprofileForm').serialize(),
+      data: $('#editProfileForm').serialize(),
       success: (res) => {
         console.log(res)
         window.location = '/profile'
