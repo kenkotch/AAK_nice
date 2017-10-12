@@ -32,10 +32,6 @@ const checkRole = (req, res, next) => {
     })
 }
 
-// router.get('/', (req, res, next) => {
-//   res.render('profile', { guest_profile, _layoutFile: 'layout.ejs' })
-// })
-//
 router.get('/', auth, checkRole, (req, res, next) => {
   // const id = req.params.id
   let id = req.claim
@@ -66,10 +62,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
       message: 'something went wrong'
     })
   }
-  // res.render('profile', {
-  //   guest_profile,
-  //   _layoutFile: 'layout.ejs'
-  // })
 })
 
 
@@ -100,7 +92,6 @@ router.post('/', auth, checkRole, (req, res, next) => {
         .then((data) => {
           guest_profile = data
           res.status(200)
-          // res.send(guest_profile[0])
           res.redirect('/profile')
         })
         .catch((err) => next(err))

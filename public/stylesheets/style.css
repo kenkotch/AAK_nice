@@ -1,8 +1,13 @@
+@@font-face {
+  font-family: 'Gill Sans';
+  src: url('gill-sans-light.ttf') format('truetype');
+}
+
 a {
   color: #00B7FF;
 }
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Gill Sans';
   padding: 50px;
 }
