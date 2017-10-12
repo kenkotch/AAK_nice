@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_KEY
 
 let role
-
 const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
     if (err) {
@@ -33,26 +32,26 @@ const checkRole = (req, res, next) => {
 router.post('/', auth, checkRole, (req, res, next) => {
   if (role === 2) {
     let id = req.claim
-    console.log('this is id for role 2', id)
+    console.log('req.claim, role2post', req.claim)
 
-  if (!req.body.time || !req.body.time.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Time cannot be blank' })
-  } else if (!req.body.item || !req.body.item.trim()) {
-    res.status(500)
-    res.render('error', { message: 'Item cannot be blank' })
-  } else {
-    knex('schedule')
-      .insert({
-        time: req.body.time,
-        item: req.body.item,
-        description: req.body.description,
-        account_id: id
-      }, '*')
-      .then(() => {
-        console.log('should render')
-        res.redirect('/schedule')
-      })
+    if (!req.body.time || !req.body.time.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Time cannot be blank' })
+    } else if (!req.body.item || !req.body.item.trim()) {
+      res.status(500)
+      res.render('error', { message: 'Item cannot be blank' })
+    } else {
+      knex('schedule')
+        .insert({
+          time: req.body.time,
+          item: req.body.item,
+          description: req.body.description,
+          account_id: id
+        }, '*')
+        .then(() => {
+          // console.log('should render')
+          res.redirect('/schedule')
+        })
     }
   }
 })
@@ -60,6 +59,7 @@ router.post('/', auth, checkRole, (req, res, next) => {
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.claim
+  console.log('this is id: req.claim', id)
 
   let fName1
   let fName2
@@ -70,12 +70,12 @@ router.get('/', auth, checkRole, (req, res, next) => {
     if (!req.body.wedding_date) {
       knex('account')
         .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-        .where('account.id', id)
+        .where('account.account_id', id)
         .orderBy('time')
         .innerJoin('schedule', 'schedule.account_id', 'account.id')
         .innerJoin('template', 'template.id', 'account.template_id')
         .then((data) => {
-          console.log(data)
+          console.log('data', data)
           fName1 = data[0].first_name_1
           fName2 = data[0].first_name_2
 
@@ -100,12 +100,12 @@ router.get('/', auth, checkRole, (req, res, next) => {
     } else {
       knex('account')
         .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
-        .where('account.id', id)
+        .where('account.account_id', id)
         .orderBy('time')
         .innerJoin('schedule', 'schedule.account_id', 'account.id')
         .innerJoin('template', 'template.id', 'account.template_id')
         .then((data) => {
-          console.log(data)
+          console.log('data', data)
           fName1 = data[0].first_name_1
           fName2 = data[0].first_name_2
           wedDate = data[0].wedding_date.toString().slice(0, 15)
@@ -135,12 +135,12 @@ router.get('/', auth, checkRole, (req, res, next) => {
     if (!req.body.wedding_date) {
       knex('account')
         .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-        .where('account.id', id)
+        .where('account.account_id', id)
         .orderBy('time')
         .innerJoin('schedule', 'schedule.account_id', 'account.id')
         .innerJoin('template', 'template.id', 'account.template_id')
         .then((data) => {
-          console.log(data)
+          console.log('data', data)
           fName1 = data[0].first_name_1
           fName2 = data[0].first_name_2
 
@@ -163,16 +163,15 @@ router.get('/', auth, checkRole, (req, res, next) => {
           next(err)
         })
     } else {
-      // let wedDate
 
       knex('account')
         .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
-        .where('account.id', id)
+        .where('account.account_id', id)
         .orderBy('time')
         .innerJoin('schedule', 'schedule.account_id', 'account.id')
         .innerJoin('template', 'template.id', 'account.template_id')
         .then((data) => {
-          console.log(data)
+          console.log('data', data)
           fName1 = data[0].first_name_1
           fName2 = data[0].first_name_2
           wedDate = data[0].wedding_date.toString().slice(0, 15)
