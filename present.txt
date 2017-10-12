@@ -1,0 +1,41 @@
+introduce ourselves:
+  adam
+  ken
+  adam
+
+project description:
+problem
+solution
+intended user:
+  wedding couples - signup and save paper
+  wedding party
+  guest
+  vendors
+
+technologies:
+  HTML
+  CSS w/ Bootstrap
+  node
+  js/ jQuery
+  postgresql
+  Knex
+  jwt/ bcrypt
+  ajax
+  Heroku
+
+demo:
+reg new wedding couple
+  add schedule items
+  edit schedule items
+  delete schedule items
+  profile - edit
+  create guest user
+  logout- login as guest and view schedule
+
+  superuser functionality:
+    see all accounts
+    view each account's schedule
+    update account
+    delete account
+    update schedule
+    delete schedule
