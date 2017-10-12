@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 let registered
 
 router.post('/', (req, res, next) => {
-  // now these must all be required fields in the request body/form input except wedding_date
+
   const {
     username,
     email,
@@ -16,11 +16,46 @@ router.post('/', (req, res, next) => {
     first_name_2,
     last_name_2
   } = req.body
-  console.log('req.body.wedding_date', req.body.wedding_date)
 
-  if (!username || !email || !password || !first_name_1 || !last_name_2 || !first_name_2 || !last_name_2) {
+  if (!username || !username.trim()) {
     res.status(400)
-    res.send('Please complete all fields')
+    res.send('Username must not be empty')
+    return
+  }
+
+  if(!email || !email.trim()) {
+    res.status(400)
+    res.send('Email must not be empty')
+    return
+  }
+
+  if(!password || !password.trim()) {
+    res.status(400)
+    res.send('Password must not be empty')
+    return
+  }
+
+  if(!first_name_1 || !first_name_1.trim()) {
+    res.status(400)
+    res.send('First_name_1 must not be empty')
+    return
+  }
+
+  if(!last_name_2 || !last_name_2.trim()) {
+    res.status(400)
+    res.send('Last_name_1 must not be empty')
+    return
+  }
+
+  if(!first_name_2 || !first_name_2.trim()) {
+    res.status(400)
+    res.send('First_name_2 must not be empty')
+    return
+  }
+
+  if(!last_name_2 || !last_name_2.trim()) {
+    res.status(400)
+    res.send('Last_name_2 must not be empty')
     return
   }
 
