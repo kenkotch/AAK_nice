@@ -26,7 +26,7 @@ exports.seed = (knex, Promise) => {
         first_name_2: 'Lisa',
         last_name_2: 'the Magnificent',
         wedding_date: '2018-07-24',
-        account_id: 1,
+        account_id: null,
         role: 3,
         template_id: 1
       }])
