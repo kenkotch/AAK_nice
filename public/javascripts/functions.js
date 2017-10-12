@@ -21,7 +21,13 @@ $(document).ready(() => {
       $("#home").addClass("active")
   }
 
-  if (window.location.pathname !== '/' && window.location.pathname !== '/register') {
+  if (window.location.pathname === '/' || window.location.pathname === '/register') {
+    $("#home").show()
+    $('.planeLink').show()
+    $('.planeNo').hide()
+  } else {
     $("#home").hide()
+    $('.planeLink').hide()
+    $('.planeNo').show()
   }
 })
