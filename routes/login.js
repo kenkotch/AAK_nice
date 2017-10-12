@@ -14,44 +14,50 @@ router.get('/', (req, res, next) => {
     role: ''
   })
 })
-
-router.post('/', (req, res, next) => {
-  const {
-    email,
-    password
-  } = req.body
-
-  if (!email || !password) {
-    res.status(400)
-    res.send('Bad email or password')
-    return
-  }
-
-  knex('account')
-    .where('email', email)
-    .first()
-    .then((data) => {
-      let match = bcrypt.compare(password, data.hashed_password)
-      if (!match) {
-        res.status(400)
-        res.send('Bad email or password')
-        return
-      }
-      const token = jwt.sign({
-        accountId: data.id
-      }, secret)
-
-      res.cookie('token', token, {
-        httpOnly: true
-      })
-      console.log(res.cookie)
-      res.status(200)
-      res.render('login', {
-        _layoutFile: 'layout.ejs'
-      })
-    })
-    .catch((err) => next(err))
-})
+//
+// router.post('/', (req, res, next) => {
+//   const {
+//     email,
+//     password
+//   } = req.body
+//
+//   if (!email || email.trim() === '') {
+//     res.status(400)
+//     res.send('Bad email or password')
+//     return
+//   }
+//
+//   if(!password || password.trim() === '') {
+//     res.status(400)
+//     res.send('Bad email or password')
+//     return
+//   }
+//
+//   knex('account')
+//     .where('email', email)
+//     .first()
+//     .then((data) => {
+//       let match = bcrypt.compare(password, data.hashed_password)
+//       if (!match) {
+//         res.status(400)
+//         res.send('Bad email or password')
+//         return
+//       }
+//       const token = jwt.sign({
+//         accountId: data.id
+//       }, secret)
+//
+//       res.cookie('token', token, {
+//         httpOnly: true
+//       })
+//       console.log(res.cookie)
+//       res.status(200)
+//       res.render('login', {
+//         _layoutFile: 'layout.ejs'
+//       })
+//     })
+//     .catch((err) => next(err))
+// })
 
 // router.get('/', (req, res, next) => {
 //   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
@@ -63,10 +69,10 @@ router.post('/', (req, res, next) => {
 //   })
 //   .catch((err) => next(err))
 // })
-
-router.delete('/', (req, res, next) => {
-  res.clearCookie('token')
-  res.sendStatus(200)
-})
-
+//
+// router.delete('/', (req, res, next) => {
+//   res.clearCookie('token')
+//   res.sendStatus(200)
+// })
+//
 module.exports = router
