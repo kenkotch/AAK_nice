@@ -11,7 +11,10 @@ const auth = (req, res, next) => {
   jwt.verify(req.cookies.token, secret, (err, payload) => {
     if (err) {
       res.status(401)
-      return res.render('login', { msg: "We couldn't find what you're looking for, so we've taken you to our homepage.", _layoutFile: 'layout.ejs' })
+      return res.render('login', {
+        msg: "We couldn't find what you're looking for, so we've taken you to our homepage.",
+        _layoutFile: 'layout.ejs'
+      })
     }
     console.log("payload", payload)
     req.payload = payload
@@ -27,7 +30,7 @@ const checkRole = (req, res, next) => {
     .where('id', req.payload.id)
     .then((data) => {
       role = data.role
-      console.log("role in checkRole", role)
+      // console.log("role in checkRole", role)
       next()
     })
 }
@@ -36,14 +39,18 @@ const checkRole = (req, res, next) => {
 router.post('/', auth, checkRole, (req, res, next) => {
   if (role === 2) {
     let id = req.payload.accountId
-    console.log('this is id for role 2', id)
+    // console.log('this is id for role 2', id)
 
     if (!req.body.time || !req.body.time.trim()) {
       res.status(500)
-      res.render('error', { message: 'Time cannot be blank' })
+      res.render('error', {
+        message: 'Time cannot be blank'
+      })
     } else if (!req.body.item || !req.body.item.trim()) {
       res.status(500)
-      res.render('error', { message: 'Item cannot be blank' })
+      res.render('error', {
+        message: 'Item cannot be blank'
+      })
     } else {
       knex('schedule')
         .insert({
@@ -63,10 +70,33 @@ router.post('/', auth, checkRole, (req, res, next) => {
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
-  console.log("id", id)
+  console.log("id in get", id)
   let fName1
   let fName2
   let wedDate
+
+  if (role === Number(1)) {
+    knex('account')
+      .select('*')
+      .then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].hashed_password
+          data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
+        }
+        console.log('data pull from super:', data)
+          res.render(
+            'superSchedule', {
+              title: 'All registered accounts',
+              role,
+              data,
+              _layoutFile: 'layout.ejs'
+            }
+          )
+      })
+      .catch((err) => {
+        next(err)
+      })
+  }
 
   if (role === 2) {
     // checks for wedding_date
@@ -88,8 +118,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'schedule',
-            {
+            'schedule', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               role,
               data,
@@ -119,8 +148,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'schedule',
-            {
+            'schedule', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               data,
               role,
@@ -153,8 +181,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'scheduleGuest',
-            {
+            'scheduleGuest', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               role,
               data,
@@ -166,7 +193,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
           next(err)
         })
     } else {
-      // let wedDate
 
       knex('account')
         .select('first_name_1', 'first_name_2', 'wedding_date', 'template.template_name', 'schedule.*')
@@ -186,8 +212,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           }
 
           res.render(
-            'scheduleGuest',
-            {
+            'scheduleGuest', {
               title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
               role,
               data,
@@ -225,7 +250,9 @@ router.get('/:id/edit', (req, res) => {
       })
   } else {
     res.status(500)
-    res.render('error', { message: 'something went wrong' })
+    res.render('error', {
+      message: 'something went wrong'
+    })
   }
 })
 
@@ -244,7 +271,11 @@ router.patch('/:id', (req, res, next) => {
         throw boom.create(404, 'Not Found')
       }
 
-      const { time, item, description } = req.body
+      const {
+        time,
+        item,
+        description
+      } = req.body
       const updateRow = {}
 
       if (time) {
