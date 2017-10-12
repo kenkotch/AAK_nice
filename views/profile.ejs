@@ -26,7 +26,7 @@
     <p>Last Name 2:</p> <%= data.last_name_2 %>
     <br><br>
 
-    <p>Wedding Date:</p> <%= data.wedding_date %>
+    <p>Wedding Date:</p> <%= data.wedding_date.toString().slice(0, 15) %>
     <br>
     <br>
     <a href="/profile/<%= data.id %>/editprofile"><button class="edit" type="button" name="button" id="<%= data.id %>">edit</button></a>
