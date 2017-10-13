@@ -67,15 +67,18 @@ $(document).ready(() => {
 
   $('.userSched').click((e) => {
     console.log('clicked on', e.target.id)
-    let data = `id=${e.target.id}`
-    console.log(data)
+    let id  = e.target.id
+    console.log(id)
 
-    $.get('/schedule',
-     data,
+
+    $.get(`/super/${id}`,
+     null,
      null,
      'json')
-     .then((data) => {
-       console.log(data)
+     .then(() => {
+       document.location= `/superSchedule`
+
+
 
      })
     })

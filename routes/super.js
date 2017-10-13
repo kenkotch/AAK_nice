@@ -86,16 +86,16 @@ router.get('/', auth, checkRole, (req, res, next) => {
   //         delete data[i].updated_at
   //       }
   //
-  //       res.send(data)
-  //       return
-  //       // res.render(
-  //       //   'schedule', {
-  //       //     title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-  //       //     role,
-  //       //     data,
-  //       //     _layoutFile: 'layout.ejs'
-  //       //   }
-  //       // )
+  //       // res.send(data)
+  //       // return
+  //       res.render(
+  //         'schedule', {
+  //           title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+  //           role,
+  //           data,
+  //           _layoutFile: 'layout.ejs'
+  //         }
+  //       )
   //     })
   //     .catch((err) => {
   //       next(err)
@@ -104,7 +104,38 @@ router.get('/', auth, checkRole, (req, res, next) => {
 })
 
 router.get('/:id', auth, checkRole, (req, res, next) => {
-  console.log('super get by id:', req.params.id)
+
+  knex('account')
+    .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+    .where('schedule.account_id', req.params.id)
+    .orderBy('time')
+    .innerJoin('schedule', 'schedule.account_id', 'account.id')
+    .innerJoin('template', 'template.id', 'account.template_id')
+    .then((data) => {
+      console.log('data from super:', data)
+      fName1 = data[0].first_name_1
+      fName2 = data[0].first_name_2
+
+      for (let i = 0; i < data.length; i++) {
+        delete data[i].created_at
+        delete data[i].updated_at
+      }
+
+      // res.send(data)
+      // return
+      res.render(
+        'superSchedule', {
+          title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+          role,
+          data,
+          _layoutFile: 'layout.ejs'
+        }
+      )
+    })
+    .catch((err) => {
+      next(err)
+    })
+
 })
 
 

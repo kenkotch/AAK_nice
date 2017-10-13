@@ -91,17 +91,17 @@ router.get('/', auth, checkRole, (req, res, next) => {
           delete data[i].updated_at
         }
 
-        res.send(data)
+        // res.send(data[0])
         // return
-        // res.render(
-        //   'superSchedule', {
-        //     title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-        //     data,
-        //     role,
-        //     _layoutFile: 'layout.ejs'
-        //   }
-        // )
-        // return
+        res.render(
+          'superSchedule', {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            data,
+            role,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+        return
       })
       .catch((err) => {
         next(err)
