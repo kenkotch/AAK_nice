@@ -23,6 +23,22 @@ $(document).ready(() => {
       })
   })
 
+  // DELETE SUPERSCHEDULE
+  $("#superSchedule .delete").click((e) => {
+    e.preventDefault()
+    // console.log(`delete ${e.target.id}`)
+    $.ajax({
+      url: `/super/${e.target.id}`,
+      method: "DELETE",
+      success: (response) => {
+        window.location.href = '/super'
+      }
+    })
+      // .then((res) => {
+      //   res.redirect('/super')
+      // })
+  })
+
   // UPDATE
   $("#editForm").submit((e) => {
     e.preventDefault()
