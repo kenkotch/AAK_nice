@@ -10,6 +10,8 @@ router.post('/', (req, res, next) => {
     email,
     password
   } = req.body
+  console.log('email:', email)
+  console.log('password', password)
 
   if (!email || email.trim() === ('')) {
     res.status(400)
@@ -47,6 +49,7 @@ router.post('/', (req, res, next) => {
         res.status(200)
         console.log('\n\n\nemail account\n\n\n')
         delete data.hashed_password
+        console.log(data)
         res.send(data)
         return
       })

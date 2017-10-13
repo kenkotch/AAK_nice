@@ -25,11 +25,16 @@ $(document).ready(() => {
       console.log('clicked on login')
 
       let data = $('#loginForm').serialize()
-      console.log('data from form')
+      console.log('data from form', data)
 
       $.post('/token', data, null, 'json').then((data) => {
         console.log('from token to schedule')
+        if(Number(data.role) === 1) {
+          document.location = '/super'
+        }
+        else {
         document.location = '/schedule'
+        }
       })
         .fail((err) => {
           $('#errorMessage').html(`<div>${err.responseText}</div>`)
@@ -51,10 +56,12 @@ $(document).ready(() => {
 
   $('.userSched').click((e) => {
     console.log('clicked on', e.target.id)
-    let id = e.target.id
+    let data = `id=${e.target.id}`
+    console.log(data)
 
-    $.ajax({
-
+    $.get('/super', data, null, 'json')
+    .then(() => {
+      document.location = '/schedule'
     })
   })
 })

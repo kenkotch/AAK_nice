@@ -14,6 +14,7 @@ const login = require('./routes/login')
 const token = require('./routes/token')
 const schedule = require('./routes/schedule')
 const profile = require('./routes/profile')
+const superuser = require('./routes/super')
 
 const app = express()
 
@@ -33,6 +34,8 @@ app.use('/login', login)
 app.use('/token', token)
 app.use('/schedule', schedule)
 app.use('/profile', profile)
+app.use('/super', superuser)
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -50,9 +53,10 @@ app.use((err, req, res, next) => {
   // render the error page
   console.log('DYING WITH 500', err)
   res.status(err.status || 500)
-  res.render('login',{
-    _layoutFile: 'layout.ejs'
-  })
+  res.send('Big fat error')
+  // res.render('login',{
+  //   _layoutFile: 'layout.ejs'
+  // })
 })
 
 module.exports = app

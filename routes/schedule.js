@@ -37,6 +37,7 @@ const checkRole = (req, res, next) => {
 
 // C
 router.post('/', auth, checkRole, (req, res, next) => {
+  if (role === 1 ) {
   if (role === 2) {
     let id = req.payload.accountId
     // console.log('this is id for role 2', id)
@@ -65,38 +66,16 @@ router.post('/', auth, checkRole, (req, res, next) => {
         })
     }
   }
+  }
 })
 
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
-  console.log("id in get", id)
+
   let fName1
   let fName2
   let wedDate
-
-  if (role === Number(1)) {
-    knex('account')
-      .select('*')
-      .then((data) => {
-        for (let i = 0; i < data.length; i++) {
-          delete data[i].hashed_password
-          data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
-        }
-        console.log('data pull from super:', data)
-          res.render(
-            'superSchedule', {
-              title: 'All registered accounts',
-              role,
-              data,
-              _layoutFile: 'layout.ejs'
-            }
-          )
-      })
-      .catch((err) => {
-        next(err)
-      })
-  }
 
   if (role === 2) {
     // checks for wedding_date
