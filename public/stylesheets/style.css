@@ -3,11 +3,47 @@
   src: url('gill-sans-light.ttf') format('truetype');
 }
 
+@component-active-bg:{
+  background-color: #cae6f9
+}
+
 a {
   color: #00B7FF;
 }
 
 body {
   font-family: 'Gill Sans';
-  padding: 50px;
+  background-color: #f4f4f4;
+}
+
+.desert {
+  background-color: #ffefd5;
+}
+
+.warm {
+  background-color: #ebebeb;
+}
+
+.rain{
+  background-color: #b9d5e8;
+}
+
+.mocha{
+  background-color:  #493d37;
+}
+
+.mud{
+  background-color: #8e8477;
+}
+
+/*.active{
+  background-color: #cae6f9;
+}*/
+
+tr {
+  padding:15px;
+}
+
+td {
+  padding: 5px;
 }

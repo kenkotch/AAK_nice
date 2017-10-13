@@ -76,7 +76,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
       .innerJoin('schedule', 'schedule.account_id', 'account.id')
       .innerJoin('template', 'template.id', 'account.template_id')
       .then((data) => {
-        console.log(data)
+        console.log('data from super:',data)
         fName1 = data[0].first_name_1
         fName2 = data[0].first_name_2
 

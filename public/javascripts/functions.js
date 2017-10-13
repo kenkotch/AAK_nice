@@ -1,10 +1,9 @@
 $(document).ready(() => {
 
-  // sets active class depending on current page
+  // gives current page class=active
   $(".active").each(() => {
     $(this).removeClass("active")
   })
-
   switch (window.location.pathname) {
     case '/':
       $("#home").addClass("active")
@@ -20,5 +19,15 @@ $(document).ready(() => {
       break
     default:
       $("#home").addClass("active")
+  }
+
+  if (window.location.pathname === '/' || window.location.pathname === '/register') {
+    $("#home").show()
+    $('.planeLink').show()
+    $('.planeNo').hide()
+  } else {
+    $("#home").hide()
+    $('.planeLink').hide()
+    $('.planeNo').show()
   }
 })
