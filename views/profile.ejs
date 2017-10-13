@@ -1,6 +1,6 @@
 <div class="container">
 <% if(typeof guest_profile == 'object' && guest_profile) { %>
-<div id="renderNewGuest">Congratulations, your guest username is : <%= guest_profile[0].username %>  now just share this and your created password with your guests so they can see your schedule!</div>
+<div id="renderNewGuest">Congratulations, your guest username is : <b><%= guest_profile[0].username %></b>.  Please share this and your created password with your guests so they can see your schedule!</div>
 <% } %>
 
 <!-- profile -->
@@ -41,7 +41,7 @@
       <br>
       <br>
 
-
+<h5>Create your guest username and password here:</h5>
 
     <form id="newGuest" action="/profile" method="post">
       <label for="username">Guest Username:</label>

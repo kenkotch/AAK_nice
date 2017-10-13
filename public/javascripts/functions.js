@@ -17,6 +17,9 @@ $(document).ready(() => {
     case '/profile':
       $("#profile").addClass("active")
       break
+    case '/super':
+      $("#super").addClass("active")
+      break
     default:
       $("#home").addClass("active")
   }

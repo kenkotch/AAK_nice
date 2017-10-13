@@ -42,10 +42,15 @@
           <li id="register"><a href="/register">Register</a></li>
           <% } %>
 
-        <% if (role === 1 || role === 2) { %>
+        <% if (role === 1) { %>
+          <li id="super"><a href="/super">Super</a></li>
+          <li id="profile"><a href="/profile">My Profile</a></li>
+        <% } %>
+
+        <% if (role === 2) { %>
           <li id="schedule"><a href="/schedule">Schedule</a></li>
           <li id="profile"><a href="/profile">My Profile</a></li>
-          <% } %>
+        <% } %>
 
       </ul>
 
