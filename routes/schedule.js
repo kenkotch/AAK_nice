@@ -37,7 +37,6 @@ const checkRole = (req, res, next) => {
 
 // C
 router.post('/', auth, checkRole, (req, res, next) => {
-  if (role === 1 ) {
   if (role === 2) {
     let id = req.payload.accountId
     // console.log('this is id for role 2', id)
@@ -66,12 +65,15 @@ router.post('/', auth, checkRole, (req, res, next) => {
         })
     }
   }
-  }
 })
 
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
+  console.log(req.body)
+  if (role === 1) {
+    id = req.body.id
+  }
 
   let fName1
   let fName2

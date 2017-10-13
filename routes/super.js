@@ -69,7 +69,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
 
   else if (role === Number(1)) {
     console.log('getting an account schedule')
-    knex('schedule')
+    knex('account')
       .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
       .where('schedule.account_id', Number(req.query.id))
       .orderBy('time')

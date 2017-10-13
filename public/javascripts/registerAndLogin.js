@@ -1,5 +1,13 @@
 $(document).ready(() => {
 
+  function getAndRenderSchedule() {
+    $.ajax({
+      method: 'GET',
+      url: '/schedule',
+      success: 'success'
+    })
+  }
+
   if (document.location.href.match(/register$/)) {
 
     $('#newOwner').submit((event) => {
@@ -60,8 +68,9 @@ $(document).ready(() => {
     console.log(data)
 
     $.get('/super', data, null, 'json')
-    .then(() => {
-      document.location = '/schedule'
+    .then((data) => {
+      console.log('data returning from super', data)
+      $.get('/schedule', data, null, 'json')
     })
   })
 })
