@@ -36,10 +36,6 @@ body {
   background-color: #8e8477;
 }
 
-/*.active{
-  background-color: #cae6f9;
-}*/
-
 tr {
   padding:15px;
 }
@@ -51,3 +47,9 @@ td {
 th {
   padding: 5px;
 }
+
+.center-content {
+  left:50%;
+  position: absolute;
+  transform: translate(-50%);
+  }

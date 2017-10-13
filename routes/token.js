@@ -10,8 +10,6 @@ router.post('/', (req, res, next) => {
     email,
     password
   } = req.body
-  console.log('email:', email)
-  console.log('password', password)
 
   if (!email || email.trim() === ('')) {
     res.status(400)
@@ -26,7 +24,6 @@ router.post('/', (req, res, next) => {
   }
 
   if (email.includes('@')) {
-
     knex('account')
       .where('email', email)
       .first()
@@ -41,15 +38,11 @@ router.post('/', (req, res, next) => {
           id: data.id
         }, secret)
 
-        res.cookie(
-          'token', token, {
-            httpOnly: true
-          }
+        res.cookie('token', token,
+          { httpOnly: true }
         )
         res.status(200)
-        console.log('\n\n\nemail account\n\n\n')
         delete data.hashed_password
-        console.log(data)
         res.send(data)
         return
       })
@@ -71,18 +64,17 @@ router.post('/', (req, res, next) => {
       }, secret)
 
       res.cookie(
-        'token', token, {
-          httpOnly: true
-        }
+        'token', token,
+        { httpOnly: true }
       )
       res.status(200)
-      console.log(data)
       delete data.hashed_password
       res.send(data)
       return
     })
-    .catch((err) => next(err))
-
+    .catch((err) => {
+      next(err)
+    })
 })
 
 router.delete('/', (req, res, next) => {

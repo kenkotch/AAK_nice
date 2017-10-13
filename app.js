@@ -54,9 +54,6 @@ app.use((err, req, res, next) => {
   console.log('DYING WITH 500', err)
   res.status(err.status || 500)
   res.send('Big fat error')
-  // res.render('login',{
-  //   _layoutFile: 'layout.ejs'
-  // })
 })
 
 module.exports = app

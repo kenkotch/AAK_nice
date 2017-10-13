@@ -65,7 +65,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
 
 // CREATION OF GUEST USERNAME AND PASSWORD
 router.post('/', auth, checkRole, (req, res, next) => {
-  // const { item } = req.body
   let id = req.claim
   if (!req.body.username || req.body.username.trim() === '') {
     res.status(500)
@@ -92,10 +91,11 @@ router.post('/', auth, checkRole, (req, res, next) => {
           res.status(200)
           res.redirect('/profile')
         })
-        .catch((err) => next(err))
+        .catch((err) => {
+          next(err)
+        })
     })
   }
-
 })
 
 router.get('/:id/editprofile', (req, res) => {
@@ -189,7 +189,9 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
           res.send(row[0])
         })
     })
-    .catch((err) => next(err))
+    .catch((err) => {
+      next(err)
+    })
 })
 
 module.exports = router

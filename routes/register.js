@@ -23,37 +23,37 @@ router.post('/', (req, res, next) => {
     return
   }
 
-  if(!email || !email.trim()) {
+  if (!email || !email.trim()) {
     res.status(400)
     res.send('Email must not be empty')
     return
   }
 
-  if(!password || !password.trim()) {
+  if (!password || !password.trim()) {
     res.status(400)
     res.send('Password must not be empty')
     return
   }
 
-  if(!first_name_1 || !first_name_1.trim()) {
+  if (!first_name_1 || !first_name_1.trim()) {
     res.status(400)
     res.send('First_name_1 must not be empty')
     return
   }
 
-  if(!last_name_2 || !last_name_2.trim()) {
+  if (!last_name_2 || !last_name_2.trim()) {
     res.status(400)
     res.send('Last_name_1 must not be empty')
     return
   }
 
-  if(!first_name_2 || !first_name_2.trim()) {
+  if (!first_name_2 || !first_name_2.trim()) {
     res.status(400)
     res.send('First_name_2 must not be empty')
     return
   }
 
-  if(!last_name_2 || !last_name_2.trim()) {
+  if (!last_name_2 || !last_name_2.trim()) {
     res.status(400)
     res.send('Last_name_2 must not be empty')
     return
@@ -97,11 +97,12 @@ router.post('/', (req, res, next) => {
                 registered = data
                 res.status(200)
                 res.send(registered[0])
-                return
               })
           })
       })
-    .catch((err) => next(err))
+      .catch((err) => {
+        next(err)
+      })
   })
 })
 

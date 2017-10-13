@@ -9,13 +9,10 @@ $(document).ready(() => {
   }
 
   if (document.location.href.match(/register$/)) {
-
     $('#newOwner').submit((event) => {
       event.preventDefault()
 
       let data = $('#newOwner').serialize()
-      // delete data.password
-      // console.log('type of data?', typeof(data))
 
       $.post("/register", data, null, 'json').then((data) => {
         document.location = '/'
@@ -30,18 +27,14 @@ $(document).ready(() => {
 
     $('#loginForm').submit((event) => {
       event.preventDefault()
-      console.log('clicked on login')
 
       let data = $('#loginForm').serialize()
-      console.log('data from form', data)
 
       $.post('/token', data, null, 'json').then((data) => {
-        console.log('from token to schedule')
-        if(Number(data.role) === 1) {
+        if (Number(data.role) === 1) {
           document.location = '/super'
-        }
-        else {
-        document.location = '/schedule'
+        } else {
+          document.location = '/schedule'
         }
       })
         .fail((err) => {
@@ -51,8 +44,6 @@ $(document).ready(() => {
   }
 
   $('#logout').click(() => {
-    console.log('clicked on logout')
-
     $.ajax({
       method: 'DELETE',
       url: '/token',
@@ -63,16 +54,13 @@ $(document).ready(() => {
   })
 
   $('.userSched').click((e) => {
-    console.log('clicked on', e.target.id)
     let id = `${e.target.id}`
-    console.log('id', id)
 
     $.ajax({
       method: 'GET',
       url: '/super',
       success: 'success'
     }).then((res) => {
-      // console.log('res', res)
       document.location = `/schedule/${id}`
     })
   })

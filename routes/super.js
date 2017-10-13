@@ -51,14 +51,12 @@ router.get('/', auth, checkRole, (req, res, next) => {
           delete data[i].hashed_password
           data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
         }
-         return res.render(
-          'superschedule', {
-            title: 'All registered accounts',
-            role,
-            data,
-            _layoutFile: 'layout.ejs'
-          }
-        )
+        return res.render('superschedule', {
+          title: 'All registered accounts',
+          role,
+          data,
+          _layoutFile: 'layout.ejs'
+        })
       })
       .catch((err) => {
         next(err)
@@ -66,7 +64,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
   }
 
   else if (role === Number(1)) {
-    console.log('getting an account schedule')
     knex('account')
       .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
       .where('schedule.account_id', Number(req.query.id))
@@ -74,7 +71,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
       .innerJoin('schedule', 'schedule.account_id', 'account.id')
       .innerJoin('template', 'template.id', 'account.template_id')
       .then((data) => {
-        console.log('data from super:',data)
         fName1 = data[0].first_name_1
         fName2 = data[0].first_name_2
 
@@ -84,15 +80,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
         }
 
         res.send(data)
-        return
-        // res.render(
-        //   'schedule', {
-        //     title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-        //     role,
-        //     data,
-        //     _layoutFile: 'layout.ejs'
-        //   }
-        // )
       })
       .catch((err) => {
         next(err)
@@ -102,7 +89,6 @@ router.get('/', auth, checkRole, (req, res, next) => {
 
 router.get('/:id', auth, checkRole, (req, res, next) => {
   const id = req.params.id
-  console.log('super get by id:', req.params.id)
 
   if (typeof id !== 'undefined') {
     knex('schedule')
@@ -128,15 +114,9 @@ router.get('/:id', auth, checkRole, (req, res, next) => {
   }
 })
 
-
-
-
-
 // POST a new account or schedule item
 
-
 // UPDATE an existing account or schedule item
-
 
 // DELETE an account
 router.delete('/:id', (req, res, next) => {

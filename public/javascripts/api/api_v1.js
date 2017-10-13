@@ -26,7 +26,6 @@ $(document).ready(() => {
   // DELETE SUPERSCHEDULE
   $("#superSchedule .delete").click((e) => {
     e.preventDefault()
-    // console.log(`delete ${e.target.id}`)
     $.ajax({
       url: `/super/${e.target.id}`,
       method: "DELETE",
@@ -34,15 +33,11 @@ $(document).ready(() => {
         window.location.href = '/super'
       }
     })
-      // .then((res) => {
-      //   res.redirect('/super')
-      // })
   })
 
   // UPDATE
   $("#editForm").submit((e) => {
     e.preventDefault()
-    console.log('form submit')
     let id = $('input[name="id"]').val()
 
     $.ajax({
@@ -50,7 +45,6 @@ $(document).ready(() => {
       method: "PATCH",
       data: $('#editForm').serialize(),
       success: (res) => {
-        console.log(res)
         window.location = '/schedule'
       }
     })
@@ -58,7 +52,6 @@ $(document).ready(() => {
 
   $("#editProfileForm").submit((e) => {
     e.preventDefault()
-    console.log('form submit')
     let id = $('input[name="id"]').val()
 
     $.ajax({
@@ -66,7 +59,6 @@ $(document).ready(() => {
       method: "PATCH",
       data: $('#editProfileForm').serialize(),
       success: (res) => {
-        console.log(res)
         window.location = '/profile'
       }
     })
