@@ -101,51 +101,32 @@ router.get('/', auth, checkRole, (req, res, next) => {
 })
 
 router.get('/:id', auth, checkRole, (req, res, next) => {
+  const id = req.params.id
   console.log('super get by id:', req.params.id)
+
+  if (typeof id !== 'undefined') {
+    knex('schedule')
+      .select('*')
+      .where('id', id)
+      // .first()
+      .then((data) => {
+        res.render(`schedule/${id}`, {
+          title: `something is working at id ${id}`,
+          id,
+          time: data.time,
+          item: data.item,
+          description: data.description,
+          role,
+          _layoutFile: 'layout.ejs'
+        })
+      })
+  } else {
+    res.status(500)
+    res.render('error', {
+      message: 'something went wrong'
+    })
+  }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -154,76 +135,7 @@ router.get('/:id', auth, checkRole, (req, res, next) => {
 // POST a new account or schedule item
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // UPDATE an existing account or schedule item
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // DELETE an account

@@ -64,13 +64,27 @@ $(document).ready(() => {
 
   $('.userSched').click((e) => {
     console.log('clicked on', e.target.id)
-    let data = `id=${e.target.id}`
-    console.log(data)
+    let id = `${e.target.id}`
+    console.log('id', id)
 
-    $.get('/super', data, null, 'json')
-    .then((data) => {
-      console.log('data returning from super', data)
-      $.get('/schedule', data, null, 'json')
+    $.ajax({
+      method: 'GET',
+      url: '/super',
+      success: 'success'
+    }).then((res) => {
+      // console.log('res', res)
+      document.location = `/schedule/${id}`
     })
   })
+  // $('.userSched').click((e) => {
+  //   console.log('clicked on', e.target.id)
+  //   let data = `id=${e.target.id}`
+  //   console.log(data)
+  //
+  //   $.get('/super', data, null, 'json')
+  //   .then((data) => {
+  //     console.log('data returning from super', data[0])
+  //     $.get('/schedule', data, null, 'json')
+  //   })
+  // })
 })
