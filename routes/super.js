@@ -16,7 +16,7 @@ const auth = (req, res, next) => {
         _layoutFile: 'layout.ejs'
       })
     }
-    // console.log("payload", payload)
+
     req.payload = payload
     next()
   })
@@ -26,11 +26,9 @@ const checkRole = (req, res, next) => {
   knex('account')
     .select('role')
     .first()
-    // .innerJoin('schedule', 'schedule.account_id', 'account.account_id')
     .where('id', req.payload.id)
     .then((data) => {
       role = data.role
-      // console.log("role in checkRole", role)
       next()
     })
 }
@@ -227,9 +225,37 @@ router.get('/:id', auth, checkRole, (req, res, next) => {
 
 
 
-// DELETE an account and/or a schedule event
 
+// DELETE an account
+router.delete('/:id', (req, res, next) => {
+  let accId = req.params.id
 
+  if (Number.isNaN(accId)) {
+    return next()
+  }
 
+  let wedding
+
+  knex('account')
+    .where('id', accId)
+    .then((row) => {
+      if (!row) {
+        throw boom.create(404, 'Not Found')
+      }
+      wedding = row
+
+      return knex('account')
+        .del()
+        .where('id', accId)
+    })
+    .then(() => {
+      delete wedding.id
+      delete wedding.account_id
+      res.send(wedding)
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
 
 module.exports = router

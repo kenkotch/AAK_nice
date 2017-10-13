@@ -32,7 +32,6 @@ const checkRole = (req, res, next) => {
 }
 
 router.get('/', auth, checkRole, (req, res, next) => {
-  // const id = req.params.id
   let id = req.claim
   if (typeof id !== 'undefined') {
     knex('account')
@@ -64,7 +63,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
 })
 
 
-// HANDLES CREATION OF GUEST USERNAME AND PASSWORD - ADAM M.
+// CREATION OF GUEST USERNAME AND PASSWORD
 router.post('/', auth, checkRole, (req, res, next) => {
   // const { item } = req.body
   let id = req.claim
@@ -128,7 +127,8 @@ router.get('/:id/editprofile', (req, res) => {
     res.render('error', { message: 'something went wrong' })
   }
 })
-// update the first and last names of the couple, update the wedding_date, update email,
+
+// U
 router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
   const id = Number(req.params.id)
   const {
@@ -191,7 +191,5 @@ router.patch('/:id/editprofile', auth, checkRole, (req, res, next) => {
     })
     .catch((err) => next(err))
 })
-//
-
 
 module.exports = router
