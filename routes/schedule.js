@@ -77,7 +77,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
     id = req.query.id
     knex('account')
       .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-      .where('schedule.account_id', Number(req.query.id))
+      .where('schedule.account_id', id)
       .orderBy('time')
       .innerJoin('schedule', 'schedule.account_id', 'account.id')
       .innerJoin('template', 'template.id', 'account.template_id')
@@ -91,17 +91,17 @@ router.get('/', auth, checkRole, (req, res, next) => {
           delete data[i].updated_at
         }
 
-        // res.send(data)
+        res.send(data)
         // return
-        res.render(
-          'superSchedule', {
-            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-            data,
-            role,
-            _layoutFile: 'layout.ejs'
-          }
-        )
-        return
+        // res.render(
+        //   'superSchedule', {
+        //     title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+        //     data,
+        //     role,
+        //     _layoutFile: 'layout.ejs'
+        //   }
+        // )
+        // return
       })
       .catch((err) => {
         next(err)

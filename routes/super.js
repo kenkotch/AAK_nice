@@ -54,7 +54,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           delete data[i].hashed_password
           data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
         }
-         res.render(
+         return res.render(
           'superSchedule', {
             title: 'All registered accounts',
             role,

@@ -36,6 +36,7 @@ $(document).ready(() => {
       console.log('data from form', data)
 
       $.post('/token', data, null, 'json').then((data) => {
+        console.log('data from token post when logging in:', data)
         console.log('from token to schedule')
         if(Number(data.role) === 1) {
           document.location = '/super'
@@ -72,10 +73,11 @@ $(document).ready(() => {
     $.get('/schedule',
      data,
      null,
-    //  $.get('/schedule', data, null, 'json'),
      'json')
-    //   console.log('data returning from super', data)
-      // $.get('/schedule', data, null, 'json')
+     .then((data) => {
+       console.log(data)
+
+     })
     })
   // }
 })
