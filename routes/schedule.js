@@ -70,9 +70,42 @@ router.post('/', auth, checkRole, (req, res, next) => {
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
-  console.log(req.body)
+
+  console.log('in sched, req.query.id =', req.query.id)
+
   if (role === 1) {
-    id = req.body.id
+    id = req.query.id
+    knex('account')
+      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+      .where('schedule.account_id', Number(req.query.id))
+      .orderBy('time')
+      .innerJoin('schedule', 'schedule.account_id', 'account.id')
+      .innerJoin('template', 'template.id', 'account.template_id')
+      .then((data) => {
+        console.log('data from super:', data)
+        fName1 = data[0].first_name_1
+        fName2 = data[0].first_name_2
+
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].created_at
+          delete data[i].updated_at
+        }
+
+        // res.send(data)
+        // return
+        res.render(
+          'superSchedule', {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            data,
+            role,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+        return
+      })
+      .catch((err) => {
+        next(err)
+      })
   }
 
   let fName1

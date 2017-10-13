@@ -62,15 +62,20 @@ $(document).ready(() => {
     })
   })
 
+// if (document.location.href.match(/super$/)){
+
   $('.userSched').click((e) => {
     console.log('clicked on', e.target.id)
     let data = `id=${e.target.id}`
     console.log(data)
 
-    $.get('/super', data, null, 'json')
-    .then((data) => {
-      console.log('data returning from super', data)
-      $.get('/schedule', data, null, 'json')
+    $.get('/schedule',
+     data,
+     null,
+    //  $.get('/schedule', data, null, 'json'),
+     'json')
+    //   console.log('data returning from super', data)
+      // $.get('/schedule', data, null, 'json')
     })
-  })
+  // }
 })

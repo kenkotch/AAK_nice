@@ -39,3 +39,30 @@
     </tr>
   <% } %>
 </table>
+
+<% if (typeof data == 'object' && data[0].time) { %>
+  <h2> Schedule for account</h2>
+
+  <table id="schedule">
+    <tr class ="row">
+      <th class="col-sm-auto col-6 text-center">Time:</th>
+      <th class="col-sm-auto col-6 text-center">Event:</th>
+      <th class="col-sm-auto col-6 text-center">Description:</th>
+      <th class="col-sm-auto col-6 text-center"></th>
+    </tr>
+
+    <% for (let i = 0; i < data.length; i++) { %>
+        <% if(data[i].time !== 'hide') { %>
+      <tr class ="row">
+        <td class="col-sm-auto col-6 text-center"><%= data[i].time %></td>
+        <td class="col-sm-auto col-6 text-center"><%= data[i].item %></td>
+        <td class="col-sm-auto col-6 text-center"><%= data[i].description %></td>
+        <td class="col-sm-auto col-6 text-center">
+          <a href="/schedule/<%= data[i].id %>/edit"><button class="edit" type="button" name="button" id="<%= data[i].id %>">edit</button></a>
+          <button class="delete" type="button" name="button" id="<%= data[i].id %>">delete</button>
+        </td>
+      </tr>
+      <% } %>
+    <% } %>
+  <% } %>
+</table>

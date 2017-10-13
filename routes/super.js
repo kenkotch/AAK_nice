@@ -38,6 +38,7 @@ const checkRole = (req, res, next) => {
 // GET for super
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
+  console.log('req.query.id', req.query.id)
 
   let fName1
   let fName2
@@ -53,7 +54,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           delete data[i].hashed_password
           data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
         }
-         return res.render(
+         res.render(
           'superSchedule', {
             title: 'All registered accounts',
             role,
@@ -67,39 +68,39 @@ router.get('/', auth, checkRole, (req, res, next) => {
       })
   }
 
-  else if (role === Number(1)) {
-    console.log('getting an account schedule')
-    knex('account')
-      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-      .where('schedule.account_id', Number(req.query.id))
-      .orderBy('time')
-      .innerJoin('schedule', 'schedule.account_id', 'account.id')
-      .innerJoin('template', 'template.id', 'account.template_id')
-      .then((data) => {
-        console.log('data from super:',data)
-        fName1 = data[0].first_name_1
-        fName2 = data[0].first_name_2
-
-        for (let i = 0; i < data.length; i++) {
-          delete data[i].created_at
-          delete data[i].updated_at
-        }
-
-        res.send(data)
-        return
-        // res.render(
-        //   'schedule', {
-        //     title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-        //     role,
-        //     data,
-        //     _layoutFile: 'layout.ejs'
-        //   }
-        // )
-      })
-      .catch((err) => {
-        next(err)
-      })
-  }
+  // else if (role === Number(1)) {
+  //   console.log('getting an account schedule')
+  //   knex('account')
+  //     .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+  //     .where('schedule.account_id', Number(req.query.id))
+  //     .orderBy('time')
+  //     .innerJoin('schedule', 'schedule.account_id', 'account.id')
+  //     .innerJoin('template', 'template.id', 'account.template_id')
+  //     .then((data) => {
+  //       console.log('data from super:', data)
+  //       fName1 = data[0].first_name_1
+  //       fName2 = data[0].first_name_2
+  //
+  //       for (let i = 0; i < data.length; i++) {
+  //         delete data[i].created_at
+  //         delete data[i].updated_at
+  //       }
+  //
+  //       res.send(data)
+  //       return
+  //       // res.render(
+  //       //   'schedule', {
+  //       //     title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+  //       //     role,
+  //       //     data,
+  //       //     _layoutFile: 'layout.ejs'
+  //       //   }
+  //       // )
+  //     })
+  //     .catch((err) => {
+  //       next(err)
+  //     })
+  // }
 })
 
 router.get('/:id', auth, checkRole, (req, res, next) => {
