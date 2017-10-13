@@ -52,7 +52,7 @@ router.get('/', auth, checkRole, (req, res, next) => {
           data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
         }
          return res.render(
-          'superSchedule', {
+          'superschedule', {
             title: 'All registered accounts',
             role,
             data,
