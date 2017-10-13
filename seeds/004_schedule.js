@@ -39,6 +39,54 @@ exports.seed = (knex, Promise) => {
         item: "Escape",
         description: "Run into the nite",
         account_id: 3
+      }, {
+        id: 7,
+        time: "08:00",
+        item: "Escape",
+        description: "This is not happening",
+        account_id: 5
+      }, {
+        id: 8,
+        time: "08:02",
+        item: "Sorry",
+        description: "Thanks for showing up.",
+        account_id: 5
+      }, {
+        id: 9,
+        time: "08:03",
+        item: "Bad day",
+        description: "Groom ran off. :(",
+        account_id: 5
+      }, {
+        id: 10,
+        time: "11:30",
+        item: "Hair!",
+        description: "I need a haircut.",
+        account_id: 4
+      }, {
+        id: 11,
+        time: "hide",
+        item: "",
+        description: "",
+        account_id: 1
+      }, {
+        id: 12,
+        time: "hide",
+        item: "",
+        description: "",
+        account_id: 3
+      }, {
+        id: 13,
+        time: "hide",
+        item: "",
+        description: "",
+        account_id: 4
+      }, {
+        id: 14,
+        time: "hide",
+        item: "",
+        description: "",
+        account_id: 5
       }])
         .then(() => {
           return knex.raw("SELECT setval('schedule_id_seq',(SELECT MAX(id) FROM schedule));")
