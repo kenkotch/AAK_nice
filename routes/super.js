@@ -16,7 +16,7 @@ const auth = (req, res, next) => {
         _layoutFile: 'layout.ejs'
       })
     }
-
+    // console.log("payload", payload)
     req.payload = payload
     next()
   })
@@ -26,9 +26,11 @@ const checkRole = (req, res, next) => {
   knex('account')
     .select('role')
     .first()
+    // .innerJoin('schedule', 'schedule.account_id', 'account.account_id')
     .where('id', req.payload.id)
     .then((data) => {
       role = data.role
+      // console.log("role in checkRole", role)
       next()
     })
 }
@@ -36,6 +38,7 @@ const checkRole = (req, res, next) => {
 // GET for super
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
+  console.log('req.query.id', req.query.id)
 
   let fName1
   let fName2
@@ -51,103 +54,214 @@ router.get('/', auth, checkRole, (req, res, next) => {
           delete data[i].hashed_password
           data[i].wedding_date = data[i].wedding_date.toString().slice(0, 15)
         }
-        return res.render('superschedule', {
-          title: 'All registered accounts',
-          role,
-          data,
-          _layoutFile: 'layout.ejs'
-        })
+         return res.render(
+          'superSchedule', {
+            title: 'All registered accounts',
+            role,
+            data,
+            _layoutFile: 'layout.ejs'
+          }
+        )
       })
       .catch((err) => {
         next(err)
       })
   }
 
-  else if (role === Number(1)) {
-    knex('account')
-      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
-      .where('schedule.account_id', Number(req.query.id))
-      .orderBy('time')
-      .innerJoin('schedule', 'schedule.account_id', 'account.id')
-      .innerJoin('template', 'template.id', 'account.template_id')
-      .then((data) => {
-        fName1 = data[0].first_name_1
-        fName2 = data[0].first_name_2
-
-        for (let i = 0; i < data.length; i++) {
-          delete data[i].created_at
-          delete data[i].updated_at
-        }
-
-        res.send(data)
-      })
-      .catch((err) => {
-        next(err)
-      })
-  }
+  // else if (role === Number(1)) {
+  //   console.log('getting an account schedule')
+  //   knex('account')
+  //     .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+  //     .where('schedule.account_id', Number(req.query.id))
+  //     .orderBy('time')
+  //     .innerJoin('schedule', 'schedule.account_id', 'account.id')
+  //     .innerJoin('template', 'template.id', 'account.template_id')
+  //     .then((data) => {
+  //       console.log('data from super:', data)
+  //       fName1 = data[0].first_name_1
+  //       fName2 = data[0].first_name_2
+  //
+  //       for (let i = 0; i < data.length; i++) {
+  //         delete data[i].created_at
+  //         delete data[i].updated_at
+  //       }
+  //
+  //       // res.send(data)
+  //       // return
+  //       res.render(
+  //         'schedule', {
+  //           title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+  //           role,
+  //           data,
+  //           _layoutFile: 'layout.ejs'
+  //         }
+  //       )
+  //     })
+  //     .catch((err) => {
+  //       next(err)
+  //     })
+  // }
 })
 
 router.get('/:id', auth, checkRole, (req, res, next) => {
-  const id = req.params.id
-
-  if (typeof id !== 'undefined') {
-    knex('schedule')
-      .select('*')
-      .where('id', id)
-      // .first()
-      .then((data) => {
-        res.render(`schedule/${id}`, {
-          title: `something is working at id ${id}`,
-          id,
-          time: data.time,
-          item: data.item,
-          description: data.description,
-          role,
-          _layoutFile: 'layout.ejs'
-        })
-      })
-  } else {
-    res.status(500)
-    res.render('error', {
-      message: 'something went wrong'
-    })
-  }
-})
-
-// POST a new account or schedule item
-
-// UPDATE an existing account or schedule item
-
-// DELETE an account
-router.delete('/:id', (req, res, next) => {
-  let accId = req.params.id
-
-  if (Number.isNaN(accId)) {
-    return next()
-  }
-
-  let wedding
 
   knex('account')
-    .where('id', accId)
-    .then((row) => {
-      if (!row) {
-        throw boom.create(404, 'Not Found')
-      }
-      wedding = row
+    .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+    .where('schedule.account_id', req.params.id)
+    .orderBy('time')
+    .innerJoin('schedule', 'schedule.account_id', 'account.id')
+    .innerJoin('template', 'template.id', 'account.template_id')
+    .then((data) => {
+      console.log('data from super:', data)
+      fName1 = data[0].first_name_1
+      fName2 = data[0].first_name_2
 
-      return knex('account')
-        .del()
-        .where('id', accId)
-    })
-    .then(() => {
-      delete wedding.id
-      delete wedding.account_id
-      res.send(wedding)
+      for (let i = 0; i < data.length; i++) {
+        delete data[i].created_at
+        delete data[i].updated_at
+      }
+
+      // res.send(data)
+      // return
+      res.render(
+        'superSchedule', {
+          title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+          role,
+          data,
+          _layoutFile: 'layout.ejs'
+        }
+      )
     })
     .catch((err) => {
       next(err)
     })
+
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// POST a new account or schedule item
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// UPDATE an existing account or schedule item
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DELETE an account and/or a schedule event
+
+
+
 
 module.exports = router

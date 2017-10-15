@@ -16,6 +16,7 @@ const auth = (req, res, next) => {
         _layoutFile: 'layout.ejs'
       })
     }
+    console.log("payload", payload)
     req.payload = payload
     next()
   })
@@ -25,9 +26,11 @@ const checkRole = (req, res, next) => {
   knex('account')
     .select('role')
     .first()
+    // .innerJoin('schedule', 'schedule.account_id', 'account.account_id')
     .where('id', req.payload.id)
     .then((data) => {
       role = data.role
+      // console.log("role in checkRole", role)
       next()
     })
 }
@@ -67,8 +70,42 @@ router.post('/', auth, checkRole, (req, res, next) => {
 // R info from db
 router.get('/', auth, checkRole, (req, res, next) => {
   let id = req.payload.accountId
+
+  console.log('in sched, req.query.id =', req.query.id)
+
   if (role === 1) {
-    id = req.body.id
+    id = req.query.id
+    knex('account')
+      .select('first_name_1', 'first_name_2', 'template.template_name', 'schedule.*')
+      .where('schedule.account_id', id)
+      .orderBy('time')
+      .innerJoin('schedule', 'schedule.account_id', 'account.id')
+      .innerJoin('template', 'template.id', 'account.template_id')
+      .then((data) => {
+        console.log('data from super:', data)
+        fName1 = data[0].first_name_1
+        fName2 = data[0].first_name_2
+
+        for (let i = 0; i < data.length; i++) {
+          delete data[i].created_at
+          delete data[i].updated_at
+        }
+
+        // res.send(data[0])
+        // return
+        res.render(
+          'schedule', {
+            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+            data,
+            role,
+            _layoutFile: 'layout.ejs'
+          }
+        )
+        return
+      })
+      .catch((err) => {
+        next(err)
+      })
   }
 
   let fName1
@@ -124,13 +161,15 @@ router.get('/', auth, checkRole, (req, res, next) => {
             delete data[i].updated_at
           }
 
-          res.render('schedule', {
-            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-            data,
-            role,
-            wedDate,
-            _layoutFile: 'layout.ejs'
-          })
+          res.render(
+            'schedule', {
+              title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+              data,
+              role,
+              wedDate,
+              _layoutFile: 'layout.ejs'
+            }
+          )
         })
         .catch((err) => {
           next(err)
@@ -155,12 +194,14 @@ router.get('/', auth, checkRole, (req, res, next) => {
             delete data[i].updated_at
           }
 
-          res.render('scheduleGuest', {
-            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-            role,
-            data,
-            _layoutFile: 'layout.ejs'
-          })
+          res.render(
+            'scheduleGuest', {
+              title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+              role,
+              data,
+              _layoutFile: 'layout.ejs'
+            }
+          )
         })
         .catch((err) => {
           next(err)
@@ -184,19 +225,26 @@ router.get('/', auth, checkRole, (req, res, next) => {
             delete data[i].updated_at
           }
 
-          res.render('scheduleGuest', {
-            title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
-            role,
-            data,
-            wedDate,
-            _layoutFile: 'layout.ejs'
-          })
+          res.render(
+            'scheduleGuest', {
+              title: `Welcome to ${fName1} and ${fName2}'s wedding!`,
+              role,
+              data,
+              wedDate,
+              _layoutFile: 'layout.ejs'
+            }
+          )
         })
         .catch((err) => {
           next(err)
         })
     }
   }
+})
+
+// R to render from super
+router.get('/:id', auth, checkRole, (req, res, next) => {
+  res.render('schedule')
 })
 
 // R to go to edit page
