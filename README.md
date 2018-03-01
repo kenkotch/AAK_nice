@@ -12,3 +12,7 @@ The technologies we used were: javascript, jquery, ajax, knex, html, ejs, css wi
 psql, node, jwt, bcrypt, heroku, and a lot of human sweat, brain power, and sacrificed sleep.
 We used an agile workflow methodology via waffle.io, and a github multi-branch workflow
 with three developers having equal access to a single master branch.
+
+![alt text](https://github.com/kenkotch/nicePaper/blob/master/public/images/NPcoupleSchedule.jpg)
+![alt text](https://github.com/kenkotch/nicePaper/blob/master/public/images/NPguestSchedule.jpg)
+![alt text](https://github.com/kenkotch/nicePaper/blob/master/public/images/NPcoupleMenu.jpg)
